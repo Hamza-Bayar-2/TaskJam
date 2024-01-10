@@ -7,11 +7,14 @@ import sys
 import datetime
 from UI.myui import Ui_MainWindow
 from modals.taskInfo import TaskInfo
+from database import db_Helper
 
 class MainWİndow(QMainWindow) :
     def __init__(self) :
         super(MainWİndow, self).__init__()
         self.ui = Ui_MainWindow()
+        self.db = db_Helper()
+        
         self.window_fix()
         self.initUI()
     def initUI(self):

@@ -6,10 +6,16 @@ from PyQt5.QtCore import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+from database import db_Helper
+from modals.userInfo import UserInfo
+from main import MainWİndow
+
 class RegisterWindow(QDialog):
     def __init__(self) -> None:
         super(RegisterWindow, self).__init__()
         self.ui = Ui_Dialog()
+        self.db = db_Helper()
+     
         self.ui.setupUi(self)
         self.window_fix()
         self.initUi()
@@ -32,7 +38,19 @@ class RegisterWindow(QDialog):
         elif(password != repassword):
              self.ui.status_label.setText("Şifreler Uyuşmuyor")
         else :
-             self.ui.status_label.setText("Helal lan")
+               newUser = UserInfo(
+                    kullaniciAdi= "kaan",
+                    kullaniciSoyadi= "Akbıyık",
+                    kullaniciMail= self.ui.eposta_lineedit.text(),
+                    kullaniciSifre = self.ui.password_lineedit.text(),
+               )
+               self.db.kullaniciEkle(newUser)
+               self.close()
+               self.main = MainWİndow()
+               self.main.showMaximized()
+               
+               self.db.kullaniciKisiselBilgilari(newUser.kullaniciMail)
+               print(self.db.cursor.fetchall()[0])
 
     def window_fix(self) :
             self.setAttribute(Qt.WA_TranslucentBackground)

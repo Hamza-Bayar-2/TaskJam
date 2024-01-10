@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
 from UI.login_ui import Ui_Dialog
+from database import db_Helper
 from register import RegisterWindow
 from main import MainWİndow
 
@@ -12,6 +13,8 @@ class LoginWindow(QDialog) :
     def __init__(self) -> None:
         super(LoginWindow, self).__init__()
         self.ui = Ui_Dialog()
+        self.db = db_Helper()
+    
         self.window_fix()
         self.ui.setupUi(self)
         self.initUi()
