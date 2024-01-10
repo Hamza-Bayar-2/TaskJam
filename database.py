@@ -4,7 +4,7 @@ import sqlite3
 conn = sqlite3.connect('veritabani.db')
 cursor = conn.cursor()
 
-# görev durumu (tamamlanacak: 0, tamamlandi: 1, devam ediyor: 2)
+# görev durumu (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
 def tablolariOlustur() :
   cursor.execute('''
     CREATE TABLE IF NOT EXISTS kullanicilar (  
@@ -21,10 +21,7 @@ def tablolariOlustur() :
       kullaniciID INTEGER,  
       calisanAdi TEXT,  
       calisanSoyadi TEXT,  
-      calisanMail TEXT,  
-      basliyacagiGorevlerMiktari INTEGER,  
-      tamamlananGorevlerMiktari INTEGER,  
-      devamEdenGorevlerMiktari INTEGER,  
+      calisanMail TEXT,   
       zamanindaTamamlananGorevlerMiktari INTEGER,   
       zamanindaTamamlanamayanGorevlerMiktari INTEGER
     )
@@ -38,7 +35,6 @@ def tablolariOlustur() :
       baslangicTarihi DATE,  
       bitisTarihi DATE,
       gecikmeMiktari INTEGER,  
-      zamanindaTamamlandi BOOLEAN
     )
   ''')
   cursor.execute('''
@@ -50,22 +46,23 @@ def tablolariOlustur() :
       gorevAciklama TEXT,
       baslangicTarihi DATE,
       bitisTarihi DATE,
-      durum INTEGER,                   
+      gorevDurum INTEGER,                   
       adamGunDegeri INTEGER,
       gecikmeMiktari INTEGER,
-      zamanindaTamamlandi BOOLEAN
     )
   ''')
   conn.commit()
 
-def kullaniciEkle(ad, soyad, mail) :
+def kullaniciEkle(ad, soyad, mail, sifre) :
   cursor.execute('''
     INSERT INTO kullanicilar(
       kullaniciAdi,
       kullaniciSoyadi,
-      kullaniciMail
+      kullaniciMail,
+      kullaniciSifre
     )
-    VALUES(?, ?, ?)''', (ad, soyad, mail,))
+    VALUES(?, ?, ?, ?)
+  ''', (ad, soyad, mail, sifre))
   conn.commit()
   
 # kullanıcı kişisel bilgileri
@@ -76,6 +73,7 @@ def kullaniciKisiselBilgilari(kulID) :
       kullaniciAdi,
       kullaniciSoyadi,
       kullaniciMail
+      kullaniciSifre          
     FROM
       kullanicilar
     WHERE
@@ -106,6 +104,15 @@ def kullaniciSilID(kulID) :
   conn.commit()
 
 
+
+
+
+
+
+
+
+
+
 # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
 def calisanEkle(kulID, calAdi, calSoyadi, calMail) :
   cursor.execute('''
@@ -114,14 +121,12 @@ def calisanEkle(kulID, calAdi, calSoyadi, calMail) :
     calisanAdi,
     calisanSoyadi,
     calisanMail,
-    basliyacagiGorevlerMiktari,
-    tamamlananGorevlerMiktari,
-    devamEdenGorevlerMiktari,
     zamanindaTamamlananGorevlerMiktari,
     zamanindaTamamlanamayanGorevlerMiktari
     )
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
-  ''', (kulID, calAdi, calSoyadi, calMail, 0, 0, 0, 0, 0,))
+    VALUES(?, ?, ?, ?, ?, ?)
+  ''', (kulID, calAdi, calSoyadi, calMail, 0, 0,))
+  conn.commit()
 
 # bütün çalışanları döndürür
 def calisanKisiselBilgilari() :
@@ -132,9 +137,6 @@ def calisanKisiselBilgilari() :
       calisanAdi,
       calisanSoyadi,
       calisanMail,
-      basliyacagiGorevlerMiktari,
-      tamamlananGorevlerMiktari,
-      devamEdenGorevlerMiktari,
       zamanindaTamamlananGorevlerMiktari,
       zamanindaTamamlanamayanGorevlerMiktari
     FROM
@@ -142,49 +144,6 @@ def calisanKisiselBilgilari() :
     WHERE
       1
   ''')
-  conn.commit()
-
-# çalışanın ististanıs tüm görevleri
-# görevler tablosu ile inner join yapmalı.
-def calisanaAitTumGorevler() :
-  cursor.execute('''
-    
-  ''')
-
-# çalışana ait başlayacağı görevleri güncelleme
-def calisanBaslayacagiGorevGuncelleme(basliyacagi, calID, kulID) :
-  cursor.execute('''
-    UPDATE
-      calisanlar
-    SET
-      basliyacagiGorevlerMiktari = ?
-    WHERE
-      calisanID = ? AND kullaniciID = ?
-  ''', (basliyacagi, calID, kulID,))
-  conn.commit()
-
-# çalışana ait tamamlanan görevleri güncelleme
-def calisantamamlananGorevGuncelleme(tamamlanan, calID, kulID) :
-  cursor.execute('''
-    UPDATE
-      calisanlar
-    SET
-      tamamlananGorevlerMiktari = ?
-    WHERE
-      calisanID = ? AND kullaniciID = ?
-  ''', (tamamlanan, calID, kulID,))
-  conn.commit()
-
-# çalışana ait devam eden görevleri güncelleme
-def calisanDevamEdenGorevGuncelleme(devamEden, calID, kulID,) :
-  cursor.execute('''
-    UPDATE
-      calisanlar
-    SET
-      devamEdenGorevlerMiktari = ?
-    WHERE
-      calisanID = ? AND kullaniciID = ?
-  ''', (devamEden, calID, kulID,))
   conn.commit()
 
 # çalışana ait zamanında tamamlanan görevleri güncelleme
@@ -232,6 +191,74 @@ def calisanSilID(calID) :
       calisanID = ?
   ''', (calID,))
   conn.commit()
+
+
+
+
+
+
+
+
+
+
+
+# proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
+def projeEkle(kulID, projeAdi, projeAciklama, basTarihi, bitTarihi) :
+  cursor.execute('''
+    INSERT INTO projeler(
+      kullaniciID,
+      projeAdi,
+      projeAciklama,
+      baslangicTarihi,
+      bitisTarihi,
+      gecikmeMiktari,
+    )
+    VALUES(?, ?, ?, ?, ?, ?)
+  ''', (kulID, projeAdi, projeAciklama, basTarihi, bitTarihi, 0,))
+  conn.commit()
+
+# projenin bilgilerini görüntülemek için bir fonksiyondur
+def projeDetaySayfasi(projeID) :
+  cursor.execute('''
+    SELECT
+      projeAdi,
+      projeAciklama,
+      baslangicTarihi,
+      bitisTarihi,
+      gecikmeMiktari
+    FROM
+      projeler
+    WHERE
+      projeID = ?
+  ''', (projeID,))
+  conn.commit()
+
+# ana sayfadaki en üst kısımdaki projelerim kısmındaki projeleri görüntülemeyi sağlayacak bu fonksiyon
+def tumProjeleriGoruntule() :
+  cursor.execute('''
+    SELECT
+      projeID
+      projeAdi,
+      projeAciklama,
+      baslangicTarihi,
+      bitisTarihi
+    FROM
+      projeler
+    WHERE
+      1
+  ''')
+  conn.commit()
+
+def projedeToplamCalisanSayisi(projeID) :
+  cursor.execute('''
+    SELECT 
+      projeID,
+      COUNT(DISTINCT calisanID) AS calisanSayisi
+    FROM 
+      gorevler
+    WHERE 
+      projeID = ?;
+  ''', (projeID,))
 
 
 
