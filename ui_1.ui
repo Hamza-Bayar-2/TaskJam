@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1059</width>
-    <height>733</height>
+    <height>741</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,13 @@
     <bool>true</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel{
+    <string notr="true">*{
+border : none;
+}
+QLabel{
+color: rgb(255, 255, 255);
+}
+QPushButton{
 color: rgb(255, 255, 255);
 }</string>
    </property>
@@ -234,7 +240,7 @@ color: rgb(255, 0, 4);
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="TaskJam/assets/image.qrc">:/image/profile-icon-9.png</pixmap>
+                <pixmap>:/image/profile-icon-9.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -284,7 +290,10 @@ color: rgb(255, 0, 4);
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 255, 0), stop:1 rgba(0, 0 255, 0), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 255, 0));</string>
+             <string notr="true">QFrame{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 255, 0), stop:1 rgba(0, 0 255, 0), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 255, 0));
+}
+</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -292,7 +301,7 @@ color: rgb(255, 0, 4);
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -309,9 +318,28 @@ color: rgb(255, 0, 4);
               <number>0</number>
              </property>
              <item>
+              <widget class="QPushButton" name="home">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+background: rgba(76, 175, 80, 0);
+
+</string>
+               </property>
+               <property name="text">
+                <string>Ana Sayfa</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>           Ana Sayfa</string>
+                <string>.</string>
                </property>
               </widget>
              </item>
@@ -358,9 +386,25 @@ color: rgb(255, 0, 4);
               <number>0</number>
              </property>
              <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: rgba(76, 175, 80, 0);</string>
+               </property>
+               <property name="text">
+                <string>Profilim</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>             Profilim</string>
+                <string>.</string>
                </property>
               </widget>
              </item>
@@ -395,7 +439,7 @@ color: rgb(255, 0, 4);
              </size>
             </property>
             <property name="text">
-             <string>Desing by Fezaitech v1.0.0</string>
+             <string>Design by Fezaitech v1.0.0</string>
             </property>
            </widget>
           </item>
@@ -466,8 +510,10 @@ color: rgb(255, 0, 4);
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(10, 10, 10);
-border-radius: 16px;</string>
+                 <string notr="true">#main_top_bar_frame{
+background-color: rgb(10, 10, 10);
+border-radius: 16px;
+}</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -538,7 +584,7 @@ text-align: center;
                     <item alignment="Qt::AlignHCenter">
                      <widget class="QLabel" name="done_label">
                       <property name="text">
-                       <string>TAMAMLANIYOR</string>
+                       <string>TAMAMLANDI</string>
                       </property>
                      </widget>
                     </item>
@@ -548,8 +594,7 @@ text-align: center;
                  <item>
                   <widget class="QFrame" name="main_bottom_bar_botttom_frame">
                    <property name="styleSheet">
-                    <string notr="true">
-</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -573,6 +618,52 @@ borderRadius : 12px;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_4">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>5</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>5</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="waiting_label_2">
+                         <property name="text">
+                          <string>aaa</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QScrollArea" name="will_done_scroll_area">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="will_done_scroll_area_content">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>239</width>
+                            <height>356</height>
+                           </rect>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">*{
+borderRadius : none;
+}</string>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                     <item>
@@ -587,6 +678,47 @@ borderRadius : 12px;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_6">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>5</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>5</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QScrollArea" name="working_scroll_area">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="working_scroll_area_content">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>238</width>
+                            <height>356</height>
+                           </rect>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                     <item>
@@ -601,6 +733,47 @@ borderRadius : 12px;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_5">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>5</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>5</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="done_label_2">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QScrollArea" name="done_scroll_area">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="done_scroll_area_content">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>239</width>
+                            <height>356</height>
+                           </rect>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
@@ -623,8 +796,6 @@ borderRadius : 12px;</string>
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="TaskJam/assets/image.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
