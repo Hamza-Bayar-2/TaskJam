@@ -6,10 +6,10 @@ class db_Helper:
     # Veritabanına bağlanma
         self.conn = sqlite3.connect('veritabani.db')
         self.cursor = self.conn.cursor()
-        self.tablolariOlustur()
+        self.createTables()
 
     # görev durumu (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
-    def tablolariOlustur(self) :
+    def createTables(self) :
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (  
                 userID INTEGER PRIMARY KEY AUTOINCREMENT,  
@@ -56,7 +56,7 @@ class db_Helper:
         ''')
         self.conn.commit()
 
-    def kullaniciEkle(self, UserInfo) :
+    def addNewUser(self, UserInfo) :
         self.cursor.execute('''
             INSERT INTO users(
                 userName,
@@ -69,7 +69,7 @@ class db_Helper:
         self.conn.commit()
         
     # kullanıcı kişisel bilgileri
-    def kullaniciKisiselBilgilari(self, userMail) :
+    def userInformation(self, userMail) :
         self.cursor.execute('''
             SELECT 
                 userID,
@@ -87,18 +87,18 @@ class db_Helper:
         return userList 
         
     # isme soyada göre kullanıcı silme 
-    def kullaniciSil(self, userName, userSurname) :
+    def deleteUser(self, userMail) :
         self.cursor.execute('''
             DELETE
             FROM
                 users
             WHERE
-                userName = ? AND userSurname = ?
-        ''', (userName, userSurname,))
+                userMail = ?
+        ''', (userMail,))
         self.conn.commit()
 
     # ID'ye göre kullanıcı silme 
-    def kullaniciSilID(self, userID) :
+    def deleteUserID(self, userID) :
         self.cursor.execute('''
             DELETE
             FROM
@@ -119,7 +119,7 @@ class db_Helper:
 
 
     # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
-    def calisanEkle(self, userID, employeeName, employeeSurname, employeeMail) :
+    def addEmployee(self, userID, employeeName, employeeSurname, employeeMail) :
         self.cursor.execute('''
             INSERT INTO employees(
                 userID,
@@ -134,7 +134,7 @@ class db_Helper:
         self.conn.commit()
 
     # bütün çalışanları döndürür
-    def calisanKisiselBilgilari(self) :
+    def employeeInformation(self) :
         self.cursor.execute('''
             SELECT
                 employeeID,
@@ -152,7 +152,7 @@ class db_Helper:
         self.conn.commit()
 
     # çalışana ait zamanında tamamlanan görevleri güncelleme
-    def calisanZamanindaTamamlananGuncelleme(self, onTime, employeeID, userID) :
+    def employeeAmountOfTasksCompletedOnTimeUpdate(self, onTime, employeeID, userID) :
         self.cursor.execute('''
             UPDATE
                 employees
@@ -164,7 +164,7 @@ class db_Helper:
         self.conn.commit()
 
     # çalışana ait zamanında tamamlanmayan görevleri güncelleme
-    def calisanZamanindaOlmayanGuncelleme(self, notOnTime, employeeID, userID) :
+    def employeeAmountOfTasksCompletedNotOnTimeUpdate(self, notOnTime, employeeID, userID) :
         self.cursor.execute('''
             UPDATE
                 employees
@@ -176,7 +176,7 @@ class db_Helper:
         self.conn.commit()
 
     # isme soyada göre çalışan silem
-    def calisanSil(self, employeeName, employeeSurname) :
+    def deleteEmployee(self, employeeName, employeeSurname) :
         self.cursor.execute('''
             DELETE
             FROM
@@ -187,7 +187,7 @@ class db_Helper:
         self.conn.commit()
 
     # ID'ye göre çalışan silem
-    def calisanSilID(self, employeeID) :
+    def deleteEmployeeID(self, employeeID) :
       self.cursor.execute('''
         DELETE
         FROM
@@ -208,7 +208,7 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
-    def projeEkle(self, kulID, projectName, projectDescription, startingDate, endDate) :
+    def addProject(self, kulID, projectName, projectDescription, startingDate, endDate) :
         self.cursor.execute('''
             INSERT INTO projects(
                 userID,
@@ -223,7 +223,7 @@ class db_Helper:
         self.conn.commit()
 
     # projenin bilgilerini görüntülemek için bir fonksiyondur
-    def projeDetaySayfasi(self, projectID) :
+    def projectDetailPage(self, projectID) :
         self.cursor.execute('''
             SELECT
                 projectName,
@@ -239,7 +239,7 @@ class db_Helper:
         self.conn.commit()
 
     # ana sayfadaki en üst kısımdaki projectsim kısmındaki projectsi görüntülemeyi sağlayacak bu fonksiyon
-    def tumprojectsiGoruntule(self) :
+    def showAllProjects(self) :
         self.cursor.execute('''
             SELECT
                 projectID
@@ -254,7 +254,7 @@ class db_Helper:
         ''')
         self.conn.commit()
 
-    def projedeToplamCalisanSayisi(self, projectID) :
+    def totalNumberOfEmployeesInTheProject(self, projectID) :
         self.cursor.execute('''
             SELECT 
                 projectID,
@@ -273,15 +273,15 @@ class db_Helper:
 
 
     """
-    tablolariOlustur()
-    #kullaniciEkle(ad = 'Hamzaaa', soyad = 'Bbbayar', mail = 'hamzabbbaya2333@gmail.com')
-    #calisanEkle(kulID = 1, calAdi = 'firat', calSoyadi = 'evren', calMail= 'wwww22@gmail.com')
+    createTables()
+    #addNewUser(ad = 'Hamzaaa', soyad = 'Bbbayar', mail = 'hamzabbbaya2333@gmail.com')
+    #addEmployee(kulID = 1, calAdi = 'firat', calSoyadi = 'evren', calMail= 'wwww22@gmail.com')
 
-    kullaniciKisiselBilgilari(4)
+    userInformation(4)
     sonuc = self.cursor.fetchall()
     print (sonuc)
 
-    calisanKisiselBilgilari()
+    employeeInformation()
     sonuc = self.cursor.fetchall()
     print (sonuc)
 
