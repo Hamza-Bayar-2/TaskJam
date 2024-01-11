@@ -11,102 +11,101 @@ class db_Helper:
     # görev durumu (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
     def tablolariOlustur(self) :
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS kullanicilar (  
-            kullaniciID INTEGER PRIMARY KEY AUTOINCREMENT,  
-            kullaniciAdi TEXT,  
-            kullaniciSoyadi TEXT,    
-            kullaniciMail TEXT,
-            kullaniciSifre TEXT
-        )
+            CREATE TABLE IF NOT EXISTS users (  
+                userID INTEGER PRIMARY KEY AUTOINCREMENT,  
+                userName TEXT,  
+                userSurname TEXT,    
+                userMail TEXT,
+                userPassword TEXT
+            )
         ''')
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS calisanlar (  
-            calisanID INTEGER PRIMARY KEY AUTOINCREMENT,  
-            kullaniciID INTEGER,  
-            calisanAdi TEXT,  
-            calisanSoyadi TEXT,  
-            calisanMail TEXT,   
-            zamanindaTamamlananGorevlerMiktari INTEGER,   
-            zamanindaTamamlanamayanGorevlerMiktari INTEGER
-        )
+            CREATE TABLE IF NOT EXISTS employees (  
+                employeeID INTEGER PRIMARY KEY AUTOINCREMENT,  
+                userID INTEGER,  
+                employeeName TEXT,  
+                employeeSurname TEXT,  
+                employeeMail TEXT,   
+                AmountOfTasksCompletedOnTime INTEGER,   
+                AmountOfTasksNotCompletedOnTime INTEGER
+            )
         ''')
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS projeler (  
-            projeID INTEGER PRIMARY KEY AUTOINCREMENT,  
-            kullaniciID INTEGER,  
-            projeAdi TEXT, 
-            projeAciklama TEXT,
-            baslangicTarihi DATE,  
-            bitisTarihi DATE,
-            gecikmeMiktari INTEGER
-        )
+            CREATE TABLE IF NOT EXISTS projects (  
+                projectID INTEGER PRIMARY KEY AUTOINCREMENT,  
+                userID INTEGER,  
+                projectName TEXT, 
+                projectDescription TEXT,
+                startingDate DATE,  
+                endDate DATE,
+                delayAmount INTEGER
+            )
         ''')
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS gorevler (  
-            gorevID INTEGER PRIMARY KEY AUTOINCREMENT,  
-            projeID INTEGER,  
-            calisanID INTEGER,
-            gorevAdi TEXT,
-            gorevAciklama TEXT,
-            baslangicTarihi DATE,
-            bitisTarihi DATE,
-            gorevDurum INTEGER,                   
-            adamGunDegeri INTEGER,
-            gecikmeMiktari INTEGER
-        )
+            CREATE TABLE IF NOT EXISTS tasks (  
+                taskID INTEGER PRIMARY KEY AUTOINCREMENT,  
+                projectID INTEGER,  
+                employeeID INTEGER,
+                taskName TEXT,
+                taskDescription TEXT,
+                startingDate DATE,
+                endDate DATE,
+                taskStatus INTEGER,                   
+                delayAmount INTEGER
+            )
         ''')
         self.conn.commit()
 
     def kullaniciEkle(self, UserInfo) :
         self.cursor.execute('''
-        INSERT INTO kullanicilar(
-            kullaniciAdi,
-            kullaniciSoyadi,
-            kullaniciMail,
-            kullaniciSifre
-        )
-        VALUES(?, ?, ?, ?)
-        ''', (UserInfo.kullaniciAdi, UserInfo.kullaniciSoyadi, UserInfo.kullaniciMail, UserInfo.kullaniciSifre))
+            INSERT INTO users(
+                userName,
+                userSurname,
+                userMail,
+                userPassword
+            )
+            VALUES(?, ?, ?, ?)
+        ''', (UserInfo.userName, UserInfo.userSurname, UserInfo.userMail, UserInfo.userPassword))
         self.conn.commit()
         
     # kullanıcı kişisel bilgileri
-    def kullaniciKisiselBilgilari(self, kullaniciMail) :
+    def kullaniciKisiselBilgilari(self, userMail) :
         self.cursor.execute('''
-        SELECT 
-            kullaniciID,
-            kullaniciAdi,
-            kullaniciSoyadi,
-            kullaniciMail,
-            kullaniciSifre          
-        FROM
-            kullanicilar
-        WHERE
-            kullaniciMail = ?
-        ''', (kullaniciMail,))
+            SELECT 
+                userID,
+                userName,
+                userSurname,
+                userMail,
+                userPassword          
+            FROM
+                users
+            WHERE
+                userMail = ?
+        ''', (userMail,))
         self.conn.commit()
         userList = self.cursor.fetchall()
         return userList 
         
     # isme soyada göre kullanıcı silme 
-    def kullaniciSil(self, ad, soyad) :
+    def kullaniciSil(self, userName, userSurname) :
         self.cursor.execute('''
-        DELETE
-        FROM
-            kullanicilar
-        WHERE
-            kullaniciAdi = ? AND kullaniciSoyadi = ?
-        ''', (ad, soyad,))
+            DELETE
+            FROM
+                users
+            WHERE
+                userName = ? AND userSurname = ?
+        ''', (userName, userSurname,))
         self.conn.commit()
 
     # ID'ye göre kullanıcı silme 
-    def kullaniciSilID(self, kulID) :
+    def kullaniciSilID(self, userID) :
         self.cursor.execute('''
-        DELETE
-        FROM
-            kullanicilar
-        WHERE
-            kullaniciID = ?
-        ''', (kulID,))
+            DELETE
+            FROM
+                users
+            WHERE
+                userID = ?
+        ''', (userID,))
         self.conn.commit()
 
 
@@ -120,83 +119,83 @@ class db_Helper:
 
 
     # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
-    def calisanEkle(self, kulID, calAdi, calSoyadi, calMail) :
+    def calisanEkle(self, userID, employeeName, employeeSurname, employeeMail) :
         self.cursor.execute('''
-        INSERT INTO calisanlar(
-        kullaniciID,
-        calisanAdi,
-        calisanSoyadi,
-        calisanMail,
-        zamanindaTamamlananGorevlerMiktari,
-        zamanindaTamamlanamayanGorevlerMiktari
-        )
-        VALUES(?, ?, ?, ?, ?, ?)
-        ''', (kulID, calAdi, calSoyadi, calMail, 0, 0,))
+            INSERT INTO employees(
+                userID,
+                employeeName,
+                employeeSurname,
+                employeeMail,
+                AmountOfTasksCompletedOnTime,
+                AmountOfTasksNotCompletedOnTime
+            )
+            VALUES(?, ?, ?, ?, ?, ?)
+        ''', (userID, employeeName, employeeSurname, employeeMail, 0, 0,))
         self.conn.commit()
 
     # bütün çalışanları döndürür
     def calisanKisiselBilgilari(self) :
         self.cursor.execute('''
-        SELECT
-            calisanID,
-            kullaniciID,
-            calisanAdi,
-            calisanSoyadi,
-            calisanMail,
-            zamanindaTamamlananGorevlerMiktari,
-            zamanindaTamamlanamayanGorevlerMiktari
-        FROM
-            calisanlar
-        WHERE
-            1
+            SELECT
+                employeeID,
+                userID,
+                employeeName,
+                employeeSurname,
+                employeeMail,
+                AmountOfTasksCompletedOnTime,
+                AmountOfTasksNotCompletedOnTime
+            FROM
+                employees
+            WHERE
+                1
         ''')
         self.conn.commit()
 
     # çalışana ait zamanında tamamlanan görevleri güncelleme
-    def calisanZamanindaTamamlananGuncelleme(self, zamaninda, calID, kulID) :
+    def calisanZamanindaTamamlananGuncelleme(self, onTime, employeeID, userID) :
         self.cursor.execute('''
-        UPDATE
-            calisanlar
-        SET
-            zamanindaTamamlananGorevlerMiktari = ?
-        WHERE
-            calisanID = ? AND kullaniciID = ?
-        ''', (zamaninda, calID, kulID,))
+            UPDATE
+                employees
+            SET
+                AmountOfTasksCompletedOnTime = ?
+            WHERE
+                employeeID = ? AND userID = ?
+        ''', (onTime, employeeID, userID,))
         self.conn.commit()
 
     # çalışana ait zamanında tamamlanmayan görevleri güncelleme
-    def calisanZamanindaOlmayanGuncelleme(self, zamanindaOlmayan, calID, kulID) :
+    def calisanZamanindaOlmayanGuncelleme(self, notOnTime, employeeID, userID) :
         self.cursor.execute('''
-        UPDATE
-            calisanlar
-        SET
-            zamanindaTamamlanamayanGorevlerMiktari = ?
-        WHERE
-            calisanID = ? AND kullaniciID = ?
-        ''', (zamanindaOlmayan, calID, kulID,))
+            UPDATE
+                employees
+            SET
+                AmountOfTasksNotCompletedOnTime = ?
+            WHERE
+            employeeID = ? AND userID = ?
+        ''', (notOnTime, employeeID, userID,))
         self.conn.commit()
 
     # isme soyada göre çalışan silem
-    def calisanSil(self, ad, soyad) :
+    def calisanSil(self, employeeName, employeeSurname) :
         self.cursor.execute('''
-        DELETE
-        FROM
-            calisanlar
-        WHERE
-            calisanAdi = ? AND calisanSoyadi = ?
-        ''', (ad, soyad,))
+            DELETE
+            FROM
+                employees
+            WHERE
+                employeeName = ? AND employeeSurname = ?
+        ''', (employeeName, employeeSurname,))
         self.conn.commit()
 
     # ID'ye göre çalışan silem
-    def calisanSilID(self, calID) :
-        self.cursor.execute('''
+    def calisanSilID(self, employeeID) :
+      self.cursor.execute('''
         DELETE
         FROM
-            calisanlar
+            employees
         WHERE
-            calisanID = ?
-        ''', (calID,))
-        self.conn.commit()
+            employeeID = ?
+      ''', (employeeID,))
+      self.conn.commit()
 
 
 
@@ -209,62 +208,62 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
-    def projeEkle(self, kulID, projeAdi, projeAciklama, basTarihi, bitTarihi) :
+    def projeEkle(self, kulID, projectName, projectDescription, startingDate, endDate) :
         self.cursor.execute('''
-        INSERT INTO projeler(
-            kullaniciID,
-            projeAdi,
-            projeAciklama,
-            baslangicTarihi,
-            bitisTarihi,
-            gecikmeMiktari,
-        )
-        VALUES(?, ?, ?, ?, ?, ?)
-        ''', (kulID, projeAdi, projeAciklama, basTarihi, bitTarihi, 0,))
+            INSERT INTO projects(
+                userID,
+                projectName,
+                projectDescription,
+                startingDate,
+                endDate,
+                delayAmount,
+            )
+            VALUES(?, ?, ?, ?, ?, ?)
+        ''', (kulID, projectName, projectDescription, startingDate, endDate, 0,))
         self.conn.commit()
 
     # projenin bilgilerini görüntülemek için bir fonksiyondur
-    def projeDetaySayfasi(self, projeID) :
+    def projeDetaySayfasi(self, projectID) :
         self.cursor.execute('''
-        SELECT
-            projeAdi,
-            projeAciklama,
-            baslangicTarihi,
-            bitisTarihi,
-            gecikmeMiktari
-        FROM
-            projeler
-        WHERE
-            projeID = ?
-        ''', (projeID,))
+            SELECT
+                projectName,
+                projectDescription,
+                startingDate,
+                endDate,
+                delayAmount
+            FROM
+                projects
+            WHERE
+                projectID = ?
+        ''', (projectID,))
         self.conn.commit()
 
-    # ana sayfadaki en üst kısımdaki projelerim kısmındaki projeleri görüntülemeyi sağlayacak bu fonksiyon
-    def tumProjeleriGoruntule(self) :
+    # ana sayfadaki en üst kısımdaki projectsim kısmındaki projectsi görüntülemeyi sağlayacak bu fonksiyon
+    def tumprojectsiGoruntule(self) :
         self.cursor.execute('''
-        SELECT
-            projeID
-            projeAdi,
-            projeAciklama,
-            baslangicTarihi,
-            bitisTarihi
-        FROM
-            projeler
-        WHERE
-            1
+            SELECT
+                projectID
+                projectName,
+                projectDescription,
+                startingDate,
+                endDate
+            FROM
+                projects
+            WHERE
+                1
         ''')
         self.conn.commit()
 
-    def projedeToplamCalisanSayisi(self, projeID) :
+    def projedeToplamCalisanSayisi(self, projectID) :
         self.cursor.execute('''
-        SELECT 
-            projeID,
-            COUNT(DISTINCT calisanID) AS calisanSayisi
-        FROM 
-            gorevler
-        WHERE 
-            projeID = ?;
-        ''', (projeID,))
+            SELECT 
+                projectID,
+                COUNT(DISTINCT employeeID) AS calisanSayisi
+            FROM 
+                tasks
+            WHERE 
+                projectID = ?;
+        ''', (projectID,))
 
 
 
