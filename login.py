@@ -14,7 +14,6 @@ class LoginWindow(QDialog) :
         super(LoginWindow, self).__init__()
         self.ui = Ui_Dialog()
         self.db = db_Helper()
-    
         self.window_fix()
         self.ui.setupUi(self)
         self.initUi()
@@ -28,6 +27,13 @@ class LoginWindow(QDialog) :
          self.ui.signin_btn.clicked.connect(lambda : self.openMain())
 
     def openMain(self):
+        email = self.ui.eposta_lineedit.text()
+        password = self.ui.eposta_lineedit.text()
+        User = self.db.kullaniciKisiselBilgilari(email)[0]
+        # if(User.kullaniciSifre = )
+        
+
+
         self.close()
         self.mainChannel = MainWİndow()
         self.mainChannel.showMaximized()
@@ -37,9 +43,10 @@ class LoginWindow(QDialog) :
         self.register = RegisterWindow()
         self.register.showNormal()
     def window_fix(self) :
-            self.setAttribute(Qt.WA_TranslucentBackground)
-            self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint |Qt.FramelessWindowHint)
-            #self.ui.app_bar_widget.mauseMoveEvent = self.mauseMoveEvent
+        self.setWindowTitle("TaskJam Login")
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint |Qt.FramelessWindowHint)
+        #self.ui.app_bar_widget.mauseMoveEvent = self.mauseMoveEvent
     def mauseMoveEvent(self, event):
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
