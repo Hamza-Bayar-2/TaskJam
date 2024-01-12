@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1104</width>
-    <height>690</height>
+    <width>1062</width>
+    <height>686</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -132,8 +132,8 @@ color: rgb(255, 0, 4);
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>assets/icons/alt_btn.png</normaloff>assets/icons/alt_btn.png</iconset>
+             <iconset resource="../assets/image.qrc">
+              <normaloff>:/icons/icons/alt_btn.png</normaloff>:/icons/icons/alt_btn.png</iconset>
             </property>
            </widget>
           </item>
@@ -149,8 +149,8 @@ color: rgb(255, 0, 4);
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>assets/icons/rectangle.png</normaloff>assets/icons/rectangle.png</iconset>
+             <iconset resource="../assets/image.qrc">
+              <normaloff>:/icons/icons/rectangle.png</normaloff>:/icons/icons/rectangle.png</iconset>
             </property>
            </widget>
           </item>
@@ -169,8 +169,8 @@ color: rgb(255, 0, 4);
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>assets/icons/Ellipse 5.png</normaloff>assets/icons/Ellipse 5.png</iconset>
+             <iconset resource="../assets/image.qrc">
+              <normaloff>:/icons/icons/Ellipse 5.png</normaloff>:/icons/icons/Ellipse 5.png</iconset>
             </property>
            </widget>
           </item>
@@ -276,7 +276,7 @@ color: rgb(255, 0, 4);
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="assets/image.qrc">:/image/profile-icon-9.png</pixmap>
+                <pixmap resource="../assets/image.qrc">:/image/profile-icon-9.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -438,7 +438,7 @@ background: rgba(76, 175, 80, 0);
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="assets/image.qrc">:/icons/icons/Ellipse 5.png</pixmap>
+                <pixmap resource="../assets/image.qrc">:/icons/icons/Ellipse 5.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -652,61 +652,103 @@ border-radius: 10px;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QScrollArea" name="projects_scroll">
-                   <property name="widgetResizable">
-                    <bool>true</bool>
+                  <widget class="QFrame" name="my_projects_frame">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                   <widget class="QWidget" name="projects_scroll_content">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>0</y>
-                      <width>806</width>
-                      <height>163</height>
-                     </rect>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_10">
+                    <property name="spacing">
+                     <number>10</number>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
+                    <property name="topMargin">
+                     <number>0</number>
                     </property>
-                    <layout class="QHBoxLayout" name="projects_scroll_content_layout">
-                     <item>
-                      <widget class="QPushButton" name="project_add_btn">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="project_add_btn">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(35, 39, 79);
+border-radius : 10px;</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../assets/image.qrc">
+                        <normaloff>:/icons/icons/plus.svg</normaloff>:/icons/icons/plus.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>50</width>
+                        <height>50</height>
+                       </size>
+                      </property>
+                      <property name="checkable">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QScrollArea" name="projects_scroll">
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="projects_scroll_content">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>636</width>
+                         <height>163</height>
+                        </rect>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>100</width>
-                         <height>16777215</height>
-                        </size>
+                       <property name="layoutDirection">
+                        <enum>Qt::LeftToRight</enum>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">background-color: rgb(35, 39, 79);
-border-radius : 10px;</string>
+                        <string notr="true"/>
                        </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="assets/image.qrc">
-                         <normaloff>:/icons/icons/plus.svg</normaloff>:/icons/icons/plus.svg</iconset>
-                       </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>50</width>
-                         <height>50</height>
-                        </size>
-                       </property>
-                       <property name="checkable">
-                        <bool>false</bool>
-                       </property>
+                       <layout class="QHBoxLayout" name="projects_scroll_content_layout">
+                        <property name="spacing">
+                         <number>12</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                       </layout>
                       </widget>
-                     </item>
-                    </layout>
-                   </widget>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -838,8 +880,8 @@ borderRadius : 12px;
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>253</width>
-                            <height>262</height>
+                            <width>239</width>
+                            <height>258</height>
                            </rect>
                           </property>
                           <property name="styleSheet">
@@ -925,8 +967,8 @@ borderRadius : 10px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>252</width>
-                            <height>312</height>
+                            <width>238</width>
+                            <height>308</height>
                            </rect>
                           </property>
                           <layout class="QVBoxLayout" name="working_scroll_area_content_layout">
@@ -990,8 +1032,8 @@ borderRadius : 10px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>253</width>
-                            <height>312</height>
+                            <width>239</width>
+                            <height>308</height>
                            </rect>
                           </property>
                           <layout class="QVBoxLayout" name="done_scroll_area_content_2">
@@ -1165,7 +1207,7 @@ border-radius : 10px;
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="assets/image.qrc">:/image/logo.png</pixmap>
+                 <pixmap resource="../assets/image.qrc">:/image/logo.png</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>false</bool>
@@ -1211,7 +1253,8 @@ border-radius : 10px;
   </widget>
  </widget>
  <resources>
-  <include location="assets/image.qrc"/>
+  <include location="../assets/image.qrc"/>
+  <include location="../assets/image.qrc"/>
  </resources>
  <connections/>
 </ui>

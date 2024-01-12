@@ -1,5 +1,6 @@
 import sqlite3 
 from modals.userInfo import UserInfo
+from modals.projectInfo import ProjectInfo
 
 class db_Helper:
     def __init__(self) -> None:
@@ -36,8 +37,8 @@ class db_Helper:
                 userID INTEGER,  
                 projectName TEXT, 
                 projectDescription TEXT,
-                startingDate DATE,  
-                endDate DATE,
+                startingDate TEXT,  
+                endDate TEXT,
                 delayAmount INTEGER
             )
         ''')
@@ -48,8 +49,8 @@ class db_Helper:
                 employeeID INTEGER,
                 taskName TEXT,
                 taskDescription TEXT,
-                startingDate DATE,
-                endDate DATE,
+                startingDate TEXT,
+                endDate TEXT,
                 taskStatus INTEGER,                   
                 delayAmount INTEGER
             )
@@ -84,7 +85,13 @@ class db_Helper:
         ''', (userMail,))
         self.conn.commit()
         userList = self.cursor.fetchall()
-        return userList 
+        return UserInfo(
+            userID = userList[0][0],
+            userName= userList[0][1], 
+            userSurname= userList[0][2], 
+            userMail= userList[0][3], 
+            userPassword= userList[0][4]
+        ) if len(userList) > 0 else None
         
     # isme soyada göre kullanıcı silme 
     def deleteUser(self, userMail) :
@@ -208,6 +215,7 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
+    def addProject(self, UserInfo, ProjectInfo) :
     def addNewProject(self, kulID, projectName, projectDescription, startingDate, endDate) :
         self.cursor.execute('''
             INSERT INTO projects(
@@ -219,9 +227,12 @@ class db_Helper:
                 delayAmount
             )
             VALUES(?, ?, ?, ?, ?, ?)
-        ''', (kulID, projectName, projectDescription, startingDate, endDate, 0,))
+        ''', (UserInfo.userID, ProjectInfo.projectName, ProjectInfo.projectDescription, ProjectInfo.startingDate, ProjectInfo.endDate, 0))
         self.conn.commit()
+        print(self.cursor.fetchall())
 
+    # projenin bilgilerini görüntülemek için bir fonksiyondur
+    def projectDetailPage(self, projectName) :
     # projenin detaylarını detaylar sayfasında görüntülemek için kullanılır
     def showProjectOnDetailPage(self, projectID) :
         self.cursor.execute('''
@@ -234,25 +245,41 @@ class db_Helper:
             FROM
                 projects
             WHERE
-                projectID = ?
-        ''', (projectID,))
+                projectName = ?
+        ''', (projectName,))
         self.conn.commit()
+        project = self.cursor.fetchall()
+        return ProjectInfo(projectID= project[0][0], projectName = project[0][1], projectDescription = project[0][2], startingDate = project[0][3], endDate = project[0][4], delayAmount= project[0][4]) if len(project) !=0 else None
 
-    # ana sayfadaki en üst kısımdaki projelerim kısmındaki projeyi görüntülemeyi sağlayacak bu fonksiyon
-    def showAllProjects(self) :
+    # ana sayfadaki en üst kısımdaki projectsim kısmındaki projectsi görüntülemeyi sağlayacak bu fonksiyon
+    def showAllProjects(self, userId) :
         self.cursor.execute('''
             SELECT
-                projectID
+                projectID,
                 projectName,
                 projectDescription,
                 startingDate,
-                endDate
+                endDate,
+                delayAmount  
             FROM
                 projects
             WHERE
-                1
-        ''')
+                userID = ?
+        ''', (userId,))
         self.conn.commit()
+        projectsList = []
+        for item in self.cursor.fetchall() :
+            projectsList.append(
+                ProjectInfo(
+                    projectID= item[0],
+                    projectName = item[1],
+                    projectDescription = item[2],
+                    startingDate = item[3], 
+                    endDate = item[4], 
+                    delayAmount= item[4]
+                )
+            )
+        return projectsList
 
     def showTotalNumberOfEmployeesInTheProject(self, projectID) :
         self.cursor.execute('''

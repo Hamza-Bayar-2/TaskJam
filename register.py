@@ -30,25 +30,26 @@ class RegisterWindow(QDialog):
         repassword = self.ui.repassword_lineedit.text()
         name = self.ui.name_lineedit.text()
         surname = self.ui.surname_lineedit.text()
+
         if((email.find("@") == -1 ) or (email.find(".") == -1) ) :
             self.ui.status_label.setText("Email'i doğru biçimde giriniz.")
         elif(password != repassword):
             self.ui.status_label.setText("Şifreler Uyuşmuyor")
         elif(name == "" or surname == "" or password == "") :
             self.ui.status_label.setText("Lütfen tüm alanları doldurunuz.")
-        elif(self.db.kullaniciKisiselBilgilari(email)):
+        elif(self.db.userInformation(email)):
             self.ui.status_label.setText("aynı maile sahip zaten bir kullanıcı var.")
         else :
             newUser = UserInfo(
-                kullaniciID = None,
-                kullaniciAdi = name,
-                kullaniciSoyadi = surname,
-                kullaniciMail = email,
-                kullaniciSifre = password,
+                userID = None,
+                userName = name,
+                userSurname = surname,
+                userMail = email,
+                userPassword = password,
             )    
-            self.db.kullaniciEkle(newUser)
+            self.db.addNewUser(newUser)
             self.close()
-            self.main = MainWİndow()
+            self.main = MainWİndow(newUser)
             self.main.showMaximized()
 
     def window_fix(self) :
