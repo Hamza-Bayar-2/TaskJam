@@ -9,7 +9,7 @@ class db_Helper:
         self.cursor = self.conn.cursor()
         self.createTables()
 
-    # görev durumu (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
+    # task status (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
     def createTables(self) :
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (  
@@ -70,7 +70,7 @@ class db_Helper:
         self.conn.commit()
         
     # kullanıcı kişisel bilgileri
-    def userInformation(self, userMail) :
+    def showUserInformation(self, userMail) :
         self.cursor.execute('''
             SELECT 
                 userID,
@@ -126,7 +126,7 @@ class db_Helper:
 
 
     # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
-    def addEmployee(self, userID, employeeName, employeeSurname, employeeMail) :
+    def addNewEmployee(self, userID, employeeName, employeeSurname, employeeMail) :
         self.cursor.execute('''
             INSERT INTO employees(
                 userID,
@@ -141,7 +141,7 @@ class db_Helper:
         self.conn.commit()
 
     # bütün çalışanları döndürür
-    def employeeInformation(self) :
+    def showEmployeeInformation(self) :
         self.cursor.execute('''
             SELECT
                 employeeID,
@@ -278,7 +278,7 @@ class db_Helper:
             )
         return projectsList
 
-    def totalNumberOfEmployeesInTheProject(self, projectID) :
+    def showTotalNumberOfEmployeesInTheProject(self, projectID) :
         self.cursor.execute('''
             SELECT 
                 projectID,
@@ -286,13 +286,126 @@ class db_Helper:
             FROM 
                 tasks
             WHERE 
-                projectID = ?;
+                projectID = ?
+        ''', (projectID,))
+
+    # bu fonksiyon projenin gecikme miktarını en geç tamamlanan göreve göre setlemektedir
+    def updateProjectDelayAmount(self, projectID) :
+        self.cursor.execute('''
+            UPDATE 
+                projects
+            SET 
+                delayAmount = (
+                    SELECT 
+                        MAX(delayAmount)
+                    FROM 
+                        tasks
+                    WHERE 
+                        tasks.projectID = projects.projectID
+                )
+            WHERE projectID = ?;
+        ''', (projectID,))
+
+    def updateProject(self, projectName, projectDescription, startingDate, endDate, projectID) :
+        self.cursor.execute('''
+            UPDATE projects
+            SET 
+                projectName = ?,
+                projectDescription = ?,
+                startingDate = ?,
+                endDate = ?
+            WHERE 
+                projectID = ?
+        ''', (projectName, projectDescription, startingDate, endDate, projectID,))
+
+    def deleteProject(self, projectID) :
+        self.cursor.execute('''
+            DELETE FROM 
+                projects
+            WHERE 
+                projectID = ?
         ''', (projectID,))
 
 
 
 
 
+
+
+
+
+
+
+    # taskStatus yani görev durumu tamamlanacak: 0 olarak atıyoruz. 
+    def addNewTask(self, projectID, employeeID, taskName, taskDescription, startingDate, endDate) :
+        self.cursor.execute('''
+            INSERT INTO projects(
+                projectID = ?,
+                employeeID = ?,
+                taskName = ?,
+                taskDescription = ?,
+                startingDate = ?,
+                endDate = ?,
+                taskStatus = ?,
+                delayAmount = ?
+            )
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (projectID, employeeID, taskName, taskDescription, startingDate, endDate, 0, 0,))
+
+    def updateTask(self, employeeID, taskName, taskDescription, startingDate, endDate, taskID) :
+        self.cursor.execute('''
+            UPDATE 
+                tasks
+            SET 
+                employeeID = ?,
+                taskName = ?,
+                taskDescription = ?,
+                startingDate = ?,
+                endDate = ?,
+            WHERE 
+                taskID = ?
+        ''', (employeeID, taskName, taskDescription, startingDate, endDate, taskID,))
+
+    # gorev durumunu guncellemek icindir (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
+    def updateTaskStatus(self, taskStatus, taskID) :
+        self.cursor.execute('''
+            UPDATE 
+                tasks
+            SET 
+                taskStatus = ?,
+            WHERE 
+                taskID = ?
+        ''', (taskStatus, taskID))
+
+    # görevin gecikme miktarını güncellemeye yarar
+    def updateTaskDelayAmount(self, delayAmount, taskID) :
+        self.cursor.execute('''
+            UPDATE 
+                tasks
+            SET 
+                delayAmount = ?,
+            WHERE 
+                taskID = ?
+        ''', (delayAmount, taskID))
+
+    # görevin detaylarını görev detayları sayfasında görüntülemeyi yarar
+    def showTaskOnDetailPage(self, taskID) :
+        self.cursor.execute('''
+            SELECT 
+                employeeID,
+                taskName,
+                taskDescription,
+                startingDate,
+                endDate,
+                taskStatus,
+                delayAmount
+            FROM 
+                tasks
+            WHERE
+                taskID = ?
+        ''', (taskID,))
+
+    # !!!!!!!!!!!!! burası bitmedi daha kullanıcı adını alacam
 
 
 
