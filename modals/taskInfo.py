@@ -1,7 +1,7 @@
 class TaskInfo :
     def __init__(
             self,
-            taskId,
+            taskID,
             projectId,
             workerId,
             taskTitle,
