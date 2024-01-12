@@ -215,7 +215,7 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
-    def addProject(self, UserInfo, ProjectInfo) :
+    def addNewProject(self, UserInfo, ProjectInfo) :
         self.cursor.execute('''
             INSERT INTO projects(
                 userID,
@@ -230,6 +230,8 @@ class db_Helper:
         self.conn.commit()
         print(self.cursor.fetchall())
 
+    # projenin detaylarını detaylar sayfasında görüntülemek için kullanılır
+    def showProjectOnDetailPage(self, projectID) :
     # projenin bilgilerini görüntülemek için bir fonksiyondur
     def projectDetailPage(self, projectName) :
         self.cursor.execute('''
@@ -243,7 +245,7 @@ class db_Helper:
                 projects
             WHERE
                 projectName = ?
-        ''', (projectName,))
+        ''', (projectID,))
         self.conn.commit()
         project = self.cursor.fetchall()
         return ProjectInfo(projectID= project[0][0], projectName = project[0][1], projectDescription = project[0][2], startingDate = project[0][3], endDate = project[0][4], delayAmount= project[0][4]) if len(project) !=0 else None
