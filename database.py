@@ -1,3 +1,4 @@
+from datetime import datetime
 import sqlite3 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
@@ -69,6 +70,20 @@ class db_Helper:
         ''', (UserInfo.userName, UserInfo.userSurname, UserInfo.userMail, UserInfo.userPassword))
         self.conn.commit()
         
+    def updateUser(self, userName, userSurname, userMail, userPassword, userID) :
+        self.cursor.execute('''
+            UPDATE 
+                users
+            SET 
+                userName = ?,
+                userSurname = ?,
+                userMail = ?,
+                userPassword = ?
+            WHERE 
+                userID = ?;
+        ''', (userName, userSurname, userMail, userPassword, userID))
+        self.conn.commit()
+
     # kullanıcı kişisel bilgileri
     def showUserInformation(self, userMail) :
         self.cursor.execute('''
@@ -93,25 +108,40 @@ class db_Helper:
             userPassword= userList[0][4]
         ) if len(userList) > 0 else None
         
-    # isme soyada göre kullanıcı silme 
-    def deleteUser(self, userMail) :
-        self.cursor.execute('''
-            DELETE
-            FROM
-                users
-            WHERE
-                userMail = ?
-        ''', (userMail,))
-        self.conn.commit()
-
-    # ID'ye göre kullanıcı silme 
+    # ID'ye göre kullanıcı silme. beraberinde kullanıcıya bağlı diğer tüm bilgilerde siliniyor
     def deleteUserID(self, userID) :
         self.cursor.execute('''
-            DELETE
-            FROM
+            DELETE FROM 
                 users
             WHERE
                 userID = ?
+        ''', (userID,))
+
+        self.cursor.execute('''
+            DELETE FROM 
+                employees
+            WHERE 
+                userID = ?
+        ''', (userID,))
+
+        self.cursor.execute('''
+            DELETE FROM 
+                projects
+            WHERE 
+                userID = ?
+        ''', (userID,))
+
+        self.cursor.execute('''
+            DELETE FROM 
+                tasks
+            WHERE employeeID IN (
+                SELECT 
+                    employeeID
+                FROM 
+                    employees
+                WHERE 
+                    userID = ?
+            )
         ''', (userID,))
         self.conn.commit()
 
@@ -158,39 +188,47 @@ class db_Helper:
         ''')
         self.conn.commit()
 
+    # çalışana ait zamanında tamamlanmayan görevleri güncelleme
     # çalışana ait zamanında tamamlanan görevleri güncelleme
-    def employeeAmountOfTasksCompletedOnTimeUpdate(self, onTime, employeeID, userID) :
+    def employeeAmountOfTasksCompletedOnTimeAndNotOnTimeUpdate(self, employeeID) :
+
+        self.cursor.execute('''
+            SELECT 
+                endDate
+            FROM 
+                tasks
+            WHERE
+                employeeID = ? AND taskStatus = ?
+        ''', (employeeID, 2,))
+
+        allEndDates = self.cursor.fetchall()
+
+        onTimeCount = 0
+        notOnTmimeCount = 0
+
+        today = datetime.today().strftime("%d.%m.%Y")
+        todayDate = datetime.strptime(today, "%d.%m.%Y")
+
+        for iter in allEndDates:
+            end = iter[0]
+            endDate = datetime.strptime(end, "%d.%m.%Y")
+            daysDifference = (endDate - todayDate).days
+            resultOfDelayAmount = max(daysDifference, 0)
+
+            if resultOfDelayAmount == 0:
+                onTimeCount += 1
+            else:
+                notOnTmimeCount += 1
+
         self.cursor.execute('''
             UPDATE
                 employees
             SET
                 AmountOfTasksCompletedOnTime = ?
-            WHERE
-                employeeID = ? AND userID = ?
-        ''', (onTime, employeeID, userID,))
-        self.conn.commit()
-
-    # çalışana ait zamanında tamamlanmayan görevleri güncelleme
-    def employeeAmountOfTasksCompletedNotOnTimeUpdate(self, notOnTime, employeeID, userID) :
-        self.cursor.execute('''
-            UPDATE
-                employees
-            SET
                 AmountOfTasksNotCompletedOnTime = ?
             WHERE
-            employeeID = ? AND userID = ?
-        ''', (notOnTime, employeeID, userID,))
-        self.conn.commit()
-
-    # isme soyada göre çalışan silem
-    def deleteEmployee(self, employeeName, employeeSurname) :
-        self.cursor.execute('''
-            DELETE
-            FROM
-                employees
-            WHERE
-                employeeName = ? AND employeeSurname = ?
-        ''', (employeeName, employeeSurname,))
+                employeeID = ?
+        ''', (onTimeCount, notOnTmimeCount, employeeID,))
         self.conn.commit()
 
     # ID'ye göre çalışan silem
@@ -288,6 +326,7 @@ class db_Helper:
             WHERE 
                 projectID = ?
         ''', (projectID,))
+        self.conn.commit()
 
     # bu fonksiyon projenin gecikme miktarını en geç tamamlanan göreve göre setlemektedir
     def updateProjectDelayAmount(self, projectID) :
@@ -305,6 +344,7 @@ class db_Helper:
                 )
             WHERE projectID = ?;
         ''', (projectID,))
+        self.conn.commit()
 
     def updateProject(self, ProjectInfo) :
         self.cursor.execute('''
@@ -341,18 +381,19 @@ class db_Helper:
     # taskStatus yani görev durumu tamamlanacak: 0 olarak atıyoruz. 
     def addNewTask(self, projectID, employeeID, taskName, taskDescription, startingDate, endDate) :
         self.cursor.execute('''
-            INSERT INTO projects(
-                projectID = ?,
-                employeeID = ?,
-                taskName = ?,
-                taskDescription = ?,
-                startingDate = ?,
-                endDate = ?,
-                taskStatus = ?,
-                delayAmount = ?
+            INSERT INTO tasks(
+                projectID ,
+                employeeID,
+                taskName,
+                taskDescription,
+                startingDate,
+                endDate,
+                taskStatus,
+                delayAmount 
             )
             VALUES(?, ?, ?, ?, ?, ?, ?, ?)
         ''', (projectID, employeeID, taskName, taskDescription, startingDate, endDate, 0, 0,))
+        self.conn.commit()
 
     def updateTask(self, employeeID, taskName, taskDescription, startingDate, endDate, taskID) :
         self.cursor.execute('''
@@ -363,10 +404,11 @@ class db_Helper:
                 taskName = ?,
                 taskDescription = ?,
                 startingDate = ?,
-                endDate = ?,
+                endDate = ?
             WHERE 
                 taskID = ?
         ''', (employeeID, taskName, taskDescription, startingDate, endDate, taskID,))
+        self.conn.commit()
 
     # gorev durumunu guncellemek icindir (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
     def updateTaskStatus(self, taskStatus, taskID) :
@@ -374,27 +416,49 @@ class db_Helper:
             UPDATE 
                 tasks
             SET 
-                taskStatus = ?,
+                taskStatus = ?
             WHERE 
                 taskID = ?
-        ''', (taskStatus, taskID))
+        ''', (taskStatus, taskID,))
+        self.conn.commit()
 
     # görevin gecikme miktarını güncellemeye yarar
-    def updateTaskDelayAmount(self, delayAmount, taskID) :
+    def updateTaskDelayAmount(self, taskID) :
+        self.cursor.execute('''
+            SELECT 
+                endDate
+            FROM 
+                tasks
+            WHERE 
+                taskID = ?
+        ''', (taskID,))
+
+        end = self.cursor.fetchone()[0]
+        today = datetime.today().strftime("%d.%m.%Y")
+
+        todayDate = datetime.strptime(today, "%d.%m.%Y")
+        endDate = datetime.strptime(end, "%d.%m.%Y")
+
+        daysDifference = (endDate - todayDate).days
+
+        resultOfDelayAmount = max(daysDifference, 0)
+
         self.cursor.execute('''
             UPDATE 
                 tasks
             SET 
-                delayAmount = ?,
+                delayAmount = ?
             WHERE 
                 taskID = ?
-        ''', (delayAmount, taskID))
+        ''', (resultOfDelayAmount, taskID))
+        self.conn.commit()
 
     # görevin detaylarını görev detayları sayfasında görüntülemeyi yarar
     def showTaskOnDetailPage(self, taskID) :
         self.cursor.execute('''
             SELECT 
-                employeeID,
+                employees.employeeName
+                employees.employeeSurname
                 taskName,
                 taskDescription,
                 startingDate,
@@ -403,27 +467,71 @@ class db_Helper:
                 delayAmount
             FROM 
                 tasks
+            INNER JOIN
+                employees ON tasks.employeeID = employees.employeeID
+            WHERE
+                tasks.taskID = ?
+        ''', (taskID,))
+        self.conn.commit()
+
+    def deleteTask(self, taskID) :
+        self.cursor.execute('''
+            DELETE FROM
+                tasks
             WHERE
                 taskID = ?
         ''', (taskID,))
-
-    # !!!!!!!!!!!!! burası bitmedi daha kullanıcı adını alacam
-
+        self.conn.commit()
 
 
-    """
-    createTables()
-    #addNewUser(ad = 'Hamzaaa', soyad = 'Bbbayar', mail = 'hamzabbbaya2333@gmail.com')
-    #addEmployee(kulID = 1, calAdi = 'firat', calSoyadi = 'evren', calMail= 'wwww22@gmail.com')
 
-    userInformation(4)
-    sonuc = self.cursor.fetchall()
-    print (sonuc)
 
-    employeeInformation()
-    sonuc = self.cursor.fetchall()
-    print (sonuc)
 
-    self.conn.close()
 
-    """
+
+# conn = sqlite3.connect('veritabani.db')
+# cursor = conn.cursor()
+
+# cursor.execute('''
+#     SELECT 
+#         endDate
+#     FROM 
+#         tasks
+#     WHERE
+#         employeeID = ? AND taskStatus = ?
+# ''', (2,2,))
+
+# allEndDates = cursor.fetchall()
+
+# today = datetime.today().strftime("%d.%m.%Y")
+# todayDate = datetime.strptime(today, "%d.%m.%Y")
+
+# onTimeCount = 0
+# notOnTmimeCount = 0
+# for iter in allEndDates:
+#     end = iter[0]
+#     endDate = datetime.strptime(end, "%d.%m.%Y")
+#     daysDifference = (endDate - todayDate).days
+#     resultOfDelayAmount = max(daysDifference, 0)
+
+#     if resultOfDelayAmount == 0:
+#         onTimeCount += 1
+#     else:
+#         notOnTmimeCount += 1
+
+# print(onTimeCount)
+# print(notOnTmimeCount)
+
+
+# print(allEndDates)
+
+# dp = db_Helper()
+# #dp.addNewTask(1, 2, 'kara', 'selam bebek deneme', '01.01.2024', '05.01.2024')
+# #dp.deleteTask(2)
+# dp.updateTaskStatus(2, 1)
+# dp.updateTaskStatus(2, 2)
+# dp.updateTaskStatus(2, 4)
+# dp.updateTask(2, "ham", "kd aaakf j", "11.01.2024", "11.01.2024", 4)
+# dp.updateTaskDelayAmount(4)
+
+# dp.deleteUserID(1)
