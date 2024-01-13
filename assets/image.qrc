@@ -4,6 +4,8 @@
     <file>profile-icon-9.png</file>
   </qresource>
   <qresource prefix="icons">
+    <file>icons/garbage.png</file>
+    <file>icons/plus2.png</file>
     <file>icons/alt_btn.png</file>
     <file>icons/Ellipse 5.png</file>
     <file>icons/rectangle.png</file>

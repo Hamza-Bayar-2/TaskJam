@@ -28,11 +28,15 @@
   <property name="styleSheet">
    <string notr="true">*{
 border : none ;
-border-radius : 10px;
-background-color: rgb(35, 39, 79);
+border-radius : 5px;
 color: rgb(255, 255, 255);
-font: 11pt &quot;MS Shell Dlg 2&quot;;
-}</string>
+font: 11pt &quot;Montserrat&quot;;
+}
+QWidget#ProjectWindow{
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(7, 26, 35), stop:1 rgb(9, 38, 53));
+border : 2px outset rgb(16, 16, 16);
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -70,6 +74,9 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;
       </property>
       <item>
        <widget class="QLabel" name="project_name">
+        <property name="styleSheet">
+         <string notr="true">font: 1000 11pt &quot;Montserrat&quot;;</string>
+        </property>
         <property name="text">
          <string>proje adı</string>
         </property>
@@ -88,7 +95,7 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;
    <item>
     <widget class="QLabel" name="project_describe">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -104,6 +111,11 @@ word-wrap: break-word;</string>
    </item>
    <item>
     <widget class="QFrame" name="bottom_row_frame">
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+font:  9pt &quot;Montserrat&quot;;
+}</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -120,15 +132,20 @@ word-wrap: break-word;</string>
       <item>
        <widget class="QLabel" name="workers_amount_label_2">
         <property name="styleSheet">
-         <string notr="true">color: rgb(158, 40, 40);</string>
+         <string notr="true">color: rgb(255, 255, 255);
+font: 9pt &quot;Montserrat&quot;;</string>
         </property>
         <property name="text">
-         <string>Aktif çalışan sayısı = </string>
+         <string>Aktif çalışan sayısı :</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="amount_label_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 1000 9pt &quot;Montserrat&quot;;</string>
+        </property>
         <property name="text">
          <string>.</string>
         </property>
@@ -159,11 +176,11 @@ word-wrap: break-word;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(10, 10, 10);</string>
+         <string notr="true">background-color: rgb(7, 26, 35);
+color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>Görüntüle</string>
+         <string>Detaylar</string>
         </property>
        </widget>
       </item>

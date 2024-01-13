@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\ui_login.ui'
+# Form implementation generated from reading ui file '.\UI\ui_login.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -17,9 +17,11 @@ class Ui_Dialog(object):
         Dialog.resize(1000, 335)
         Dialog.setMinimumSize(QtCore.QSize(1000, 335))
         Dialog.setMaximumSize(QtCore.QSize(1000, 335))
-        Dialog.setStyleSheet("    background-color: rgb(25, 27, 42);\n"
+        Dialog.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
 "color: rgb(255, 255, 255);\n"
 "border : none ;\n"
+"}\n"
 "")
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -47,21 +49,47 @@ class Ui_Dialog(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.logo_label = QtWidgets.QLabel(self.main_frame)
+        self.frame = QtWidgets.QFrame(self.main_frame)
+        self.frame.setMinimumSize(QtCore.QSize(140, 0))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout_4.setSpacing(20)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.label_2 = QtWidgets.QLabel(self.frame)
+        self.label_2.setMinimumSize(QtCore.QSize(250, 50))
+        self.label_2.setMaximumSize(QtCore.QSize(250, 50))
+        self.label_2.setStyleSheet("*{\n"
+"background-color: rgb(9, 38, 53);\n"
+"pading : 6px;\n"
+"border-radius:5px;\n"
+"font: 1000 14pt \"Montserrat\";\n"
+"}")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_4.addWidget(self.label_2, 0, QtCore.Qt.AlignHCenter)
+        self.logo_label = QtWidgets.QLabel(self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.logo_label.sizePolicy().hasHeightForWidth())
         self.logo_label.setSizePolicy(sizePolicy)
+        self.logo_label.setMaximumSize(QtCore.QSize(210, 70))
         self.logo_label.setText("")
         self.logo_label.setPixmap(QtGui.QPixmap(":/image/logo.png"))
-        self.logo_label.setScaledContents(False)
+        self.logo_label.setScaledContents(True)
         self.logo_label.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.logo_label.setWordWrap(False)
         self.logo_label.setIndent(-1)
         self.logo_label.setOpenExternalLinks(False)
         self.logo_label.setObjectName("logo_label")
-        self.horizontalLayout.addWidget(self.logo_label)
+        self.verticalLayout_4.addWidget(self.logo_label)
+        self.label = QtWidgets.QLabel(self.frame)
+        self.label.setStyleSheet("font: 11pt \"Montserrat\";")
+        self.label.setObjectName("label")
+        self.verticalLayout_4.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
+        self.horizontalLayout.addWidget(self.frame, 0, QtCore.Qt.AlignHCenter)
         self.main_form_frame = QtWidgets.QFrame(self.main_frame)
         self.main_form_frame.setStyleSheet("QLineEdit{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -74,7 +102,15 @@ class Ui_Dialog(object):
 "font:45 14pt \"MS Shell Dlg 2\";\n"
 "text-align: center;\n"
 "\n"
-"}")
+"}\n"
+"QLineEdit{\n"
+"background-color: rgb(20, 69, 93);\n"
+"border-radius : 5px;\n"
+"padding:5px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"")
         self.main_form_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.main_form_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.main_form_frame.setObjectName("main_form_frame")
@@ -115,8 +151,9 @@ class Ui_Dialog(object):
         self.horizontalLayout_3.addWidget(self.password_lineedit)
         self.verticalLayout_2.addWidget(self.password_frame, 0, QtCore.Qt.AlignTop)
         self.button_row_frame = QtWidgets.QFrame(self.main_form_frame)
-        self.button_row_frame.setStyleSheet("border-radius : 10px; \n"
-"font: 75 12pt \"MS Shell Dlg 2\";")
+        self.button_row_frame.setStyleSheet("border-radius : 5px; \n"
+"font: 75 12pt \"MS Shell Dlg 2\";\n"
+"")
         self.button_row_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.button_row_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.button_row_frame.setObjectName("button_row_frame")
@@ -124,15 +161,29 @@ class Ui_Dialog(object):
         self.horizontalLayout_4.setSpacing(86)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.register_btn = QtWidgets.QPushButton(self.button_row_frame)
-        self.register_btn.setMinimumSize(QtCore.QSize(200, 35))
+        self.register_btn.setMinimumSize(QtCore.QSize(200, 40))
         self.register_btn.setMaximumSize(QtCore.QSize(200, 16777215))
-        self.register_btn.setStyleSheet("background-color: rgb(174, 163, 60);")
+        self.register_btn.setStyleSheet("QPushButton{\n"
+"background-color: rgb(20, 66, 114);\n"
+"border-radius : 5px ;\n"
+"font: 600 12pt \"Montserrat\";\n"
+"}\n"
+":hover{\n"
+"background-color: rgb(9, 33, 44);\n"
+"}")
         self.register_btn.setObjectName("register_btn")
         self.horizontalLayout_4.addWidget(self.register_btn)
         self.signin_btn = QtWidgets.QPushButton(self.button_row_frame)
-        self.signin_btn.setMinimumSize(QtCore.QSize(200, 35))
+        self.signin_btn.setMinimumSize(QtCore.QSize(200, 40))
         self.signin_btn.setMaximumSize(QtCore.QSize(15, 16777215))
-        self.signin_btn.setStyleSheet("background-color: rgb(33, 164, 62);")
+        self.signin_btn.setStyleSheet("QPushButton{\n"
+"background-color: rgb(33, 164, 62);\n"
+"border-radius : 5px ;\n"
+"font: 600 12pt \"Montserrat\";\n"
+"}\n"
+":hover{\n"
+"background-color: rgb(25, 126, 47);\n"
+"}")
         self.signin_btn.setObjectName("signin_btn")
         self.horizontalLayout_4.addWidget(self.signin_btn)
         self.verticalLayout_2.addWidget(self.button_row_frame)
@@ -148,14 +199,6 @@ class Ui_Dialog(object):
         self.status_label.setText("")
         self.status_label.setObjectName("status_label")
         self.verticalLayout_3.addWidget(self.status_label, 0, QtCore.Qt.AlignRight)
-        self.designer_label = QtWidgets.QLabel(self.frame_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.designer_label.sizePolicy().hasHeightForWidth())
-        self.designer_label.setSizePolicy(sizePolicy)
-        self.designer_label.setObjectName("designer_label")
-        self.verticalLayout_3.addWidget(self.designer_label)
         self.verticalLayout.addWidget(self.frame_2)
 
         self.retranslateUi(Dialog)
@@ -164,9 +207,10 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.label_2.setText(_translate("Dialog", "Hoş Geldiniz"))
+        self.label.setText(_translate("Dialog", "Developed by FezaTech v1.0.0"))
         self.eposta_label.setText(_translate("Dialog", "E-POSTA"))
         self.password_label.setText(_translate("Dialog", "ŞİFRE"))
         self.register_btn.setText(_translate("Dialog", "Kayıt Ol"))
         self.signin_btn.setText(_translate("Dialog", "Giriş Yap"))
-        self.designer_label.setText(_translate("Dialog", "Design by Fezaitech v1.0.0"))
 import image_rc

@@ -10,6 +10,8 @@ from register import RegisterWindow
 from main import MainWİndow
 
 class LoginWindow(QDialog) :
+    
+
     def __init__(self) -> None:
         super(LoginWindow, self).__init__()
         self.ui = Ui_Dialog()
@@ -32,7 +34,7 @@ class LoginWindow(QDialog) :
     def openMain(self):
         email = self.ui.eposta_lineedit.text()
         password = self.ui.password_lineedit.text()
-        User = self.db.userInformation(email)
+        User = self.db.showUserInformation(email)
     
         if(email == "" or password == ""):
             self.ui.status_label.setText("Lütfen bilgileri eksiksiz giriniz.")
@@ -49,9 +51,11 @@ class LoginWindow(QDialog) :
             self.ui.status_label.setText("Email ya da Password Yanlış")  
 
     def openRegister(self):
-        self.close()
         self.register = RegisterWindow()
         self.register.showNormal()
+        self.close()
+        self.register.showBack.connect(lambda veri : self.show() if veri == "55 TAMM" else print("zort"))
+
 
     def window_fix(self) :
         self.setWindowTitle("TaskJam Login")
