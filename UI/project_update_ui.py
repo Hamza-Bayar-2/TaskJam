@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\UI\ui_add_project.ui'
+# Form implementation generated from reading ui file '.\UI\ui_project_update.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,16 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_project_add(object):
-    def setupUi(self, project_add):
-        project_add.setObjectName("project_add")
-        project_add.resize(1000, 388)
-        project_add.setMinimumSize(QtCore.QSize(1000, 350))
-        project_add.setMaximumSize(QtCore.QSize(1000, 388))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/image/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        project_add.setWindowIcon(icon)
-        project_add.setStyleSheet("*{\n"
+class Ui_TaskJamProjectInfo(object):
+    def setupUi(self, TaskJamProjectInfo):
+        TaskJamProjectInfo.setObjectName("TaskJamProjectInfo")
+        TaskJamProjectInfo.resize(1000, 388)
+        TaskJamProjectInfo.setMinimumSize(QtCore.QSize(1000, 350))
+        TaskJamProjectInfo.setMaximumSize(QtCore.QSize(1000, 388))
+        TaskJamProjectInfo.setStyleSheet("*{\n"
 "font: 1000 12pt \"Montserrat\";\n"
 "border : none ;\n"
 "    color: rgb(255, 255, 255);\n"
@@ -42,11 +39,11 @@ class Ui_project_add(object):
 "box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
 "border : 2px outset rgb(16, 16, 16);\n"
 "}")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(project_add)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(TaskJamProjectInfo)
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.main_frame = QtWidgets.QFrame(project_add)
+        self.main_frame = QtWidgets.QFrame(TaskJamProjectInfo)
         self.main_frame.setMinimumSize(QtCore.QSize(0, 0))
         self.main_frame.setStyleSheet("QFrame#main_frame{\n"
 "background-color: rgb(7, 26, 35);\n"
@@ -58,7 +55,7 @@ class Ui_project_add(object):
         self.main_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.main_frame.setObjectName("main_frame")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.main_frame)
-        self.verticalLayout_4.setContentsMargins(12, 12, 12, 1)
+        self.verticalLayout_4.setContentsMargins(12, 12, 12, 0)
         self.verticalLayout_4.setSpacing(15)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.addProject_header_freame = QtWidgets.QFrame(self.main_frame)
@@ -79,7 +76,8 @@ class Ui_project_add(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.title_label.sizePolicy().hasHeightForWidth())
         self.title_label.setSizePolicy(sizePolicy)
-        self.title_label.setMinimumSize(QtCore.QSize(150, 0))
+        self.title_label.setMinimumSize(QtCore.QSize(200, 0))
+        self.title_label.setAutoFillBackground(False)
         self.title_label.setStyleSheet("color: rgb(229, 189, 48);\n"
 "background-color: rgb(9, 38, 53);\n"
 "border-radius : 5px;\n"
@@ -108,9 +106,9 @@ class Ui_project_add(object):
         self.exit_btn.setSizePolicy(sizePolicy)
         self.exit_btn.setStyleSheet("border:none;")
         self.exit_btn.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/Ellipse 5.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.exit_btn.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/Ellipse 5.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.exit_btn.setIcon(icon)
         self.exit_btn.setIconSize(QtCore.QSize(20, 20))
         self.exit_btn.setObjectName("exit_btn")
         self.horizontalLayout_2.addWidget(self.exit_btn)
@@ -241,8 +239,30 @@ class Ui_project_add(object):
         self.addProject_footer_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.addProject_footer_frame.setObjectName("addProject_footer_frame")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.addProject_footer_frame)
+        self.horizontalLayout_7.setContentsMargins(-1, -1, 128, -1)
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.project_dlete_btn = QtWidgets.QPushButton(self.addProject_footer_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.project_dlete_btn.sizePolicy().hasHeightForWidth())
+        self.project_dlete_btn.setSizePolicy(sizePolicy)
+        self.project_dlete_btn.setStyleSheet("*{\n"
+"background-color: rgb(20, 66, 114);\n"
+"border-radius : 5px ;\n"
+"font: 600 12pt \"Montserrat\";\n"
+"padding : 4px;\n"
+"}\n"
+":hover{\n"
+"background-color: rgb(9, 33, 44);\n"
+"}")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/garbage.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.project_dlete_btn.setIcon(icon1)
+        self.project_dlete_btn.setIconSize(QtCore.QSize(20, 20))
+        self.project_dlete_btn.setObjectName("project_dlete_btn")
+        self.horizontalLayout_7.addWidget(self.project_dlete_btn)
         self.project_add_btn = QtWidgets.QPushButton(self.addProject_footer_frame)
         self.project_add_btn.setMinimumSize(QtCore.QSize(211, 0))
         self.project_add_btn.setMaximumSize(QtCore.QSize(211, 16777215))
@@ -271,18 +291,19 @@ class Ui_project_add(object):
         self.verticalLayout_4.addWidget(self.status_label, 0, QtCore.Qt.AlignRight)
         self.horizontalLayout_3.addWidget(self.main_frame)
 
-        self.retranslateUi(project_add)
-        QtCore.QMetaObject.connectSlotsByName(project_add)
+        self.retranslateUi(TaskJamProjectInfo)
+        QtCore.QMetaObject.connectSlotsByName(TaskJamProjectInfo)
 
-    def retranslateUi(self, project_add):
+    def retranslateUi(self, TaskJamProjectInfo):
         _translate = QtCore.QCoreApplication.translate
-        project_add.setWindowTitle(_translate("project_add", "Dialog"))
-        self.title_label.setText(_translate("project_add", "PROJE EKLE"))
-        self.project_name_label.setText(_translate("project_add", "Proje Adı :"))
-        self.project_describe_title.setText(_translate("project_add", "Proje Açıklaması :"))
-        self.start_date_label.setText(_translate("project_add", "Başlangıç Tarihi :"))
-        self.format_1.setText(_translate("project_add", "format : (gg.aa.yyyy)           "))
-        self.end_date_label.setText(_translate("project_add", "Bitiş Tarihi :"))
-        self.format_2.setText(_translate("project_add", "format : (gg.aa.yyyy)"))
-        self.project_add_btn.setText(_translate("project_add", "Ekle"))
+        TaskJamProjectInfo.setWindowTitle(_translate("TaskJamProjectInfo", "Dialog"))
+        self.title_label.setText(_translate("TaskJamProjectInfo", "PROJE GÖRÜNTÜLE"))
+        self.project_name_label.setText(_translate("TaskJamProjectInfo", "Proje Adı :"))
+        self.project_describe_title.setText(_translate("TaskJamProjectInfo", "Proje Açıklaması :"))
+        self.start_date_label.setText(_translate("TaskJamProjectInfo", "Başlangıç Tarihi :"))
+        self.format_1.setText(_translate("TaskJamProjectInfo", "format : (gg.aa.yyyy)           "))
+        self.end_date_label.setText(_translate("TaskJamProjectInfo", "Bitiş Tarihi :"))
+        self.format_2.setText(_translate("TaskJamProjectInfo", "format : (gg.aa.yyyy)"))
+        self.project_dlete_btn.setText(_translate("TaskJamProjectInfo", "Projeyi Sil"))
+        self.project_add_btn.setText(_translate("TaskJamProjectInfo", "GÜNCELLE"))
 import image_rc

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>project_add</class>
- <widget class="QDialog" name="project_add">
+ <class>TaskJamProjectInfo</class>
+ <widget class="QDialog" name="TaskJamProjectInfo">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,10 +24,6 @@
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../assets/image.qrc">
-    <normaloff>:/image/logo.png</normaloff>:/image/logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">*{
@@ -105,7 +101,7 @@ border : 2px outset rgb(120, 120, 120);
        <number>12</number>
       </property>
       <property name="bottomMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <item alignment="Qt::AlignTop">
        <widget class="QFrame" name="addProject_header_freame">
@@ -144,9 +140,12 @@ border : 2px outset rgb(120, 120, 120);
            </property>
            <property name="minimumSize">
             <size>
-             <width>150</width>
+             <width>200</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(229, 189, 48);
@@ -155,7 +154,7 @@ border-radius : 5px;
 padding : 6px;</string>
            </property>
            <property name="text">
-            <string>PROJE EKLE</string>
+            <string>PROJE GÖRÜNTÜLE</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -550,11 +549,17 @@ padding : 6px;</string>
             </item>
             <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="format_2">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 10pt &quot;Montserrat&quot;;</string>
               </property>
               <property name="text">
                <string>format : (gg.aa.yyyy)</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -576,8 +581,45 @@ padding : 6px;</string>
          <property name="spacing">
           <number>0</number>
          </property>
+         <property name="rightMargin">
+          <number>128</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="project_dlete_btn">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">*{
+background-color: rgb(20, 66, 114);
+border-radius : 5px ;
+font: 600 12pt &quot;Montserrat&quot;;
+padding : 4px;
+}
+:hover{
+background-color: rgb(9, 33, 44);
+}</string>
+           </property>
+           <property name="text">
+            <string>Projeyi Sil</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../assets/image.qrc">
+             <normaloff>:/icons/icons/garbage.png</normaloff>:/icons/icons/garbage.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </widget>
+         </item>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="project_add_btn">
+          <widget class="QPushButton" name="project_update_btnn">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -603,7 +645,7 @@ QPushButton:hover{
  }</string>
            </property>
            <property name="text">
-            <string>Ekle</string>
+            <string>GÜNCELLE</string>
            </property>
           </widget>
          </item>

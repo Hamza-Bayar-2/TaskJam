@@ -10,6 +10,8 @@ from modals.userInfo import UserInfo
 from main import MainWİndow
 
 class RegisterWindow(QDialog):
+    showBack = pyqtSignal(str)
+
     def __init__(self) -> None:
         super(RegisterWindow, self).__init__()
         self.ui = Ui_Dialog()
@@ -23,21 +25,19 @@ class RegisterWindow(QDialog):
     def buttonHandle(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
         self.ui.create_btn.clicked.connect(lambda : self.createUser())
+        self.ui.login_open_btn.clicked.connect(lambda : self.openLogin("55 TAMM"))
 
     def createUser(self):
         email = self.ui.eposta_lineedit.text()
         password = self.ui.password_lineedit.text()
-        repassword = self.ui.repassword_lineedit.text()
         name = self.ui.name_lineedit.text()
         surname = self.ui.surname_lineedit.text()
 
         if((email.find("@") == -1 ) or (email.find(".") == -1) ) :
             self.ui.status_label.setText("Email'i doğru biçimde giriniz.")
-        elif(password != repassword):
-            self.ui.status_label.setText("Şifreler Uyuşmuyor")
         elif(name == "" or surname == "" or password == "") :
             self.ui.status_label.setText("Lütfen tüm alanları doldurunuz.")
-        elif(self.db.userInformation(email)):
+        elif(self.db.showUserInformation(email)):
             self.ui.status_label.setText("aynı maile sahip zaten bir kullanıcı var.")
         else :
             newUser = UserInfo(
@@ -51,6 +51,10 @@ class RegisterWindow(QDialog):
             self.close()
             self.main = MainWİndow(newUser)
             self.main.showMaximized()
+
+    def openLogin(self, message):
+        self.showBack.emit(message)
+        self.close()
 
     def window_fix(self) :
             self.setAttribute(Qt.WA_TranslucentBackground)

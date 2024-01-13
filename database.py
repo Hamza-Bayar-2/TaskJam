@@ -231,9 +231,7 @@ class db_Helper:
         print(self.cursor.fetchall())
 
     # projenin detaylarını detaylar sayfasında görüntülemek için kullanılır
-    def showProjectOnDetailPage(self, projectID) :
-    # projenin bilgilerini görüntülemek için bir fonksiyondur
-    def projectDetailPage(self, projectName) :
+    def showProjectOnDetailPage(self, projectName) :
         self.cursor.execute('''
             SELECT
                 projectName,
@@ -245,7 +243,7 @@ class db_Helper:
                 projects
             WHERE
                 projectName = ?
-        ''', (projectID,))
+        ''', (projectName,))
         self.conn.commit()
         project = self.cursor.fetchall()
         return ProjectInfo(projectID= project[0][0], projectName = project[0][1], projectDescription = project[0][2], startingDate = project[0][3], endDate = project[0][4], delayAmount= project[0][4]) if len(project) !=0 else None
@@ -308,7 +306,7 @@ class db_Helper:
             WHERE projectID = ?;
         ''', (projectID,))
 
-    def updateProject(self, projectName, projectDescription, startingDate, endDate, projectID) :
+    def updateProject(self, ProjectInfo) :
         self.cursor.execute('''
             UPDATE projects
             SET 
@@ -318,8 +316,9 @@ class db_Helper:
                 endDate = ?
             WHERE 
                 projectID = ?
-        ''', (projectName, projectDescription, startingDate, endDate, projectID,))
-
+        ''', (ProjectInfo.projectName, ProjectInfo.projectDescription, ProjectInfo.startingDate, ProjectInfo.endDate, ProjectInfo.projectID,))
+        self.conn.commit()
+        
     def deleteProject(self, projectID) :
         self.cursor.execute('''
             DELETE FROM 
@@ -327,6 +326,7 @@ class db_Helper:
             WHERE 
                 projectID = ?
         ''', (projectID,))
+        self.conn.commit()
 
 
 

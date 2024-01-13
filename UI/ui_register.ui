@@ -7,29 +7,31 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>370</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>370</height>
+    <height>390</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1000</width>
-    <height>370</height>
+    <height>390</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">	background-color: rgb(25, 27, 42);
+   <string notr="true">*{
+background-color: rgb(7, 26, 35);
 color: rgb(255, 255, 255);
 border : none ;
-</string>
+font: 11pt &quot;Montserrat&quot;;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_10">
    <item>
@@ -51,10 +53,10 @@ border : none ;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <item alignment="Qt::AlignRight">
        <widget class="QPushButton" name="exit_btn">
@@ -112,6 +114,9 @@ border : none ;
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
             <item>
              <widget class="QLabel" name="logo_label">
               <property name="sizePolicy">
@@ -120,6 +125,12 @@ border : none ;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>270</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -127,7 +138,7 @@ border : none ;
                <pixmap resource="../assets/image.qrc">:/image/logo.png</pixmap>
               </property>
               <property name="scaledContents">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="alignment">
                <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -146,8 +157,16 @@ border : none ;
               </property>
              </widget>
             </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Bir hesabınız var ise
+giriş yapın</string>
+              </property>
+             </widget>
+            </item>
             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-             <widget class="QPushButton" name="create_btn">
+             <widget class="QPushButton" name="login_open_btn">
               <property name="minimumSize">
                <size>
                 <width>200</width>
@@ -161,12 +180,17 @@ border : none ;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(33, 164, 62);
-border-radius : 10px ;
-font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+               <string notr="true">QPushButton{
+background-color: rgb(20, 66, 114);
+border-radius : 5px ;
+font: 600 12pt &quot;Montserrat&quot;;
+}
+:hover{
+background-color: rgb(9, 33, 44);
+}</string>
               </property>
               <property name="text">
-               <string>Oluştur</string>
+               <string>Giriş Yap</string>
               </property>
              </widget>
             </item>
@@ -177,16 +201,15 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
           <widget class="QFrame" name="main_form_frame">
            <property name="styleSheet">
             <string notr="true">QLineEdit{
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
-width: 20px;
-height: 30px;
-font: 75 16pt &quot;MS Shell Dlg 2&quot;;
+border-radius : 5px;
+background-color: rgb(20, 69, 93);
+color:rgb(255, 255, 255);
+padding:5px;
+	font: 14pt &quot;Montserrat&quot;;
 }
 QLabel{
 font:45 14pt &quot;MS Shell Dlg 2&quot;;
 text-align: center;
-
 }</string>
            </property>
            <property name="frameShape">
@@ -199,19 +222,7 @@ text-align: center;
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>49</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item alignment="Qt::AlignVCenter">
+            <item>
              <widget class="QFrame" name="name_frame">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -238,6 +249,9 @@ text-align: center;
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -246,7 +260,7 @@ text-align: center;
               </layout>
              </widget>
             </item>
-            <item alignment="Qt::AlignVCenter">
+            <item>
              <widget class="QFrame" name="surname_frame">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -284,7 +298,7 @@ text-align: center;
               </layout>
              </widget>
             </item>
-            <item alignment="Qt::AlignVCenter">
+            <item>
              <widget class="QFrame" name="eposta_frame">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -316,7 +330,7 @@ text-align: center;
               </layout>
              </widget>
             </item>
-            <item alignment="Qt::AlignVCenter">
+            <item>
              <widget class="QFrame" name="password_frame">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -351,41 +365,41 @@ text-align: center;
               </layout>
              </widget>
             </item>
-            <item alignment="Qt::AlignVCenter">
-             <widget class="QFrame" name="repassword_frame">
+            <item>
+             <widget class="QFrame" name="frame_3">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <property name="leftMargin">
-                <number>9</number>
-               </property>
-               <property name="topMargin">
-                <number>9</number>
-               </property>
-               <property name="bottomMargin">
-                <number>9</number>
-               </property>
-               <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                <widget class="QLabel" name="repassword_label">
-                 <property name="text">
-                  <string>ŞİFRE TEKRAR</string>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item alignment="Qt::AlignRight">
+                <widget class="QPushButton" name="create_btn">
+                 <property name="minimumSize">
+                  <size>
+                   <width>200</width>
+                   <height>35</height>
+                  </size>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="repassword_lineedit">
                  <property name="maximumSize">
                   <size>
-                   <width>350</width>
+                   <width>15</width>
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(33, 164, 62);
+border-radius : 5px ;
+font: 600 12pt &quot;Montserrat&quot;;
+}
+:hover{
+background-color: rgb(25, 126, 47);
+}</string>
+                 </property>
                  <property name="text">
-                  <string/>
+                  <string>Hesap Oluştur</string>
                  </property>
                 </widget>
                </item>
@@ -423,7 +437,7 @@ text-align: center;
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Design by Fezaitech v1.0.0</string>
+         <string>                   Developed by FezaTech v1.0.0</string>
         </property>
        </widget>
       </item>
@@ -435,7 +449,7 @@ text-align: center;
  <resources>
   <include location="../assets/image.qrc"/>
   <include location="../assets/image.qrc"/>
-  <include location="assets/image.qrc"/>
+  <include location="../assets/image.qrc"/>
  </resources>
  <connections/>
 </ui>

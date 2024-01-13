@@ -19,11 +19,15 @@ class Ui_ProjectWindow(object):
         ProjectWindow.setMaximumSize(QtCore.QSize(390, 140))
         ProjectWindow.setStyleSheet("*{\n"
 "border : none ;\n"
-"border-radius : 10px;\n"
-"background-color: rgb(35, 39, 79);\n"
+"border-radius : 5px;\n"
 "color: rgb(255, 255, 255);\n"
-"font: 11pt \"MS Shell Dlg 2\";\n"
-"}")
+"font: 11pt \"Montserrat\";\n"
+"}\n"
+"QWidget#ProjectWindow{\n"
+"background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(7, 26, 35), stop:1 rgb(9, 38, 53));\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"")
         self.verticalLayout = QtWidgets.QVBoxLayout(ProjectWindow)
         self.verticalLayout.setContentsMargins(10, 2, 10, 0)
         self.verticalLayout.setSpacing(0)
@@ -41,6 +45,7 @@ class Ui_ProjectWindow(object):
         self.horizontalLayout_2.setContentsMargins(0, -1, -1, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.project_name = QtWidgets.QLabel(self.top_row)
+        self.project_name.setStyleSheet("font: 1000 11pt \"Montserrat\";")
         self.project_name.setObjectName("project_name")
         self.horizontalLayout_2.addWidget(self.project_name)
         self.date_label = QtWidgets.QLabel(self.top_row)
@@ -49,7 +54,7 @@ class Ui_ProjectWindow(object):
         self.horizontalLayout_2.addWidget(self.date_label, 0, QtCore.Qt.AlignRight)
         self.verticalLayout.addWidget(self.top_row)
         self.project_describe = QtWidgets.QLabel(ProjectWindow)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.project_describe.sizePolicy().hasHeightForWidth())
@@ -59,6 +64,9 @@ class Ui_ProjectWindow(object):
         self.project_describe.setObjectName("project_describe")
         self.verticalLayout.addWidget(self.project_describe)
         self.bottom_row_frame = QtWidgets.QFrame(ProjectWindow)
+        self.bottom_row_frame.setStyleSheet("QPushButton{\n"
+"font:  9pt \"Montserrat\";\n"
+"}")
         self.bottom_row_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.bottom_row_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.bottom_row_frame.setObjectName("bottom_row_frame")
@@ -66,10 +74,13 @@ class Ui_ProjectWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, -1, 0, -1)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.workers_amount_label_2 = QtWidgets.QLabel(self.bottom_row_frame)
-        self.workers_amount_label_2.setStyleSheet("color: rgb(158, 40, 40);")
+        self.workers_amount_label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 9pt \"Montserrat\";")
         self.workers_amount_label_2.setObjectName("workers_amount_label_2")
         self.horizontalLayout_4.addWidget(self.workers_amount_label_2)
         self.amount_label_2 = QtWidgets.QLabel(self.bottom_row_frame)
+        self.amount_label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 1000 9pt \"Montserrat\";")
         self.amount_label_2.setObjectName("amount_label_2")
         self.horizontalLayout_4.addWidget(self.amount_label_2)
         self.select_btn_2 = QtWidgets.QPushButton(self.bottom_row_frame)
@@ -79,8 +90,8 @@ class Ui_ProjectWindow(object):
         self.horizontalLayout_4.addWidget(self.select_btn_2)
         self.show_btn_2 = QtWidgets.QPushButton(self.bottom_row_frame)
         self.show_btn_2.setMinimumSize(QtCore.QSize(0, 20))
-        self.show_btn_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(10, 10, 10);")
+        self.show_btn_2.setStyleSheet("background-color: rgb(7, 26, 35);\n"
+"color: rgb(255, 255, 255);")
         self.show_btn_2.setObjectName("show_btn_2")
         self.horizontalLayout_4.addWidget(self.show_btn_2)
         self.verticalLayout.addWidget(self.bottom_row_frame)
@@ -93,7 +104,7 @@ class Ui_ProjectWindow(object):
         ProjectWindow.setWindowTitle(_translate("ProjectWindow", "Form"))
         self.project_name.setText(_translate("ProjectWindow", "proje adı"))
         self.project_describe.setText(_translate("ProjectWindow", "....."))
-        self.workers_amount_label_2.setText(_translate("ProjectWindow", "Aktif çalışan sayısı = "))
+        self.workers_amount_label_2.setText(_translate("ProjectWindow", "Aktif çalışan sayısı :"))
         self.amount_label_2.setText(_translate("ProjectWindow", "."))
         self.select_btn_2.setText(_translate("ProjectWindow", "Seç"))
-        self.show_btn_2.setText(_translate("ProjectWindow", "Görüntüle"))
+        self.show_btn_2.setText(_translate("ProjectWindow", "Detaylar"))

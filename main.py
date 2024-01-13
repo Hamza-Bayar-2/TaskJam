@@ -11,6 +11,9 @@ from database import db_Helper
 from modals.userInfo import UserInfo
 from add_project import AddProjectWindow
 from UI.project_widget_ui import Ui_ProjectWindow
+from add_task import AddTask
+from project_update import  ProjectUpdate
+
 
 class MainWİndow(QMainWindow) :
     def __init__(self, userInfo) :
@@ -18,6 +21,7 @@ class MainWİndow(QMainWindow) :
         self.user = userInfo
         self.ui = Ui_MainWindow()
         self.db = db_Helper()
+        self.myProject = None
         
         self.window_fix()
         self.initUI()
@@ -31,6 +35,7 @@ class MainWİndow(QMainWindow) :
         self.setState()
 
     def setState(self):
+        print("ahaa")
         self.projectRowUpdate()
         self.verileri_guncelle()
 
@@ -43,7 +48,12 @@ class MainWİndow(QMainWindow) :
         self.ui.home_page_btn.clicked.connect(lambda : self.changePage(0))
         self.ui.signout_btn.clicked.connect(lambda : self.close())  # login ekranına yönlendirilebilir.
         self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd())
+        self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
     
+    def taskAdd(self):
+        self.tasskAddWindow = AddTask()
+        self.tasskAddWindow.show()
+        
     def projectAdd(self):
         self.projectAddWindow = AddProjectWindow(self.user)
         self.projectAddWindow.show()
@@ -69,7 +79,7 @@ class MainWİndow(QMainWindow) :
     def layoutSetting(self):
         self.ui.working_scroll_area_content_layout.setAlignment(Qt.AlignTop |Qt.AlignHCenter)
         self.ui.will_done_scroll_area_content_layout.setAlignment(Qt.AlignTop |Qt.AlignHCenter)
-        self.ui.projects_scroll_content_layout.setAlignment(Qt.AlignLeft |Qt.AlignVCenter)
+        self.ui.projects_scroll_content_widget_layout.setAlignment(Qt.AlignLeft |Qt.AlignVCenter)
     
     def clear_layout(self, layout):
         # Layout içindeki tüm widgetları temizle
@@ -79,8 +89,9 @@ class MainWİndow(QMainWindow) :
                 child.widget().deleteLater()
 
     def projectRowUpdate(self):
-        self.clear_layout(self.ui.projects_scroll_content_layout)
+        self.clear_layout(self.ui.projects_scroll_content_widget_layout)
         projects = self.db.showAllProjects(self.user.userID)
+        # self.ui.project_count_label.setText(str(len(projects)) + "\nAktif") # aktiflik kontrolunu yapmamız lazım
         for item in projects :
             widget = QWidget()
             projectWidget  =  Ui_ProjectWindow()
@@ -89,16 +100,39 @@ class MainWİndow(QMainWindow) :
             projectWidget.date_label.setText(f"{item.startingDate} - {item.endDate}")
             projectWidget.project_describe.setText(item.projectDescription)
             projectWidget.amount_label_2.setText('ihi')
-            self.ui.projects_scroll_content_layout.addWidget(widget)
+            self.ui.projects_scroll_content_widget_layout.addWidget(widget)
+            projectWidget.select_btn_2.clicked.connect(lambda _, project = item: self.setMyProject(project))
+            projectWidget.show_btn_2.clicked.connect(lambda _, selectedProject = item : self.editProject(selectedProject))
+            if(self.myProject == None or self.myProject.projectID == item.projectID):
+                print("girdik")
+                if(self.myProject == None):
+                    self.myProject = item
+                widget.setStyleSheet(
+                    """*{
+                        border : none ;
+                        border-radius : 5px;
+                        color: rgb(255, 255, 255);
+                        font: 11pt "Montserrat";
+                    }
+                    QWidget#ProjectWindow{
+                        background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(20, 69, 93), stop:1 rgb(9, 38, 53));
+                        border : 2px outset rgb(16, 16, 16);
+                    }
+                """)  
+                projectWidget.select_btn_2.deleteLater()
 
+    def editProject(self, selectedProject):
+        updateProject = ProjectUpdate(selectedProject)
+        updateProject.show()
+        updateProject.mainServer.connect(lambda veri : self.setState() if veri == "55 TAMM" else print("zort"))
+        print(self.db.showAllProjects(self.user.userID))
+    
+    def setMyProject(self, item):
+        self.myProject = item
+        self.setState()
 
     def verileri_guncelle(self):
-        users = [
-            TaskInfo(taskId=1,taskTitle="selam",adam_gun_deger= "1" , finishDate="11.01.2024", startDate="10.01.2024", isCompletedTime= True, lastTime = 1, projectId = 1 , status=True, workerId=1),
-            TaskInfo(taskId=2,taskTitle="selam",adam_gun_deger= "1" , finishDate="11.01.2024", startDate="10.01.2024", isCompletedTime= True, lastTime = 1, projectId = 1 , status=True, workerId=1),
-            TaskInfo(taskId=3,taskTitle="selam",adam_gun_deger= "1" , finishDate="11.01.2024", startDate="10.01.2024", isCompletedTime= True, lastTime = 1, projectId = 1 , status=True, workerId=1),
-            TaskInfo(taskId=4,taskTitle="selam",adam_gun_deger= "1" , finishDate="11.01.2024", startDate="10.01.2024", isCompletedTime= True, lastTime = 1, projectId = 1 , status=True, workerId=1),
-        ]
+        users = []
         self.clear_layout(self.ui.will_done_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
 
         for i in users:
@@ -118,11 +152,12 @@ class MainWİndow(QMainWindow) :
             self.ui.will_done_scroll_area_content_layout.addWidget(a)
 
     def WindowSize(self):
-        if self.isMaximized:
-              self.showNormal()
+        if self.isMaximized():  # Eğer pencere küçültülmüşse
+            self.showNormal()    # Normal boyutta göster
         else:
-             self.showMaximized()
+            self.showMaximized() 
     def window_fix(self) :
+            # self.ui.app_bar_frame.mauseMoveEvent = self.mauseMoveEvent
             self.setAttribute(Qt.WA_TranslucentBackground)
             self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint)
             #self.ui.app_bar_widget.mauseMoveEvent = self.mauseMoveEvent
@@ -130,12 +165,15 @@ class MainWİndow(QMainWindow) :
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
+    def mausePressEvent(self, event):
+        self.oldPos = event.globalPos()
+
 
     def wheelEvent(self, event):
     # Tekerlek olayını yakala ve scroll işlemi yap
-        if self.ui.my_projects_frame.rect().contains(event.pos()):
+        if self.ui.main_top_right_frame.rect().contains(event.pos()) or self.ui.main_top_bar_frame.rect().contains(event.pos()):
             delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
-            self.ui.projects_scroll.horizontalScrollBar().setValue(self.ui.projects_scroll.horizontalScrollBar().value() - int(delta * 20))  # 20 birimlik bir kaydırma yap
+            self.ui.projects_scroll.horizontalScrollBar().setValue(self.ui.projects_scroll.horizontalScrollBar().value() - int(delta * 40))  # 20 birimlik bir kaydırma yap
     
 """   projectRowUpdate a aittir...
  projectWidget = QWidget()
