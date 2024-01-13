@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1142, 654)
+        MainWindow.resize(1429, 815)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setEnabled(True)
         self.centralwidget.setStyleSheet("*{\n"
@@ -97,6 +97,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.bottom_line_btn = QtWidgets.QPushButton(self.window_edit_frame)
         self.bottom_line_btn.setMinimumSize(QtCore.QSize(0, 22))
+        self.bottom_line_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self.bottom_line_btn.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/alt_btn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -105,6 +106,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addWidget(self.bottom_line_btn)
         self.restore_btn = QtWidgets.QPushButton(self.window_edit_frame)
         self.restore_btn.setMinimumSize(QtCore.QSize(0, 20))
+        self.restore_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self.restore_btn.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/icons/rectangle.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -114,6 +116,7 @@ class Ui_MainWindow(object):
         self.exit_btn = QtWidgets.QPushButton(self.window_edit_frame)
         self.exit_btn.setMinimumSize(QtCore.QSize(0, 18))
         self.exit_btn.setMouseTracking(False)
+        self.exit_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self.exit_btn.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/icons/icons/Ellipse 5.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -198,6 +201,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.addWidget(self.user_email_label, 0, QtCore.Qt.AlignHCenter)
         self.signout_btn = QtWidgets.QPushButton(self.avatar_info_frame)
         self.signout_btn.setMinimumSize(QtCore.QSize(70, 20))
+        self.signout_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self.signout_btn.setStyleSheet("border-radius: 8px;\n"
 "background-color: rgb(158, 40, 40);\n"
 "font: 75 10pt \"MS Shell Dlg 2\";\n"
@@ -270,6 +274,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.workers_page_btn.sizePolicy().hasHeightForWidth())
         self.workers_page_btn.setSizePolicy(sizePolicy)
+        self.workers_page_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self.workers_page_btn.setStyleSheet("background: rgba(76, 175, 80, 0);\n"
 "font: 2000 9pt \"Montserrat\";")
         self.workers_page_btn.setObjectName("workers_page_btn")
@@ -436,7 +441,7 @@ class Ui_MainWindow(object):
         self.projects_scroll.setWidgetResizable(True)
         self.projects_scroll.setObjectName("projects_scroll")
         self.projects_scroll_content_widget = QtWidgets.QWidget()
-        self.projects_scroll_content_widget.setGeometry(QtCore.QRect(0, 0, 577, 178))
+        self.projects_scroll_content_widget.setGeometry(QtCore.QRect(0, 0, 864, 178))
         self.projects_scroll_content_widget.setObjectName("projects_scroll_content_widget")
         self.projects_scroll_content_widget_layout = QtWidgets.QHBoxLayout(self.projects_scroll_content_widget)
         self.projects_scroll_content_widget_layout.setSpacing(15)
@@ -551,7 +556,7 @@ class Ui_MainWindow(object):
         self.will_done_scroll_area.setWidgetResizable(True)
         self.will_done_scroll_area.setObjectName("will_done_scroll_area")
         self.will_done_scroll_area_content = QtWidgets.QWidget()
-        self.will_done_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 258, 205))
+        self.will_done_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 354, 366))
         self.will_done_scroll_area_content.setStyleSheet("*{\n"
 "borderRadius : none;\n"
 "}")
@@ -591,7 +596,7 @@ class Ui_MainWindow(object):
         self.working_scroll_area.setWidgetResizable(True)
         self.working_scroll_area.setObjectName("working_scroll_area")
         self.working_scroll_area_content = QtWidgets.QWidget()
-        self.working_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 258, 254))
+        self.working_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 353, 415))
         self.working_scroll_area_content.setObjectName("working_scroll_area_content")
         self.working_scroll_area_content_layout = QtWidgets.QVBoxLayout(self.working_scroll_area_content)
         self.working_scroll_area_content_layout.setContentsMargins(0, 15, 0, 15)
@@ -611,11 +616,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.done_scroll_area = QtWidgets.QScrollArea(self.done_frame)
+        self.done_scroll_area.setFocusPolicy(QtCore.Qt.NoFocus)
         self.done_scroll_area.setStyleSheet("")
         self.done_scroll_area.setWidgetResizable(True)
         self.done_scroll_area.setObjectName("done_scroll_area")
         self.done_scroll_area_content = QtWidgets.QWidget()
-        self.done_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 258, 254))
+        self.done_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 354, 415))
         self.done_scroll_area_content.setObjectName("done_scroll_area_content")
         self.done_scroll_area_content_2 = QtWidgets.QVBoxLayout(self.done_scroll_area_content)
         self.done_scroll_area_content_2.setContentsMargins(0, 15, 0, 15)
@@ -629,7 +635,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.main_body_frame_)
         self.stackedWidget.addWidget(self.home_page)
         self.workers_page = QtWidgets.QWidget()
-        self.workers_page.setStyleSheet("background-color: rgb(25, 27, 42);")
+        self.workers_page.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
+"}\n"
+"\n"
+"")
         self.workers_page.setObjectName("workers_page")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.workers_page)
         self.horizontalLayout_5.setContentsMargins(15, 15, 15, 15)
@@ -640,11 +650,7 @@ class Ui_MainWindow(object):
 "background-color: rgb(10, 10, 10);\n"
 "border-radius : 10px;\n"
 "}\n"
-"\n"
-"#workers_page_left_menu_top_frame{\n"
-"background-color: rgb(10, 10, 10);\n"
-"border-radius : 10px;\n"
-"}")
+"")
         self.workers_page_left_menu_widget.setObjectName("workers_page_left_menu_widget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.workers_page_left_menu_widget)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -657,23 +663,252 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.workers_page_left_menu_top_frame.sizePolicy().hasHeightForWidth())
         self.workers_page_left_menu_top_frame.setSizePolicy(sizePolicy)
         self.workers_page_left_menu_top_frame.setMinimumSize(QtCore.QSize(0, 200))
-        self.workers_page_left_menu_top_frame.setStyleSheet("")
+        self.workers_page_left_menu_top_frame.setStyleSheet("font: 11pt \"Montserrat\";")
         self.workers_page_left_menu_top_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.workers_page_left_menu_top_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.workers_page_left_menu_top_frame.setObjectName("workers_page_left_menu_top_frame")
-        self.verticalLayout_3.addWidget(self.workers_page_left_menu_top_frame)
+        self.horizontalLayout_14 = QtWidgets.QHBoxLayout(self.workers_page_left_menu_top_frame)
+        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_14.setSpacing(19)
+        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+        self.employee_header = QtWidgets.QFrame(self.workers_page_left_menu_top_frame)
+        self.employee_header.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.employee_header.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.employee_header.setObjectName("employee_header")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.employee_header)
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_14.setSpacing(1)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.header_label = QtWidgets.QLabel(self.employee_header)
+        self.header_label.setMinimumSize(QtCore.QSize(250, 60))
+        self.header_label.setMaximumSize(QtCore.QSize(250, 60))
+        self.header_label.setStyleSheet("background-color: rgb(9, 38, 53);\n"
+"border-radius : 5px;\n"
+"color: rgb(249, 202, 36);\n"
+"font: 1000 12pt \"Montserrat\";\n"
+"border : 2px outset rgb(16, 16, 16);")
+        self.header_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.header_label.setObjectName("header_label")
+        self.verticalLayout_14.addWidget(self.header_label)
+        self.employee_amount_label = QtWidgets.QLabel(self.employee_header)
+        self.employee_amount_label.setStyleSheet("font: 75 13pt \"Montserrat\";\n"
+"color: rgb(229, 189, 48);")
+        self.employee_amount_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.employee_amount_label.setObjectName("employee_amount_label")
+        self.verticalLayout_14.addWidget(self.employee_amount_label, 0, QtCore.Qt.AlignVCenter)
+        self.employee_title_label = QtWidgets.QLabel(self.employee_header)
+        self.employee_title_label.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.employee_title_label.setObjectName("employee_title_label")
+        self.verticalLayout_14.addWidget(self.employee_title_label, 0, QtCore.Qt.AlignTop)
+        self.horizontalLayout_14.addWidget(self.employee_header, 0, QtCore.Qt.AlignHCenter)
+        self.employee_add_frame = QtWidgets.QFrame(self.workers_page_left_menu_top_frame)
+        self.employee_add_frame.setMinimumSize(QtCore.QSize(530, 0))
+        self.employee_add_frame.setMaximumSize(QtCore.QSize(530, 16777215))
+        self.employee_add_frame.setStyleSheet("QFrame#employee_add_frame{\n"
+"background-color: rgb(9, 38, 53);\n"
+"border-radius : 5px;\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"*{\n"
+"background-color: rgb(9, 38, 53);\n"
+"    font: 605 11pt \"Montserrat\";\n"
+"}\n"
+"QLineEdit{\n"
+"background-color: rgb(7, 26, 35);\n"
+"border-radius: 5px;\n"
+"padding : 4px;\n"
+"font: 11pt \"Montserrat\";\n"
+"    color: rgb(255, 255, 255);\n"
+"}")
+        self.employee_add_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.employee_add_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.employee_add_frame.setObjectName("employee_add_frame")
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.employee_add_frame)
+        self.verticalLayout_15.setContentsMargins(17, 13, 17, 9)
+        self.verticalLayout_15.setSpacing(0)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.label_5 = QtWidgets.QLabel(self.employee_add_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        self.label_5.setSizePolicy(sizePolicy)
+        self.label_5.setStyleSheet("color: rgb(229, 189, 48);")
+        self.label_5.setObjectName("label_5")
+        self.verticalLayout_15.addWidget(self.label_5)
+        self.frame_3 = QtWidgets.QFrame(self.employee_add_frame)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.frame_3)
+        self.verticalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_16.setSpacing(0)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.employee_name_frame = QtWidgets.QFrame(self.frame_3)
+        self.employee_name_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.employee_name_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.employee_name_frame.setObjectName("employee_name_frame")
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.employee_name_frame)
+        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_16.setSpacing(0)
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.emp_name_label = QtWidgets.QLabel(self.employee_name_frame)
+        self.emp_name_label.setObjectName("emp_name_label")
+        self.horizontalLayout_16.addWidget(self.emp_name_label, 0, QtCore.Qt.AlignHCenter)
+        self.emp_name_lineEdit = QtWidgets.QLineEdit(self.employee_name_frame)
+        self.emp_name_lineEdit.setMinimumSize(QtCore.QSize(240, 0))
+        self.emp_name_lineEdit.setMaximumSize(QtCore.QSize(240, 16777215))
+        self.emp_name_lineEdit.setText("")
+        self.emp_name_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.emp_name_lineEdit.setObjectName("emp_name_lineEdit")
+        self.horizontalLayout_16.addWidget(self.emp_name_lineEdit)
+        self.verticalLayout_16.addWidget(self.employee_name_frame)
+        self.employee_surname_frame = QtWidgets.QFrame(self.frame_3)
+        self.employee_surname_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.employee_surname_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.employee_surname_frame.setObjectName("employee_surname_frame")
+        self.horizontalLayout_19 = QtWidgets.QHBoxLayout(self.employee_surname_frame)
+        self.horizontalLayout_19.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_19.setSpacing(0)
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.emp_surname_label = QtWidgets.QLabel(self.employee_surname_frame)
+        self.emp_surname_label.setObjectName("emp_surname_label")
+        self.horizontalLayout_19.addWidget(self.emp_surname_label, 0, QtCore.Qt.AlignHCenter)
+        self.emp_surname_lineEdit = QtWidgets.QLineEdit(self.employee_surname_frame)
+        self.emp_surname_lineEdit.setMinimumSize(QtCore.QSize(240, 0))
+        self.emp_surname_lineEdit.setMaximumSize(QtCore.QSize(240, 16777215))
+        self.emp_surname_lineEdit.setText("")
+        self.emp_surname_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.emp_surname_lineEdit.setObjectName("emp_surname_lineEdit")
+        self.horizontalLayout_19.addWidget(self.emp_surname_lineEdit)
+        self.verticalLayout_16.addWidget(self.employee_surname_frame)
+        self.employee_mail_frame = QtWidgets.QFrame(self.frame_3)
+        self.employee_mail_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.employee_mail_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.employee_mail_frame.setObjectName("employee_mail_frame")
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.employee_mail_frame)
+        self.horizontalLayout_20.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_20.setSpacing(0)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.emp_mail_labell = QtWidgets.QLabel(self.employee_mail_frame)
+        self.emp_mail_labell.setObjectName("emp_mail_labell")
+        self.horizontalLayout_20.addWidget(self.emp_mail_labell, 0, QtCore.Qt.AlignHCenter)
+        self.emp_mail_lineEdit = QtWidgets.QLineEdit(self.employee_mail_frame)
+        self.emp_mail_lineEdit.setMinimumSize(QtCore.QSize(240, 0))
+        self.emp_mail_lineEdit.setMaximumSize(QtCore.QSize(240, 16777215))
+        self.emp_mail_lineEdit.setText("")
+        self.emp_mail_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.emp_mail_lineEdit.setObjectName("emp_mail_lineEdit")
+        self.horizontalLayout_20.addWidget(self.emp_mail_lineEdit)
+        self.verticalLayout_16.addWidget(self.employee_mail_frame)
+        self.verticalLayout_15.addWidget(self.frame_3)
+        self.emp_add_bottom_frame = QtWidgets.QFrame(self.employee_add_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.emp_add_bottom_frame.sizePolicy().hasHeightForWidth())
+        self.emp_add_bottom_frame.setSizePolicy(sizePolicy)
+        self.emp_add_bottom_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.emp_add_bottom_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.emp_add_bottom_frame.setObjectName("emp_add_bottom_frame")
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.emp_add_bottom_frame)
+        self.horizontalLayout_15.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_15.setSpacing(0)
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        self.status_label = QtWidgets.QLabel(self.emp_add_bottom_frame)
+        self.status_label.setStyleSheet("font: 705 8pt \"Montserrat\";\n"
+"color: rgb(189, 47, 47);")
+        self.status_label.setText("")
+        self.status_label.setObjectName("status_label")
+        self.horizontalLayout_15.addWidget(self.status_label)
+        self.emp_add_btn = QtWidgets.QPushButton(self.emp_add_bottom_frame)
+        self.emp_add_btn.setMinimumSize(QtCore.QSize(140, 28))
+        self.emp_add_btn.setMaximumSize(QtCore.QSize(15, 16777215))
+        self.emp_add_btn.setStyleSheet("QPushButton{\n"
+"background-color: rgb(33, 164, 62);\n"
+"border-radius : 5px ;\n"
+"font: 600 12pt \"Montserrat\";\n"
+"}\n"
+":hover{\n"
+"background-color: rgb(25, 126, 47);\n"
+"}")
+        self.emp_add_btn.setObjectName("emp_add_btn")
+        self.horizontalLayout_15.addWidget(self.emp_add_btn)
+        self.verticalLayout_15.addWidget(self.emp_add_bottom_frame)
+        self.horizontalLayout_14.addWidget(self.employee_add_frame)
+        self.verticalLayout_3.addWidget(self.workers_page_left_menu_top_frame, 0, QtCore.Qt.AlignLeft)
         self.workers_page_left_menu_bottom_frame = QtWidgets.QFrame(self.workers_page_left_menu_widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.workers_page_left_menu_bottom_frame.sizePolicy().hasHeightForWidth())
         self.workers_page_left_menu_bottom_frame.setSizePolicy(sizePolicy)
+        self.workers_page_left_menu_bottom_frame.setStyleSheet("*{\n"
+"background-color: rgb(9, 38, 53);\n"
+"border-radius : 5px;\n"
+"}\n"
+"#workers_page_left_menu_bottom_frame{\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"")
         self.workers_page_left_menu_bottom_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.workers_page_left_menu_bottom_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.workers_page_left_menu_bottom_frame.setObjectName("workers_page_left_menu_bottom_frame")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.workers_page_left_menu_bottom_frame)
+        self.verticalLayout_17.setContentsMargins(15, 15, 15, 10)
+        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.header_label_2 = QtWidgets.QLabel(self.workers_page_left_menu_bottom_frame)
+        self.header_label_2.setMinimumSize(QtCore.QSize(250, 50))
+        self.header_label_2.setMaximumSize(QtCore.QSize(100000, 50))
+        self.header_label_2.setStyleSheet("background-color: rgb(7, 26, 35);\n"
+"border-radius : 5px;\n"
+"color: rgb(255, 255, 255);\n"
+"font: 1000 12pt \"Montserrat\";\n"
+"border : 2px outset rgb(16, 16, 16);")
+        self.header_label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.header_label_2.setObjectName("header_label_2")
+        self.verticalLayout_17.addWidget(self.header_label_2)
+        self.title_row = QtWidgets.QFrame(self.workers_page_left_menu_bottom_frame)
+        self.title_row.setStyleSheet("font: 1000 10pt \"Montserrat\";")
+        self.title_row.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.title_row.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.title_row.setObjectName("title_row")
+        self.horizontalLayout_21 = QtWidgets.QHBoxLayout(self.title_row)
+        self.horizontalLayout_21.setContentsMargins(9, -1, 9, -1)
+        self.horizontalLayout_21.setSpacing(127)
+        self.horizontalLayout_21.setObjectName("horizontalLayout_21")
+        self.mail_titile_label = QtWidgets.QLabel(self.title_row)
+        self.mail_titile_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.mail_titile_label.setObjectName("mail_titile_label")
+        self.horizontalLayout_21.addWidget(self.mail_titile_label)
+        self.name_title_label = QtWidgets.QLabel(self.title_row)
+        self.name_title_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.name_title_label.setObjectName("name_title_label")
+        self.horizontalLayout_21.addWidget(self.name_title_label)
+        self.verticalLayout_17.addWidget(self.title_row)
+        self.employee_list_scroll_area = QtWidgets.QScrollArea(self.workers_page_left_menu_bottom_frame)
+        self.employee_list_scroll_area.setStyleSheet("border:none;")
+        self.employee_list_scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.employee_list_scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.employee_list_scroll_area.setWidgetResizable(True)
+        self.employee_list_scroll_area.setObjectName("employee_list_scroll_area")
+        self.employee_list_scroll_area_content = QtWidgets.QWidget()
+        self.employee_list_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 765, 405))
+        self.employee_list_scroll_area_content.setObjectName("employee_list_scroll_area_content")
+        self.employee_list_scroll_area_content_layout = QtWidgets.QVBoxLayout(self.employee_list_scroll_area_content)
+        self.employee_list_scroll_area_content_layout.setContentsMargins(-1, -1, 0, -1)
+        self.employee_list_scroll_area_content_layout.setObjectName("employee_list_scroll_area_content_layout")
+        self.employee_list_scroll_area.setWidget(self.employee_list_scroll_area_content)
+        self.verticalLayout_17.addWidget(self.employee_list_scroll_area)
         self.verticalLayout_3.addWidget(self.workers_page_left_menu_bottom_frame)
-        self.horizontalLayout_5.addWidget(self.workers_page_left_menu_widget)
+        self.horizontalLayout_5.addWidget(self.workers_page_left_menu_widget, 0, QtCore.Qt.AlignLeft)
         self.workers_page_right_menu_frame = QtWidgets.QFrame(self.workers_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.workers_page_right_menu_frame.sizePolicy().hasHeightForWidth())
+        self.workers_page_right_menu_frame.setSizePolicy(sizePolicy)
         self.workers_page_right_menu_frame.setStyleSheet("#workers_page_right_menu_bottom_frame{\n"
 "background-color: rgb(10, 10, 10);\n"
 "border-radius : 10px;\n"
@@ -702,6 +937,12 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.workers_page_right_menu_bottom_frame.sizePolicy().hasHeightForWidth())
         self.workers_page_right_menu_bottom_frame.setSizePolicy(sizePolicy)
         self.workers_page_right_menu_bottom_frame.setMinimumSize(QtCore.QSize(0, 0))
+        self.workers_page_right_menu_bottom_frame.setStyleSheet("*{\n"
+"background-color: rgb(9, 38, 53);\n"
+"border-radius : 5px;\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"")
         self.workers_page_right_menu_bottom_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.workers_page_right_menu_bottom_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.workers_page_right_menu_bottom_frame.setObjectName("workers_page_right_menu_bottom_frame")
@@ -738,4 +979,16 @@ class Ui_MainWindow(object):
         self.working_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-size:13pt\">Tamamlanmakta </span><span style=\" font-family:\'Montserrat\'; font-size:13pt;\">Olan Görevler</span></p></body></html>"))
         self.done_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600; font-size:13pt\">Tamamlanan </span><span style=\" font-family:\'Montserrat\'; font-size:13pt;\">Görevler</span></p></body></html>"))
         self.task_add_btn.setText(_translate("MainWindow", "+ Yeni Görev Ekle"))
+        self.header_label.setText(_translate("MainWindow", "ÇALIŞANLAR"))
+        self.employee_amount_label.setText(_translate("MainWindow", "?"))
+        self.employee_title_label.setText(_translate("MainWindow", "Çalışan\n"
+" Var"))
+        self.label_5.setText(_translate("MainWindow", "ÇALIŞAN BİLGİSİ EKLE"))
+        self.emp_name_label.setText(_translate("MainWindow", "Çalışan Adı"))
+        self.emp_surname_label.setText(_translate("MainWindow", "Çalışan Soyadı"))
+        self.emp_mail_labell.setText(_translate("MainWindow", "Çalışan Mail"))
+        self.emp_add_btn.setText(_translate("MainWindow", "Ekle"))
+        self.header_label_2.setText(_translate("MainWindow", "ÇALIŞANLAR LİSTESİ"))
+        self.mail_titile_label.setText(_translate("MainWindow", "Adı Soyadı"))
+        self.name_title_label.setText(_translate("MainWindow", "E Posta"))
 import image_rc

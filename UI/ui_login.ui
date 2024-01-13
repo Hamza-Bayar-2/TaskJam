@@ -423,7 +423,7 @@ background-color: rgb(25, 126, 47);
  </widget>
  <resources>
   <include location="../assets/image.qrc"/>
-  <include location="assets/image.qrc"/>
+  <include location="../assets/image.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -7,13 +7,15 @@ import sys
 import datetime
 from UI.my_ui import Ui_MainWindow
 from modals.taskInfo import TaskInfo
-from database import db_Helper
 from modals.userInfo import UserInfo
+from modals.employeeInfo import EmployeeInfo
+from database import db_Helper
 from add_project import AddProjectWindow
 from UI.project_widget_ui import Ui_ProjectWindow
+from UI.employee_list_widget_ui import Ui_Form
+from UI.task_will_ui import Ui_TaskWill
 from add_task import AddTask
 from project_update import  ProjectUpdate
-
 
 class MainWİndow(QMainWindow) :
     def __init__(self, userInfo) :
@@ -22,9 +24,10 @@ class MainWİndow(QMainWindow) :
         self.ui = Ui_MainWindow()
         self.db = db_Helper()
         self.myProject = None
-        
+        self.myEmployee = None
         self.window_fix()
         self.initUI()
+
     def initUI(self):
         self.ui.setupUi(self)
         self.setWindowTitle("TaskJam")
@@ -35,9 +38,9 @@ class MainWİndow(QMainWindow) :
         self.setState()
 
     def setState(self):
-        print("ahaa")
         self.projectRowUpdate()
-        self.verileri_guncelle()
+        self.addWillTaskWidgetsUpdate()
+        self.employeeListWidgetUpdate()
 
     def buttonSetting(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
@@ -49,23 +52,90 @@ class MainWİndow(QMainWindow) :
         self.ui.signout_btn.clicked.connect(lambda : self.close())  # login ekranına yönlendirilebilir.
         self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd())
         self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
+        self.ui.emp_add_btn.clicked.connect(lambda : self.employeeAdd())
     
+    def employeeListWidgetUpdate(self):
+        self.clear_layout(self.ui.employee_list_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
+
+        employeeList = self.db.showEmployeeInformation()
+        for item in employeeList:
+            mywidgets = QWidget()
+            employeeListWidget = Ui_Form()
+            employeeListWidget.setupUi(mywidgets)
+            employeeListWidget.employee_name_label.setText(item.employeeName + " " + item.employeeSurname)
+            employeeListWidget.employee_mail_label.setText(item.employeeMail)
+            employeeListWidget.select_btn.clicked.connect(lambda _, selectedEmpployee = item : self.setEmployee(selectedEmpployee))
+            self.ui.employee_list_scroll_area_content_layout.addWidget(mywidgets)
+
+    def setEmployee(self, selectedEmpployee):
+        self.myEmployee = selectedEmpployee
+        pass
+
+    def employeeAdd(self):
+        empName = self.ui.emp_name_lineEdit.text()
+        empSurname = self.ui.emp_surname_lineEdit.text()
+        empMail = self.ui.emp_mail_lineEdit.text()
+        
+        if(0):
+            self.ui.status_label.setText("aynı maile sahip zaten bir çalışan var")
+            return
+        elif(empMail == "" or empSurname == "" or empMail == ""):
+            self.ui.status_label.setText("Boş bırakılamaz")
+            return
+        elif((empMail.find("@") == -1 ) or (empMail.find(".") == -1)):
+            self.ui.status_label.setText("Email'i doğru biçimde giriniz.")
+            return
+        #validete yap cnm
+        self.db.addNewEmployee(
+            EmployeeInfo(
+                userID = self.user.userID,  
+                employeeName= empName,
+                employeeMail= empMail,
+                employeeSurname= empSurname,
+                employeeID=None,
+                AmountOfTasksCompletedOnTime=None,
+                AmountOfTasksNotCompletedOnTime=None,
+            )
+        )
+        self.ui.emp_name_lineEdit.setText("")
+        self.ui.emp_surname_lineEdit.setText("")
+        self.ui.emp_mail_lineEdit.setText("")
+
+        self.setState()
+
     def taskAdd(self):
         self.tasskAddWindow = AddTask()
         self.tasskAddWindow.show()
-        
+
     def projectAdd(self):
         self.projectAddWindow = AddProjectWindow(self.user)
         self.projectAddWindow.show()
         self.projectAddWindow.mainServer.connect(lambda veri : self.setState() if veri == "55 TAMM" else print("zort"))
-            
 
     def changePage(self, index):
         self.ui.stackedWidget.setCurrentIndex(index)
         if index == 1:
             self.ui.workers_pointer.setPixmap(QPixmap(":/icons/icons/Ellipse 5.png"))
+            self.ui.workers_page_btn.setStyleSheet("""
+                background: rgba(76, 175, 80, 0);
+                font: 2000 9pt "Montserrat";
+                color : rgb(229, 189, 48);
+                """)
+            self.ui.home_page_btn.setStyleSheet("""
+                background: rgba(76, 175, 80, 0);
+                font: 2000 9pt "Montserrat";
+                """)
             self.ui.home_Pointer.clear()
         else :
+            self.ui.home_page_btn.setStyleSheet("""
+                background: rgba(76, 175, 80, 0);
+                font: 2000 9pt "Montserrat";
+                color : rgb(229, 189, 48);
+                """)
+            self.ui.workers_page_btn.setStyleSheet("""
+                background: rgba(76, 175, 80, 0);
+                font: 2000 9pt "Montserrat";
+                """)
             self.ui.home_Pointer.setPixmap(QPixmap(":/icons/icons/Ellipse 5.png"))
             self.ui.workers_pointer.clear()
 
@@ -131,25 +201,16 @@ class MainWİndow(QMainWindow) :
         self.myProject = item
         self.setState()
 
-    def verileri_guncelle(self):
-        users = []
+    def addWillTaskWidgetsUpdate(self):
+        users = self.db.showTaskOnDetailPage()
         self.clear_layout(self.ui.will_done_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
 
-        for i in users:
-            a = QWidget(self)
-            a.setMinimumHeight(50)
-            a.setMinimumWidth(500)
-            a.setStyleSheet("""
-                background-color: rgb(35, 39, 79);\n
-                color: rgb(255, 255, 255);\n
-                border-radius : 10px;"""
-            )            
-            itemLayout = QHBoxLayout(self)
-            a.setLayout(itemLayout)
-            itemLayout.addWidget(QLabel(i.taskTitle))
-            itemLayout.addWidget(QLabel(i.finishDate))
-            itemLayout.addWidget(QPushButton("Seç", clicked=lambda _, task = i : print(task.taskId)))
-            self.ui.will_done_scroll_area_content_layout.addWidget(a)
+        for item in users:
+            widget = QWidget(self)
+            taskWillWidget =  Ui_TaskWill()
+            taskWillWidget.setupUi(widget)
+
+            
 
     def WindowSize(self):
         if self.isMaximized():  # Eğer pencere küçültülmüşse
@@ -167,14 +228,14 @@ class MainWİndow(QMainWindow) :
         self.oldPos = event.globalPos()
     def mausePressEvent(self, event):
         self.oldPos = event.globalPos()
-
-
     def wheelEvent(self, event):
     # Tekerlek olayını yakala ve scroll işlemi yap
         if self.ui.main_top_right_frame.rect().contains(event.pos()) or self.ui.main_top_bar_frame.rect().contains(event.pos()):
             delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
             self.ui.projects_scroll.horizontalScrollBar().setValue(self.ui.projects_scroll.horizontalScrollBar().value() - int(delta * 40))  # 20 birimlik bir kaydırma yap
-    
+        if(self.ui.employee_list_scroll_area.rect().contains(event.pos())):
+            delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
+            self.ui.employee_list_scroll_area.verticalScrollBar().setValue(self.ui.employee_list_scroll_area.verticalScrollBar().value() - int(delta * 40))
 """   projectRowUpdate a aittir...
  projectWidget = QWidget()
 project_name_label = QLabel(item.projectName)

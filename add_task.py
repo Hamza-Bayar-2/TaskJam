@@ -10,6 +10,7 @@ from database import db_Helper
 from UI.add_task_ui import Ui_AddTask
 from modals.projectInfo import ProjectInfo
 from modals.userInfo import UserInfo
+from list_employee_window import ListEmployeeWindow
 
 class AddTask(QDialog):
     def __init__(self) -> None:
@@ -17,13 +18,26 @@ class AddTask(QDialog):
         self.ui = Ui_AddTask()
         self.ui.setupUi(self)
         self.window_fix()
+        self.myEmployee = None
         self.initUi() 
+
     def initUi(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
         self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
-
+        self.ui.workers_list_btn.clicked.connect(lambda: self.openEmployeeList())
+    
     def taskAdd(self) :
+        #validet yap myEmployee geldi mi ?
         pass
+    
+    def openEmployeeList(self):
+        self.employeeList = ListEmployeeWindow()
+        self.employeeList.connectMain.connect(lambda selectedEmployee : self.setEmployee(selectedEmployee) if(selectedEmployee != None) else print("zart") )
+        self.employeeList.show()
+
+    def setEmployee(self, selectedEmp):
+        self.myEmployee = selectedEmp
+        self.ui.selected_worker_label.setText(selectedEmp.employeeName + " " + selectedEmp.employeeSurname)
 
     def window_fix(self) :
         self.setWindowTitle("TaskJam Login")
@@ -35,3 +49,4 @@ class AddTask(QDialog):
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
+

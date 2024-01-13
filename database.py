@@ -2,6 +2,7 @@ from datetime import datetime
 import sqlite3 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
+from modals.employeeInfo import EmployeeInfo
 
 class db_Helper:
     def __init__(self) -> None:
@@ -156,7 +157,7 @@ class db_Helper:
 
 
     # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
-    def addNewEmployee(self, userID, employeeName, employeeSurname, employeeMail) :
+    def addNewEmployee(self, EmployeeInfo) :
         self.cursor.execute('''
             INSERT INTO employees(
                 userID,
@@ -167,7 +168,7 @@ class db_Helper:
                 AmountOfTasksNotCompletedOnTime
             )
             VALUES(?, ?, ?, ?, ?, ?)
-        ''', (userID, employeeName, employeeSurname, employeeMail, 0, 0,))
+        ''', (EmployeeInfo.userID, EmployeeInfo.employeeName, EmployeeInfo.employeeSurname, EmployeeInfo.employeeMail, 0, 0,))
         self.conn.commit()
 
     # bütün çalışanları döndürür
@@ -187,6 +188,20 @@ class db_Helper:
                 1
         ''')
         self.conn.commit()
+        projectsList = []
+        for item in self.cursor.fetchall() :
+            projectsList.append(
+                EmployeeInfo(
+                    employeeID = item[0],
+                    userID = item[1],
+                    employeeName = item[2],
+                    employeeSurname = item[3], 
+                    employeeMail = item[4], 
+                    AmountOfTasksCompletedOnTime= item[4],
+                    AmountOfTasksNotCompletedOnTime = item[5]
+                )
+            )
+        return projectsList
 
     def selectedEmployeeInfomation(self, employeeID) :
         self.cursor.execute('''
