@@ -464,11 +464,14 @@ class db_Helper:
                 startingDate,
                 endDate,
                 taskStatus,
-                delayAmount
+                delayAmount,
+                projects.projectName
             FROM 
                 tasks
             INNER JOIN
                 employees ON tasks.employeeID = employees.employeeID
+            INNER JOIN 
+                projects ON tasks.projectID = projects.projectID
             WHERE
                 tasks.taskID = ?
         ''', (taskID,))
