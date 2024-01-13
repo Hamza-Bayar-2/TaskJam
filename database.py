@@ -1,5 +1,6 @@
 from datetime import datetime
-import sqlite3 
+import sqlite3
+from modals.selectedEmployee import SelectedEmployee 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
 from modals.employeeInfo import EmployeeInfo
@@ -203,30 +204,38 @@ class db_Helper:
             )
         return projectsList
 
+    # seçilen çalışanın, ekranın sağ tarafında gösterilecek bilgiler
     def selectedEmployeeInfomation(self, employeeID) :
         self.cursor.execute('''
             SELECT 
-                employees.employeeID,
-                employees.userID,
                 employees.employeeName,
                 employees.employeeSurname,
                 employees.employeeMail,
                 employees.AmountOfTasksCompletedOnTime,
                 employees.AmountOfTasksNotCompletedOnTime,
-                COUNT(tasks.taskID) AS TotalTasks,
-                SUM(CASE WHEN tasks.taskStatus = 0 THEN 1 ELSE 0 END) AS goingToCompletTasks,
-                SUM(CASE WHEN tasks.taskStatus = 1 THEN 1 ELSE 0 END) AS OngoingTasks,
-                SUM(CASE WHEN tasks.taskStatus = 2 THEN 1 ELSE 0 END) AS CompletedTasks
+                SUM(CASE WHEN tasks.taskStatus = 0 THEN 1 ELSE 0 END) AS goingToCompleteTasks,
+                SUM(CASE WHEN tasks.taskStatus = 1 THEN 1 ELSE 0 END) AS ongoingTasks,
+                SUM(CASE WHEN tasks.taskStatus = 2 THEN 1 ELSE 0 END) AS completedTasks
             FROM 
                 employees
-            LEFT JOIN 
+            INNER JOIN 
                 tasks ON employees.employeeID = tasks.employeeID
             WHERE
                 employees.employeeID = ?;
         ''', (employeeID,))
         self.conn.commit()
+        list = self.cursor.fetchall()
 
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!! üstteki kod tamamlanmadı. kullanmayınız
+        return SelectedEmployee(
+            employeeName = list[0][0],
+            employeeSurname = list[0][1],
+            employeeMail = list[0][2],
+            AmountOfTasksCompletedOnTime = list[0][3],
+            AmountOfTasksNotCompletedOnTime = list[0][4],
+            goingToCompleteTasks = list[0][5],
+            ongoingTasks = list[0][6],
+            completedTasks = list[0][7]
+        )
 
     # çalışana ait zamanında tamamlanmayan görevleri güncelleme
     # çalışana ait zamanında tamamlanan görevleri güncelleme
