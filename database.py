@@ -188,6 +188,31 @@ class db_Helper:
         ''')
         self.conn.commit()
 
+    def selectedEmployeeInfomation(self, employeeID) :
+        self.cursor.execute('''
+            SELECT 
+                employees.employeeID,
+                employees.userID,
+                employees.employeeName,
+                employees.employeeSurname,
+                employees.employeeMail,
+                employees.AmountOfTasksCompletedOnTime,
+                employees.AmountOfTasksNotCompletedOnTime,
+                COUNT(tasks.taskID) AS TotalTasks,
+                SUM(CASE WHEN tasks.taskStatus = 0 THEN 1 ELSE 0 END) AS goingToCompletTasks,
+                SUM(CASE WHEN tasks.taskStatus = 1 THEN 1 ELSE 0 END) AS OngoingTasks,
+                SUM(CASE WHEN tasks.taskStatus = 2 THEN 1 ELSE 0 END) AS CompletedTasks
+            FROM 
+                employees
+            LEFT JOIN 
+                tasks ON employees.employeeID = tasks.employeeID
+            WHERE
+                employees.employeeID = ?;
+        ''', (employeeID,))
+        self.conn.commit()
+
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!! üstteki kod tamamlanmadı. kullanmayınız
+
     # çalışana ait zamanında tamamlanmayan görevleri güncelleme
     # çalışana ait zamanında tamamlanan görevleri güncelleme
     def employeeAmountOfTasksCompletedOnTimeAndNotOnTimeUpdate(self, employeeID) :
@@ -230,6 +255,22 @@ class db_Helper:
                 employeeID = ?
         ''', (onTimeCount, notOnTmimeCount, employeeID,))
         self.conn.commit()
+
+    # çalışanın varlığını kontrol ediyor. employeeCount eğer sıfırsa öyle bir çalışan yok
+    def isThisEmployeeMailExist(self, employeeMail) :
+        self.cursor.execute('''
+        SELECT 
+            COUNT(*) AS employeeCount
+        FROM 
+            employees
+        WHERE
+            employeeMail = ?;
+        ''', (employeeMail,))
+
+        result = self.cursor.fetchone(),
+        # eğer sonuç sıfırsa yani verilen mail e göre bir kullanıcı yok
+        isEmployeeExist = result[0]
+        print(isEmployeeExist)
 
     # ID'ye göre çalışan silem
     def deleteEmployeeID(self, employeeID) :
@@ -316,6 +357,7 @@ class db_Helper:
             )
         return projectsList
 
+    # projedeki toplam çalışan sayısını verir
     def showTotalNumberOfEmployeesInTheProject(self, projectID) :
         self.cursor.execute('''
             SELECT 
@@ -464,11 +506,14 @@ class db_Helper:
                 startingDate,
                 endDate,
                 taskStatus,
-                delayAmount
+                delayAmount,
+                projects.projectName
             FROM 
                 tasks
             INNER JOIN
                 employees ON tasks.employeeID = employees.employeeID
+            INNER JOIN 
+                projects ON tasks.projectID = projects.projectID
             WHERE
                 tasks.taskID = ?
         ''', (taskID,))
