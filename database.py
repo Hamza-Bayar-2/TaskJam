@@ -1,6 +1,8 @@
 from datetime import datetime
 import sqlite3
-from modals.selectedEmployee import SelectedEmployee 
+from modals.selectedEmployee import SelectedEmployee
+from modals.tasksBasedOnStatusAndEmployeeID import TasksBasedOnStatusAndEmployeeID
+from modals.tasksBasedOnStatusAndProjectID import TasksBasedOnStatusAndProjectID 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
 
@@ -190,7 +192,9 @@ class db_Helper:
         self.conn.commit()
 
     # seçilen çalışanın, ekranın sağ tarafında gösterilecek bilgiler
-    def selectedEmployeeInfomation(self, employeeID) :
+    # task status (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
+    # task status (goingToCompleteTasks: 0, ongoingTasks: 1, completedTasks: 2 )
+    def showSelectedEmployeeInfomation(self, employeeID) :
         self.cursor.execute('''
             SELECT 
                 employees.employeeName,
@@ -224,7 +228,7 @@ class db_Helper:
 
     # çalışana ait zamanında tamamlanmayan görevleri güncelleme
     # çalışana ait zamanında tamamlanan görevleri güncelleme
-    def employeeAmountOfTasksCompletedOnTimeAndNotOnTimeUpdate(self, employeeID) :
+    def updateEmployeeAmountOfTasksCompletedOnTimeAndNotOnTime(self, employeeID) :
 
         self.cursor.execute('''
             SELECT 
@@ -249,7 +253,7 @@ class db_Helper:
             daysDifference = (endDate - todayDate).days
             resultOfDelayAmount = max(daysDifference, 0)
 
-            if resultOfDelayAmount == 0:
+            if resultOfDelayAmount == 0 :
                 onTimeCount += 1
             else:
                 notOnTmimeCount += 1
@@ -268,12 +272,12 @@ class db_Helper:
     # çalışanın varlığını kontrol ediyor. employeeCount eğer sıfırsa öyle bir çalışan yok
     def isThisEmployeeMailExist(self, employeeMail) :
         self.cursor.execute('''
-        SELECT 
-            COUNT(*) AS employeeCount
-        FROM 
-            employees
-        WHERE
-            employeeMail = ?;
+            SELECT 
+                COUNT(*) AS employeeCount
+            FROM 
+                employees
+            WHERE
+                employeeMail = ?;
         ''', (employeeMail,))
 
         result = self.cursor.fetchone(),
@@ -334,7 +338,13 @@ class db_Helper:
         ''', (projectName,))
         self.conn.commit()
         project = self.cursor.fetchall()
-        return ProjectInfo(projectID= project[0][0], projectName = project[0][1], projectDescription = project[0][2], startingDate = project[0][3], endDate = project[0][4], delayAmount= project[0][4]) if len(project) !=0 else None
+        return ProjectInfo(
+            projectID = project[0][0], 
+            projectName = project[0][1], 
+            projectDescription = project[0][2], 
+            startingDate = project[0][3], 
+            endDate = project[0][4], 
+            delayAmount = project[0][4]) if len(project) != 0 else None
 
     # ana sayfadaki en üst kısımdaki projectsim kısmındaki projectsi görüntülemeyi sağlayacak bu fonksiyon
     def showAllProjects(self, userId) :
@@ -353,6 +363,7 @@ class db_Helper:
         ''', (userId,))
         self.conn.commit()
         projectsList = []
+
         for item in self.cursor.fetchall() :
             projectsList.append(
                 ProjectInfo(
@@ -361,7 +372,7 @@ class db_Helper:
                     projectDescription = item[2],
                     startingDate = item[3], 
                     endDate = item[4], 
-                    delayAmount= item[4]
+                    delayAmount= item[5]
                 )
             )
         return projectsList
@@ -528,6 +539,143 @@ class db_Helper:
         ''', (taskID,))
         self.conn.commit()
 
+    # görev durumu ve projeID ye göre görevlerin döndürülmesi. Ana sayfadaki görevlerin görünmesi için
+    # task status (goingToCompleteTasks: 0, ongoingTasks: 1, completedTasks: 2 )
+    def showTasksBasedOnStatusAndProjectID(self, projectID) :
+        self.cursor.execute('''
+            SELECT
+                taskID,
+                taskName,
+                taskDescription,
+                startingDate,
+                endDate,
+                delayAmount,
+                taskStatus
+            FROM
+                tasks
+            WHERE
+                projectID = ?
+        ''', (projectID,))
+
+        goingToCompleteTasks = []
+        ongoingTasks = []
+        completedTasks = []
+
+        listOfAllTasks = []
+
+        allTasks = self.cursor.fetchall()
+
+        for item in allTasks :
+            if item[6] == 0 :
+                goingToCompleteTasks.append(
+                    TasksBasedOnStatusAndProjectID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        taskDescription = item[2],
+                        startingDate = item[3],
+                        endDate = item[4],
+                        delayAmount = item[5]
+                    )
+                )
+            elif item[6] == 1 :
+                ongoingTasks.append(
+                    TasksBasedOnStatusAndProjectID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        taskDescription = item[2],
+                        startingDate = item[3],
+                        endDate = item[4],
+                        delayAmount = item[5]
+                    )
+                )
+            elif item[6] == 2 :
+                completedTasks.append(
+                    TasksBasedOnStatusAndProjectID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        taskDescription = item[2],
+                        startingDate = item[3],
+                        endDate = item[4],
+                        delayAmount = item[5]
+                    )
+                )
+        
+        listOfAllTasks = [goingToCompleteTasks, ongoingTasks, completedTasks]
+        return listOfAllTasks
+
+    # görev durumu ve employeeID ye göre görevlerin döndürülmesi. Çalışanlar listesinin orada seçili olan çalışanının görevlerinin gösterilmesi
+    # task status (goingToCompleteTasks: 0, ongoingTasks: 1, completedTasks: 2 )
+    def showTasksBasedOnStatusAndEmployeeID(self, employeeID) :
+        self.cursor.execute('''
+            SELECT
+                taskID,
+                taskName,
+                startingDate,
+                endDate,
+                taskStatus
+            FROM
+                tasks
+            WHERE
+                projectID = ?
+        ''', (employeeID,))
+
+        goingToCompleteTasks = []
+        ongoingTasks = []
+        completedTasks = []
+
+        listOfAllTasks = []
+
+        allTasks = self.cursor.fetchall()
+
+        for item in allTasks :
+            if item[4] == 0 :
+                goingToCompleteTasks.append(
+                    TasksBasedOnStatusAndEmployeeID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        startingDate = item[2],
+                        endDate = [3]
+                    )
+                )
+            elif item[4] == 1 :
+                ongoingTasks.append(
+                    TasksBasedOnStatusAndEmployeeID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        startingDate = item[2],
+                        endDate = [3]
+                    )
+                )
+            elif item[4] == 2 :
+                completedTasks.append(
+                    TasksBasedOnStatusAndEmployeeID(
+                        taskID = item[0],
+                        taskName = item[1],
+                        startingDate = item[2],
+                        endDate = [3]
+                    )
+                )
+        
+        listOfAllTasks = [goingToCompleteTasks, ongoingTasks, completedTasks]
+        return listOfAllTasks
+        
+    # verilen görev ismine göre herhangi bir görev var mı diye kontrol ediyor
+    def isThisNameOfTheTaskExist(self, taskName) :
+        self.cursor.execute('''
+            SELECT 
+                COUNT(*) AS taskCount
+            FROM 
+                tasks
+            WHERE
+                taskName = ?;
+        ''', (taskName,))
+
+        result = self.cursor.fetchone(),
+
+        # eğer sonuç sıfırsa, yani verilen isme göre bir görev yok
+        isTaskExist = result[0]
+        print(isTaskExist)
+
     def deleteTask(self, taskID) :
         self.cursor.execute('''
             DELETE FROM
@@ -536,10 +684,6 @@ class db_Helper:
                 taskID = ?
         ''', (taskID,))
         self.conn.commit()
-
-
-
-
 
 
 
