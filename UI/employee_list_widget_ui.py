@@ -21,6 +21,8 @@ class Ui_Form(object):
 "background-color: rgb(7, 26, 35);\n"
 "}\n"
 "\n"
+"\n"
+"\n"
 "")
         self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -32,6 +34,7 @@ class Ui_Form(object):
 "color: rgb(249, 202, 36);\n"
 "font: 1000 12pt \"Montserrat\";\n"
 "border : 2px outset rgb(16, 16, 16);\n"
+"background: rgba(76, 175, 80, 0);\n"
 "}\n"
 "*{\n"
 "\n"
@@ -47,10 +50,12 @@ class Ui_Form(object):
         self.horizontalLayout_2.setSpacing(30)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.employee_name_label = QtWidgets.QLabel(self.main_frame)
+        self.employee_name_label.setStyleSheet("background: rgba(76, 175, 80, 0);")
         self.employee_name_label.setAlignment(QtCore.Qt.AlignCenter)
         self.employee_name_label.setObjectName("employee_name_label")
         self.horizontalLayout_2.addWidget(self.employee_name_label)
         self.employee_mail_label = QtWidgets.QLabel(self.main_frame)
+        self.employee_mail_label.setStyleSheet("background: rgba(76, 175, 80, 0);")
         self.employee_mail_label.setAlignment(QtCore.Qt.AlignCenter)
         self.employee_mail_label.setObjectName("employee_mail_label")
         self.horizontalLayout_2.addWidget(self.employee_mail_label)
@@ -66,6 +71,7 @@ class Ui_Form(object):
 "background-color: rgb(229, 189, 48);\n"
 "border-radius :5px;\n"
 "padding : 3px;\n"
+"    color: rgb(0, 0, 0);\n"
 "}\n"
 ":hover{\n"
 "background-color: rgb(104, 85, 21);\n"

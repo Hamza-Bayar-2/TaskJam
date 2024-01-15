@@ -25,6 +25,7 @@ class MainWİndow(QMainWindow) :
         self.db = db_Helper()
         self.myProject = None
         self.myEmployee = None
+        self.users = ["a" , "b", "c", "a" , "b", "c"]
         self.window_fix()
         self.initUI()
 
@@ -46,18 +47,17 @@ class MainWİndow(QMainWindow) :
         self.ui.exit_btn.clicked.connect(lambda : self.close())
         self.ui.bottom_line_btn.clicked.connect(lambda : self.showMinimized())
         self.ui.restore_btn.clicked.connect(lambda : self.WindowSize())
-        self.ui.task_add_btn.clicked.connect(lambda : self.verileri_guncelle())
+        self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
         self.ui.workers_page_btn.clicked.connect(lambda : self.changePage(1))
         self.ui.home_page_btn.clicked.connect(lambda : self.changePage(0))
         self.ui.signout_btn.clicked.connect(lambda : self.close())  # login ekranına yönlendirilebilir.
         self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd())
-        self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
         self.ui.emp_add_btn.clicked.connect(lambda : self.employeeAdd())
     
     def employeeListWidgetUpdate(self):
         self.clear_layout(self.ui.employee_list_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
-
         employeeList = self.db.showEmployeeInformation()
+        self.ui.employee_amount_label.setText(str(len(employeeList)))
         for item in employeeList:
             mywidgets = QWidget()
             employeeListWidget = Ui_Form()
@@ -66,10 +66,26 @@ class MainWİndow(QMainWindow) :
             employeeListWidget.employee_mail_label.setText(item.employeeMail)
             employeeListWidget.select_btn.clicked.connect(lambda _, selectedEmpployee = item : self.setEmployee(selectedEmpployee))
             self.ui.employee_list_scroll_area_content_layout.addWidget(mywidgets)
+            if(self.myEmployee != None and self.myEmployee.employeeID == item.employeeID ):
+                mywidgets.setStyleSheet("""
+                    #Form{
+                    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y1:0, stop:0 rgb(20, 66, 114), stop:0.6 rgb(7, 26, 35), stop:1 rgb(7, 26, 35));
+                    }
+                """)
 
     def setEmployee(self, selectedEmpployee):
         self.myEmployee = selectedEmpployee
-        pass
+        self.ui.employee_detail_stackwidget.setCurrentIndex(1)
+        self.ui.emp_name_detail_label_2.setText(self.myEmployee.employeeName)
+        self.ui.emp_surname_detail_label_2.setText(self.myEmployee.employeeMail)
+        self.ui.workers_delete_btn_2.clicked.connect(lambda : self.deleteEmployee())
+        self.setState()
+
+    def deleteEmployee(self):
+        self.ui.employee_detail_stackwidget.setCurrentIndex(0)
+        self.db.deleteEmployeeID(self.myEmployee.employeeID)
+        self.myEmployee = None
+        self.setState()
 
     def employeeAdd(self):
         empName = self.ui.emp_name_lineEdit.text()
@@ -161,7 +177,7 @@ class MainWİndow(QMainWindow) :
     def projectRowUpdate(self):
         self.clear_layout(self.ui.projects_scroll_content_widget_layout)
         projects = self.db.showAllProjects(self.user.userID)
-        # self.ui.project_count_label.setText(str(len(projects)) + "\nAktif") # aktiflik kontrolunu yapmamız lazım
+        self.ui.project_count_label.setText(str(len(projects)) + "\nAktif") # aktiflik kontrolunu yapmamız lazım
         for item in projects :
             widget = QWidget()
             projectWidget  =  Ui_ProjectWindow()
@@ -202,15 +218,19 @@ class MainWİndow(QMainWindow) :
         self.setState()
 
     def addWillTaskWidgetsUpdate(self):
-        users = self.db.showTaskOnDetailPage()
         self.clear_layout(self.ui.will_done_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
+        
+        users = self.db
 
-        for item in users:
+        for item in self.users:
             widget = QWidget(self)
+            self.ui
             taskWillWidget =  Ui_TaskWill()
             taskWillWidget.setupUi(widget)
+            self.ui.will_done_scroll_area_content_layout.addWidget(widget)
+            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.users.pop(self.users.index(item)))
+            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
 
-            
 
     def WindowSize(self):
         if self.isMaximized():  # Eğer pencere küçültülmüşse
@@ -236,6 +256,7 @@ class MainWİndow(QMainWindow) :
         if(self.ui.employee_list_scroll_area.rect().contains(event.pos())):
             delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
             self.ui.employee_list_scroll_area.verticalScrollBar().setValue(self.ui.employee_list_scroll_area.verticalScrollBar().value() - int(delta * 40))
+
 """   projectRowUpdate a aittir...
  projectWidget = QWidget()
 project_name_label = QLabel(item.projectName)

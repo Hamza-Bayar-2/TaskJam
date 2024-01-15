@@ -33,7 +33,6 @@ class AddTask(QDialog):
     def openEmployeeList(self):
         self.employeeList = ListEmployeeWindow()
         self.employeeList.connectMain.connect(lambda selectedEmployee : self.setEmployee(selectedEmployee) if(selectedEmployee != None) else print("zart") )
-        self.employeeList.show()
 
     def setEmployee(self, selectedEmp):
         self.myEmployee = selectedEmp

@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ProjectWindow(object):
     def setupUi(self, ProjectWindow):
         ProjectWindow.setObjectName("ProjectWindow")
-        ProjectWindow.resize(390, 140)
-        ProjectWindow.setMinimumSize(QtCore.QSize(390, 140))
-        ProjectWindow.setMaximumSize(QtCore.QSize(390, 140))
+        ProjectWindow.resize(390, 150)
+        ProjectWindow.setMinimumSize(QtCore.QSize(390, 150))
+        ProjectWindow.setMaximumSize(QtCore.QSize(390, 150))
         ProjectWindow.setStyleSheet("*{\n"
 "border : none ;\n"
 "border-radius : 5px;\n"

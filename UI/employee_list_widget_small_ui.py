@@ -36,7 +36,7 @@ class Ui_smal_row_Widget(object):
         self.main_frame.setObjectName("main_frame")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.main_frame)
         self.horizontalLayout_2.setContentsMargins(23, 6, 13, 5)
-        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setSpacing(4)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.user_name_label = QtWidgets.QLabel(self.main_frame)
         self.user_name_label.setObjectName("user_name_label")
@@ -47,7 +47,7 @@ class Ui_smal_row_Widget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.user_mail_label.sizePolicy().hasHeightForWidth())
         self.user_mail_label.setSizePolicy(sizePolicy)
-        self.user_mail_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.user_mail_label.setAlignment(QtCore.Qt.AlignCenter)
         self.user_mail_label.setObjectName("user_mail_label")
         self.horizontalLayout_2.addWidget(self.user_mail_label, 0, QtCore.Qt.AlignVCenter)
         self.selected_btn = QtWidgets.QPushButton(self.main_frame)
@@ -57,19 +57,20 @@ class Ui_smal_row_Widget(object):
         sizePolicy.setHeightForWidth(self.selected_btn.sizePolicy().hasHeightForWidth())
         self.selected_btn.setSizePolicy(sizePolicy)
         self.selected_btn.setMinimumSize(QtCore.QSize(50, 0))
+        self.selected_btn.setMaximumSize(QtCore.QSize(50, 16777215))
         self.selected_btn.setStyleSheet("QPushButton{\n"
 "background-color: rgb(229, 189, 48);\n"
 "border-radius : 5px ;\n"
 "font: 100 9pt \"Montserrat\";\n"
 "padding :5px;\n"
-"\n"
+"    color: rgb(7, 26, 35);\n"
 "}\n"
 ":hover{\n"
 "background-color: rgb(184, 150, 38);\n"
 "}")
         self.selected_btn.setIconSize(QtCore.QSize(25, 25))
         self.selected_btn.setObjectName("selected_btn")
-        self.horizontalLayout_2.addWidget(self.selected_btn, 0, QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
+        self.horizontalLayout_2.addWidget(self.selected_btn, 0, QtCore.Qt.AlignBottom)
         self.horizontalLayout.addWidget(self.main_frame)
 
         self.retranslateUi(smal_row_Widget)

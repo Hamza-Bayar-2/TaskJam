@@ -14,10 +14,17 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_TaskWill(object):
     def setupUi(self, TaskWill):
         TaskWill.setObjectName("TaskWill")
-        TaskWill.resize(532, 195)
-        TaskWill.setMaximumSize(QtCore.QSize(532, 195))
+        TaskWill.resize(483, 190)
+        TaskWill.setMaximumSize(QtCore.QSize(490, 190))
+        TaskWill.setStyleSheet("*{\n"
+"background-color: rgb(9, 38, 53);\n"
+"}\n"
+"#TaskWill{\n"
+"background-color: rgb(9, 38, 53);\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(TaskWill)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setContentsMargins(9, 3, 10, 10)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.main_frame = QtWidgets.QFrame(TaskWill)
@@ -25,17 +32,16 @@ class Ui_TaskWill(object):
 "background-color: rgb(9, 38, 53);\n"
 "border-raius : 5px;\n"
 "\n"
-"border : 2px outset rgb(16, 16, 16);\n"
 "}\n"
 "*{\n"
 "color: rgb(255, 255, 255);\n"
-"font: 600 9pt \"Montserrat\";\n"
+"font: 600 8pt \"Montserrat\";\n"
 "}")
         self.main_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.main_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.main_frame.setObjectName("main_frame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.main_frame)
-        self.verticalLayout.setContentsMargins(10, 7, 10, 10)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.header_frame = QtWidgets.QFrame(self.main_frame)
@@ -64,8 +70,7 @@ class Ui_TaskWill(object):
         self.horizontalLayout_2.addWidget(self.taskname_label)
         self.header_right_frame = QtWidgets.QFrame(self.header_frame)
         self.header_right_frame.setMaximumSize(QtCore.QSize(150, 16777215))
-        self.header_right_frame.setStyleSheet("\n"
-"")
+        self.header_right_frame.setStyleSheet("")
         self.header_right_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.header_right_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.header_right_frame.setObjectName("header_right_frame")
@@ -172,12 +177,18 @@ class Ui_TaskWill(object):
         self.horizontalLayout_3.addWidget(self.end_date_frame)
         self.verticalLayout.addWidget(self.date_frame)
         self.footer_frame = QtWidgets.QFrame(self.main_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.footer_frame.sizePolicy().hasHeightForWidth())
+        self.footer_frame.setSizePolicy(sizePolicy)
         self.footer_frame.setStyleSheet("border:none ;\n"
-"padding : 5px;")
+"padding : 4px;")
         self.footer_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.footer_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.footer_frame.setObjectName("footer_frame")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.footer_frame)
+        self.horizontalLayout_4.setContentsMargins(0, 6, 0, 0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.delete_btn = QtWidgets.QPushButton(self.footer_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
@@ -196,7 +207,7 @@ class Ui_TaskWill(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/garbage.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_btn.setIcon(icon)
-        self.delete_btn.setIconSize(QtCore.QSize(22, 22))
+        self.delete_btn.setIconSize(QtCore.QSize(20, 20))
         self.delete_btn.setObjectName("delete_btn")
         self.horizontalLayout_4.addWidget(self.delete_btn)
         self.text_label_2 = QtWidgets.QLabel(self.footer_frame)
@@ -235,7 +246,7 @@ class Ui_TaskWill(object):
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/icons/resume.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.resume_btn.setIcon(icon1)
-        self.resume_btn.setIconSize(QtCore.QSize(23, 23))
+        self.resume_btn.setIconSize(QtCore.QSize(20, 20))
         self.resume_btn.setObjectName("resume_btn")
         self.horizontalLayout_4.addWidget(self.resume_btn)
         self.verticalLayout.addWidget(self.footer_frame)
