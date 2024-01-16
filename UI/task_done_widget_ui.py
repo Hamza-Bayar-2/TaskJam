@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\UI\ui_task_will.ui'
+# Form implementation generated from reading ui file '.\UI\ui_task_done_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_TaskWill(object):
-    def setupUi(self, TaskWill):
-        TaskWill.setObjectName("TaskWill")
-        TaskWill.resize(471, 167)
-        TaskWill.setMaximumSize(QtCore.QSize(471, 167))
-        TaskWill.setStyleSheet("*{\n"
+class Ui_DoneWidget(object):
+    def setupUi(self, DoneWidget):
+        DoneWidget.setObjectName("DoneWidget")
+        DoneWidget.resize(470, 139)
+        DoneWidget.setMaximumSize(QtCore.QSize(742, 140))
+        DoneWidget.setStyleSheet("*{\n"
 "background-color: rgb(9, 38, 53);\n"
 "    font: 22pt \"Montserrat\";\n"
 "}\n"
@@ -24,11 +24,9 @@ class Ui_TaskWill(object):
 "background-color: rgb(9, 38, 53);\n"
 "border : 2px outset rgb(16, 16, 16);\n"
 "}")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(TaskWill)
-        self.horizontalLayout.setContentsMargins(9, 3, 10, 10)
-        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout = QtWidgets.QHBoxLayout(DoneWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.main_frame = QtWidgets.QFrame(TaskWill)
+        self.main_frame = QtWidgets.QFrame(DoneWidget)
         self.main_frame.setStyleSheet("QFrame#main_frame{\n"
 "background-color: rgb(9, 38, 53);\n"
 "border-raius : 5px;\n"
@@ -111,7 +109,7 @@ class Ui_TaskWill(object):
         self.label.setPixmap(QtGui.QPixmap(":/icons/icons/yellow_set.png"))
         self.label.setObjectName("label")
         self.horizontalLayout_2.addWidget(self.label)
-        self.verticalLayout.addWidget(self.header_frame)
+        self.verticalLayout.addWidget(self.header_frame, 0, QtCore.Qt.AlignTop)
         self.describe_label = QtWidgets.QLabel(self.main_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -128,56 +126,6 @@ class Ui_TaskWill(object):
         self.employee_label.setSizePolicy(sizePolicy)
         self.employee_label.setObjectName("employee_label")
         self.verticalLayout.addWidget(self.employee_label)
-        self.date_frame = QtWidgets.QFrame(self.main_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.date_frame.sizePolicy().hasHeightForWidth())
-        self.date_frame.setSizePolicy(sizePolicy)
-        self.date_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.date_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.date_frame.setObjectName("date_frame")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.date_frame)
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_3.setSpacing(0)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.starting_date_frame = QtWidgets.QFrame(self.date_frame)
-        self.starting_date_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.starting_date_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.starting_date_frame.setObjectName("starting_date_frame")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.starting_date_frame)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.date_title = QtWidgets.QLabel(self.starting_date_frame)
-        self.date_title.setStyleSheet("font: 9pt \"Montserrat\";")
-        self.date_title.setAlignment(QtCore.Qt.AlignCenter)
-        self.date_title.setObjectName("date_title")
-        self.verticalLayout_3.addWidget(self.date_title)
-        self.starting_date_label = QtWidgets.QLabel(self.starting_date_frame)
-        self.starting_date_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.starting_date_label.setObjectName("starting_date_label")
-        self.verticalLayout_3.addWidget(self.starting_date_label)
-        self.horizontalLayout_3.addWidget(self.starting_date_frame)
-        self.end_date_frame = QtWidgets.QFrame(self.date_frame)
-        self.end_date_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.end_date_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.end_date_frame.setObjectName("end_date_frame")
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.end_date_frame)
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_4.setSpacing(0)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.date_title_2 = QtWidgets.QLabel(self.end_date_frame)
-        self.date_title_2.setStyleSheet("font: 9pt \"Montserrat\";")
-        self.date_title_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.date_title_2.setObjectName("date_title_2")
-        self.verticalLayout_4.addWidget(self.date_title_2)
-        self.end_date_label = QtWidgets.QLabel(self.end_date_frame)
-        self.end_date_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.end_date_label.setObjectName("end_date_label")
-        self.verticalLayout_4.addWidget(self.end_date_label)
-        self.horizontalLayout_3.addWidget(self.end_date_frame)
-        self.verticalLayout.addWidget(self.date_frame)
         self.footer_frame = QtWidgets.QFrame(self.main_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -218,60 +166,29 @@ class Ui_TaskWill(object):
         self.horizontalLayout_4.addWidget(self.text_label_2)
         self.show_btn = QtWidgets.QPushButton(self.footer_frame)
         self.show_btn.setStyleSheet("*{\n"
-"background-color: rgb(7, 26, 35);\n"
-"border-radius : 5px;\n"
-"}\n"
-":hover{\n"
-"background-color: rgb(21, 79, 106);\n"
-"}")
-        self.show_btn.setObjectName("show_btn")
-        self.horizontalLayout_4.addWidget(self.show_btn)
-        self.text_label_3 = QtWidgets.QLabel(self.footer_frame)
-        self.text_label_3.setMaximumSize(QtCore.QSize(90, 16777215))
-        self.text_label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.text_label_3.setObjectName("text_label_3")
-        self.horizontalLayout_4.addWidget(self.text_label_3)
-        self.resume_btn = QtWidgets.QPushButton(self.footer_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.resume_btn.sizePolicy().hasHeightForWidth())
-        self.resume_btn.setSizePolicy(sizePolicy)
-        self.resume_btn.setStyleSheet("*{\n"
 "background-color: rgb(33, 164, 62);\n"
 "border-radius : 5px;\n"
 "}\n"
 ":hover{\n"
-"background-color: rgb(24, 120, 44);\n"
+"background-color: rgb(22, 113, 42);\n"
 "}")
-        self.resume_btn.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/resume.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.resume_btn.setIcon(icon1)
-        self.resume_btn.setIconSize(QtCore.QSize(20, 20))
-        self.resume_btn.setObjectName("resume_btn")
-        self.horizontalLayout_4.addWidget(self.resume_btn)
+        self.show_btn.setObjectName("show_btn")
+        self.horizontalLayout_4.addWidget(self.show_btn)
         self.verticalLayout.addWidget(self.footer_frame)
         self.horizontalLayout.addWidget(self.main_frame)
 
-        self.retranslateUi(TaskWill)
-        QtCore.QMetaObject.connectSlotsByName(TaskWill)
+        self.retranslateUi(DoneWidget)
+        QtCore.QMetaObject.connectSlotsByName(DoneWidget)
 
-    def retranslateUi(self, TaskWill):
+    def retranslateUi(self, DoneWidget):
         _translate = QtCore.QCoreApplication.translate
-        TaskWill.setWindowTitle(_translate("TaskWill", "Form"))
-        self.taskname_label.setText(_translate("TaskWill", "TaskName"))
-        self.last_day_result_label.setText(_translate("TaskWill", "1 GÜn İçinde"))
-        self.text_label.setText(_translate("TaskWill", "Bitmesi Gerekiyor"))
-        self.describe_label.setText(_translate("TaskWill", "Burada görev açıklaması yer almaktadır."))
-        self.employee_label.setText(_translate("TaskWill", "employeeName"))
-        self.date_title.setText(_translate("TaskWill", "Planlanan Başlangıç"))
-        self.starting_date_label.setText(_translate("TaskWill", "startingDate"))
-        self.date_title_2.setText(_translate("TaskWill", "Planlanan Bİtiş"))
-        self.end_date_label.setText(_translate("TaskWill", "startingDate"))
-        self.text_label_2.setText(_translate("TaskWill", "Görevi\n"
+        DoneWidget.setWindowTitle(_translate("DoneWidget", "Form"))
+        self.taskname_label.setText(_translate("DoneWidget", "TaskName"))
+        self.last_day_result_label.setText(_translate("DoneWidget", "1 GÜn İçinde"))
+        self.text_label.setText(_translate("DoneWidget", "Bitmesi Gerekiyor"))
+        self.describe_label.setText(_translate("DoneWidget", "Burada görev açıklaması yer almaktadır."))
+        self.employee_label.setText(_translate("DoneWidget", "employeeName"))
+        self.text_label_2.setText(_translate("DoneWidget", "Görevi\n"
 "Sil"))
-        self.show_btn.setText(_translate("TaskWill", "Şu an da işlem bekliyor. Detay görüntüle"))
-        self.text_label_3.setText(_translate("TaskWill", "Göreve\n"
-"Başla"))
+        self.show_btn.setText(_translate("DoneWidget", "Görev Tamamlandı Detay Görüntüle"))
 import image_rc

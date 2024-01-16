@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\UI\ui_add_task.ui'
+# Form implementation generated from reading ui file '.\UI\ui_task_update.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,13 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_AddTask(object):
-    def setupUi(self, AddTask):
-        AddTask.setObjectName("AddTask")
-        AddTask.resize(910, 400)
-        AddTask.setMinimumSize(QtCore.QSize(910, 400))
-        AddTask.setMaximumSize(QtCore.QSize(910, 400))
-        AddTask.setStyleSheet("*{\n"
+class Ui_UpdateTask(object):
+    def setupUi(self, UpdateTask):
+        UpdateTask.setObjectName("UpdateTask")
+        UpdateTask.resize(910, 400)
+        UpdateTask.setMinimumSize(QtCore.QSize(910, 400))
+        UpdateTask.setMaximumSize(QtCore.QSize(910, 400))
+        UpdateTask.setStyleSheet("*{\n"
 "font: 1000 12pt \"Montserrat\";\n"
 "border : none ;\n"
 "    color: rgb(255, 255, 255);\n"
@@ -39,11 +39,11 @@ class Ui_AddTask(object):
 "box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
 "border : 2px outset rgb(16, 16, 16);\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(AddTask)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.main_frame = QtWidgets.QFrame(AddTask)
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(UpdateTask)
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.main_frame = QtWidgets.QFrame(UpdateTask)
         self.main_frame.setMinimumSize(QtCore.QSize(0, 0))
         self.main_frame.setStyleSheet("QFrame#main_frame{\n"
 "background-color: rgb(7, 26, 35);\n"
@@ -76,7 +76,7 @@ class Ui_AddTask(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.title_label.sizePolicy().hasHeightForWidth())
         self.title_label.setSizePolicy(sizePolicy)
-        self.title_label.setMinimumSize(QtCore.QSize(150, 0))
+        self.title_label.setMinimumSize(QtCore.QSize(200, 0))
         self.title_label.setStyleSheet("color: rgb(229, 189, 48);\n"
 "background-color: rgb(9, 38, 53);\n"
 "border-radius : 5px;\n"
@@ -301,6 +301,27 @@ class Ui_AddTask(object):
         self.addTask_footer_frame.setObjectName("addTask_footer_frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.addTask_footer_frame)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.project_dlete_btn = QtWidgets.QPushButton(self.addTask_footer_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.project_dlete_btn.sizePolicy().hasHeightForWidth())
+        self.project_dlete_btn.setSizePolicy(sizePolicy)
+        self.project_dlete_btn.setStyleSheet("*{\n"
+"background-color: rgb(20, 66, 114);\n"
+"border-radius : 5px ;\n"
+"font: 600 12pt \"Montserrat\";\n"
+"padding : 4px;\n"
+"}\n"
+":hover{\n"
+"background-color: rgb(9, 33, 44);\n"
+"}")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/garbage.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.project_dlete_btn.setIcon(icon1)
+        self.project_dlete_btn.setIconSize(QtCore.QSize(20, 20))
+        self.project_dlete_btn.setObjectName("project_dlete_btn")
+        self.horizontalLayout_3.addWidget(self.project_dlete_btn)
         self.teher_project_label = QtWidgets.QLabel(self.addTask_footer_frame)
         self.teher_project_label.setObjectName("teher_project_label")
         self.horizontalLayout_3.addWidget(self.teher_project_label, 0, QtCore.Qt.AlignRight)
@@ -323,26 +344,27 @@ class Ui_AddTask(object):
         self.task_add_btn.setObjectName("task_add_btn")
         self.horizontalLayout_3.addWidget(self.task_add_btn)
         self.verticalLayout_4.addWidget(self.addTask_footer_frame)
-        self.verticalLayout.addWidget(self.main_frame)
+        self.horizontalLayout_6.addWidget(self.main_frame)
 
-        self.retranslateUi(AddTask)
-        QtCore.QMetaObject.connectSlotsByName(AddTask)
+        self.retranslateUi(UpdateTask)
+        QtCore.QMetaObject.connectSlotsByName(UpdateTask)
 
-    def retranslateUi(self, AddTask):
+    def retranslateUi(self, UpdateTask):
         _translate = QtCore.QCoreApplication.translate
-        AddTask.setWindowTitle(_translate("AddTask", "Form"))
-        self.title_label.setText(_translate("AddTask", "GÖREV EKLE"))
-        self.task_name_label.setText(_translate("AddTask", "Görev Adı :"))
-        self.task_describe_title.setText(_translate("AddTask", "Görev Açıklaması : "))
-        self.start_date_label.setText(_translate("AddTask", "Başlangıç Tarihi :"))
-        self.format_1.setText(_translate("AddTask", "format : (gg.aa.yyyy)           "))
-        self.end_date_label.setText(_translate("AddTask", "Bitiş Tarihi :"))
-        self.format_2.setText(_translate("AddTask", "format : (gg.aa.yyyy)"))
-        self.task_worker_label.setText(_translate("AddTask", "Görev Çalışanı :"))
-        self.select_there_label.setText(_translate("AddTask", "Şuradan Seç"))
-        self.workers_list_btn.setText(_translate("AddTask", "Çalışanlar Listesi"))
-        self.selected_worker_label.setText(_translate("AddTask", "UserName"))
-        self.teher_project_label.setText(_translate("AddTask", "Şu Projeye:"))
-        self.will_add_project_label.setText(_translate("AddTask", "${Eklenecek Proje Adı"))
-        self.task_add_btn.setText(_translate("AddTask", "Ekle"))
+        UpdateTask.setWindowTitle(_translate("UpdateTask", "Dialog"))
+        self.title_label.setText(_translate("UpdateTask", "GÖREV GÖRÜNTÜLE"))
+        self.task_name_label.setText(_translate("UpdateTask", "Görev Adı :"))
+        self.task_describe_title.setText(_translate("UpdateTask", "Görev Açıklaması : "))
+        self.start_date_label.setText(_translate("UpdateTask", "Başlangıç Tarihi :"))
+        self.format_1.setText(_translate("UpdateTask", "format : (gg.aa.yyyy)           "))
+        self.end_date_label.setText(_translate("UpdateTask", "Bitiş Tarihi :"))
+        self.format_2.setText(_translate("UpdateTask", "format : (gg.aa.yyyy)"))
+        self.task_worker_label.setText(_translate("UpdateTask", "Görev Çalışanı :"))
+        self.select_there_label.setText(_translate("UpdateTask", "Şuradan Seç"))
+        self.workers_list_btn.setText(_translate("UpdateTask", "Çalışanlar Listesi"))
+        self.selected_worker_label.setText(_translate("UpdateTask", "UserName"))
+        self.project_dlete_btn.setText(_translate("UpdateTask", "Projeyi Sil"))
+        self.teher_project_label.setText(_translate("UpdateTask", "Şu Projeye:"))
+        self.will_add_project_label.setText(_translate("UpdateTask", "${Eklenecek Proje Adı"))
+        self.task_add_btn.setText(_translate("UpdateTask", "GÜNCELLE"))
 import image_rc

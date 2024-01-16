@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TaskJamProjectInfo</class>
- <widget class="QDialog" name="TaskJamProjectInfo">
+ <class>UpdateTask</class>
+ <widget class="QDialog" name="UpdateTask">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>388</height>
+    <width>910</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>350</height>
+    <width>910</width>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1000</width>
-    <height>388</height>
+    <width>910</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,7 @@ box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
 border : 2px outset rgb(16, 16, 16);
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
+  <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -89,7 +89,7 @@ border : 2px outset rgb(120, 120, 120);
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>15</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>12</number>
@@ -101,10 +101,10 @@ border : 2px outset rgb(120, 120, 120);
        <number>12</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <item alignment="Qt::AlignTop">
-       <widget class="QFrame" name="addProject_header_freame">
+       <widget class="QFrame" name="addTask_header_freame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
           <horstretch>0</horstretch>
@@ -122,7 +122,7 @@ border : 2px outset rgb(120, 120, 120);
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>7</number>
+          <number>5</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -144,9 +144,6 @@ border : 2px outset rgb(120, 120, 120);
              <height>0</height>
             </size>
            </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(229, 189, 48);
 background-color: rgb(9, 38, 53);
@@ -154,7 +151,7 @@ border-radius : 5px;
 padding : 6px;</string>
            </property>
            <property name="text">
-            <string>PROJE GÖRÜNTÜLE</string>
+            <string>GÖREV GÖRÜNTÜLE</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -224,7 +221,7 @@ padding : 6px;</string>
        </widget>
       </item>
       <item alignment="Qt::AlignLeft">
-       <widget class="QFrame" name="addProject_name_frame">
+       <widget class="QFrame" name="addTask_name_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -245,10 +242,10 @@ padding : 6px;</string>
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>18</number>
+          <number>22</number>
          </property>
          <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="project_name_label">
+          <widget class="QLabel" name="task_name_label">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -268,7 +265,7 @@ padding : 6px;</string>
             </size>
            </property>
            <property name="text">
-            <string>Proje Adı :</string>
+            <string>Görev Adı :</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -276,7 +273,7 @@ padding : 6px;</string>
           </widget>
          </item>
          <item alignment="Qt::AlignLeft">
-          <widget class="QLineEdit" name="project_name_lineEdit">
+          <widget class="QLineEdit" name="task_name_lineEdit">
            <property name="minimumSize">
             <size>
              <width>240</width>
@@ -295,7 +292,7 @@ padding : 6px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="addProject_describe_frame">
+       <widget class="QFrame" name="addTask_describe_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -319,7 +316,7 @@ padding : 6px;</string>
           <number>29</number>
          </property>
          <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="project_describe_title">
+          <widget class="QLabel" name="task_describe_title">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -339,7 +336,7 @@ padding : 6px;</string>
             </size>
            </property>
            <property name="text">
-            <string>Proje Açıklaması :</string>
+            <string>Görev Açıklaması : </string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -347,7 +344,7 @@ padding : 6px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="project_describe_lineEdit">
+          <widget class="QLineEdit" name="lineEdit_2">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -366,7 +363,7 @@ padding : 6px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="addProject_date_row_frame">
+       <widget class="QFrame" name="addTask_date_row_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -375,7 +372,7 @@ padding : 6px;</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -387,7 +384,7 @@ padding : 6px;</string>
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>9</number>
+          <number>0</number>
          </property>
          <item alignment="Qt::AlignTop">
           <widget class="QLabel" name="start_date_label">
@@ -417,7 +414,7 @@ padding : 6px;</string>
            </property>
           </widget>
          </item>
-         <item alignment="Qt::AlignLeft">
+         <item>
           <widget class="QFrame" name="frame_2">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -529,7 +526,7 @@ padding : 6px;</string>
              <number>0</number>
             </property>
             <item alignment="Qt::AlignRight">
-             <widget class="QLineEdit" name="ending_date_lineEdit">
+             <widget class="QLineEdit" name="ending_datelineEdit">
               <property name="minimumSize">
                <size>
                 <width>240</width>
@@ -549,17 +546,11 @@ padding : 6px;</string>
             </item>
             <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="format_2">
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
               <property name="styleSheet">
                <string notr="true">font: 10pt &quot;Montserrat&quot;;</string>
               </property>
               <property name="text">
                <string>format : (gg.aa.yyyy)</string>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -570,20 +561,131 @@ padding : 6px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="addProject_footer_frame">
+       <widget class="QFrame" name="addTask_workers_row_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
          <property name="spacing">
-          <number>0</number>
+          <number>45</number>
          </property>
-         <property name="rightMargin">
-          <number>128</number>
-         </property>
+         <item>
+          <widget class="QLabel" name="task_worker_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>170</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>170</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Görev Çalışanı :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="select_there_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>170</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>170</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Şuradan Seç</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="workers_list_btn">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+padding : 6px;
+background-color: rgb(20, 66, 114);
+border-radius:5px;
+font: 11pt &quot;Montserrat&quot;;
+}
+
+QPushButton:hover{
+ background-color: #2980b9; /* Fare üzerine gelindiğinde arkaplan rengi 
+ }</string>
+           </property>
+           <property name="text">
+            <string>Çalışanlar Listesi</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QLabel" name="selected_worker_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding : 6px;
+background-color: rgb(20, 69, 93);
+border-radius:5px;
+font: 11pt &quot;Montserrat&quot;;
+box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
+border : 2px outset rgb(16, 16, 16);</string>
+           </property>
+           <property name="text">
+            <string>UserName</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="addTask_footer_frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QPushButton" name="project_dlete_btn">
            <property name="sizePolicy">
@@ -618,8 +720,22 @@ background-color: rgb(9, 33, 44);
            </property>
           </widget>
          </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QLabel" name="teher_project_label">
+           <property name="text">
+            <string>Şu Projeye:</string>
+           </property>
+          </widget>
+         </item>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="project_update_btnn">
+          <widget class="QLabel" name="will_add_project_label">
+           <property name="text">
+            <string>${Eklenecek Proje Adı</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="task_add_btn">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -637,7 +753,7 @@ background-color: rgb(9, 33, 44);
 padding : 6px;
 	background-color: rgb(33, 164, 62);
 border-radius:5px;
-font: 600 12pt &quot;Montserrat&quot;;
+font: 1000 12pt &quot;Montserrat&quot;;
 }
 
 QPushButton:hover{
@@ -645,27 +761,11 @@ QPushButton:hover{
  }</string>
            </property>
            <property name="text">
-            <string>Güncelle</string>
+            <string>GÜNCELLE</string>
            </property>
           </widget>
          </item>
         </layout>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignRight">
-       <widget class="QLabel" name="status_label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color : rgb(195, 49, 49);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
        </widget>
       </item>
      </layout>

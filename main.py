@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QHBoxLayout,QPushButton, QFrame
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QHBoxLayout,QPushButton, QFrame, QSizePolicy
 from PyQt5.QtCore import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -9,6 +9,7 @@ from UI.my_ui import Ui_MainWindow
 from modals.taskInfo import TaskInfo
 from modals.userInfo import UserInfo
 from modals.employeeInfo import EmployeeInfo
+from modals.selectedEmployee import SelectedEmployee
 from database import db_Helper
 from add_project import AddProjectWindow
 from UI.project_widget_ui import Ui_ProjectWindow
@@ -40,8 +41,9 @@ class MainWİndow(QMainWindow) :
 
     def setState(self):
         self.projectRowUpdate()
-        self.addWillTaskWidgetsUpdate()
+        self.tasksTableUpdateAll() if(self.myProject !=None) else print("proje yok")
         self.employeeListWidgetUpdate()
+        print("SetState Gerçekleşti")
 
     def buttonSetting(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
@@ -84,7 +86,6 @@ class MainWİndow(QMainWindow) :
     def deleteEmployee(self):
         self.ui.employee_detail_stackwidget.setCurrentIndex(0)
         self.db.deleteEmployeeID(self.myEmployee.employeeID)
-        self.myEmployee = None
         self.setState()
 
     def employeeAdd(self):
@@ -120,8 +121,11 @@ class MainWİndow(QMainWindow) :
         self.setState()
 
     def taskAdd(self):
-        self.tasskAddWindow = AddTask()
+        #proje seçiliyken tıklanmamsı gerekiyor.
+        self.tasskAddWindow = AddTask(self.myProject.projectName)
         self.tasskAddWindow.show()
+        self.tasskAddWindow.mainWindowSocket.connect(lambda response : self.setState() if(response == "55 TAMM") else print("zorrtt"))
+
 
     def projectAdd(self):
         self.projectAddWindow = AddProjectWindow(self.user)
@@ -217,20 +221,108 @@ class MainWİndow(QMainWindow) :
         self.myProject = item
         self.setState()
 
-    def addWillTaskWidgetsUpdate(self):
-        self.clear_layout(self.ui.will_done_scroll_area_content_layout)  #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
+    def tasksTableUpdateAll(self):
+        #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
+        self.clear_layout(self.ui.will_done_scroll_area_content_layout) 
+        self.clear_layout(self.ui.working_scroll_area_content_layout)
+        self.clear_layout(self.ui.done_scroll_area_cotent_layout)
         
-        users = self.db
+        listOfAllTasks = self.db.showTasksBasedOnStatusAndProjectID(projectID= self.myProject.projectID)
 
-        for item in self.users:
+        # users = self.db.
+        self.loadWrkingTask(listOfAllTasks[1])
+        for item in listOfAllTasks[0]: #TAMAMLANACAK BÖLGESİ İÇİN
             widget = QWidget(self)
-            self.ui
             taskWillWidget =  Ui_TaskWill()
             taskWillWidget.setupUi(widget)
             self.ui.will_done_scroll_area_content_layout.addWidget(widget)
-            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.users.pop(self.users.index(item)))
+            taskWillWidget.taskname_label.setText(item.taskName)
+            taskWillWidget.describe_label.setText(item.taskDescription)
+            taskWillWidget.starting_date_label.setText(item.startingDate)
+            taskWillWidget.end_date_label.setText(item.endDate)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(task.taskID))
             taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+            taskWillWidget.resume_btn.clicked.connect(lambda _, itemTask = item : self.db.updateTaskStatus(1, itemTask.taskID))
+            taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+        
+        """for item in listOfAllTasks[1]: #TAMAMLANACAK BÖLGESİ İÇİN
+            widget = QWidget(self)
+            taskWillWidget =  Ui_TaskWill()
+            taskWillWidget.setupUi(widget)
+            self.ui.working_scroll_area_content_layout.addWidget(widget)
+            taskWillWidget.taskname_label.setText(item.taskName)
+            taskWillWidget.describe_label.setText(item.taskDescription)
+            taskWillWidget.starting_date_label.setText(item.startingDate)
+            taskWillWidget.end_date_label.setText(item.endDate)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+            # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.updateTaskStatus(0, task.taskID))
+            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+            taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.db.updateTaskStatus(2,task2.taskID))
+            taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())"""
 
+        
+        for item in listOfAllTasks[2]: #TAMAMLANACAK BÖLGESİ İÇİN
+            widget = QWidget(self)
+            taskWillWidget =  Ui_TaskWill()
+            taskWillWidget.setupUi(widget)
+            self.ui.done_scroll_area_cotent_layout.addWidget(widget)
+            taskWillWidget.taskname_label.setText(item.taskName)
+            taskWillWidget.describe_label.setText(item.taskDescription)
+            taskWillWidget.starting_date_label.setText(item.startingDate)
+            taskWillWidget.end_date_label.setText(item.endDate)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID = item.employeeID).employeeName)
+              # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.updateTaskStatus(1, task.taskID))
+            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+    
+    def loadWrkingTask(self, listOfAllTasks):
+
+        for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
+                widget = QWidget(self)
+                taskWillWidget =  Ui_TaskWill()
+                taskWillWidget.setupUi(widget)
+                self.ui.working_scroll_area_content_layout.addWidget(widget)
+                taskWillWidget.taskname_label.setText(item.taskName)
+                taskWillWidget.describe_label.setText(item.taskDescription)
+                fark = (datetime.datetime.now() - self.convertDateFromStr(item.startingDate)).days 
+                if (fark > 0):
+                    taskWillWidget.end_date_frame.deleteLater()
+                    taskWillWidget.starting_date_frame.deleteLater()
+                    Label = QLabel(taskWillWidget.date_frame)
+                    Label.setMaximumSize(QSize(15, 15))
+                    Label.setText("aaaa")
+                    Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
+                    Label2 = QLabel("Görev")
+                    Label3 = QLabel(str(fark) + "Gün Gecikti")
+                    taskWillWidget.horizontalLayout_3.addWidget(Label2)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label3)
+                    sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+                    sizePolicy.setHorizontalStretch(0)
+                    sizePolicy.setVerticalStretch(0)
+                    taskWillWidget.date_frame.setSizePolicy(sizePolicy)
+                    # otherTAsk = QFrame(taskWillWidget.date_frame)
+                    # otherTAsk.setLayout(QHBoxLayout("myLayout"))
+                    # otherTAsk.myLayout.addWidget(QLabel("Görev"))
+
+                taskWillWidget.starting_date_label.setText(item.startingDate)
+                taskWillWidget.end_date_label.setText(item.endDate)
+                taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+                # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.updateTaskStatus(0, task.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+                taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.db.updateTaskStatus(2,task2.taskID))
+                taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+
+    def convertDateFromStr(self, strDate):
+        today = datetime.datetime.strptime(strDate,"%d.%m.%Y")
+        return today
+    
+    def changeStatusTask(self, taskID):
+        print("asda")
+        self.db.updateTaskStatus(1,taskID)
+        self.setState()
 
     def WindowSize(self):
         if self.isMaximized():  # Eğer pencere küçültülmüşse

@@ -4,6 +4,8 @@
     <file>profile-icon-9.png</file>
   </qresource>
   <qresource prefix="icons">
+    <file>icons/rect_attention.png</file>
+    <file>icons/info.png</file>
     <file>icons/garbageRed.png</file>
     <file>icons/resume.png</file>
     <file>icons/yellow_set.png</file>

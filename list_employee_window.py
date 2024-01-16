@@ -40,6 +40,7 @@ class ListEmployeeWindow(QDialog):
             employeeListWidget.user_mail_label.setText(item.employeeMail)
             employeeListWidget.selected_btn.clicked.connect(lambda _, selectedEmployee = item : self.setEmployee(selectedEmployee))
             self.ui.employee_List_widget_layout.addWidget(widget)
+
     def setEmployee(self, selectedEmployee):
         self.connectMain.emit(selectedEmployee)
         self.close()

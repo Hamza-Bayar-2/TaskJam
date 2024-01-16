@@ -62,6 +62,7 @@ class ProjectUpdate(QDialog):
             self.db.updateProject(
                 ProjectInfo(
                     projectID = self.myProject.projectID,
+                    userID= None,
                     projectName= projectName,
                     projectDescription= projectDescription,
                     startingDate= projectStartingDate,
