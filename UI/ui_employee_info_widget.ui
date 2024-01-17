@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>inof_emp</class>
+ <widget class="QWidget" name="inof_emp">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -59,14 +59,14 @@ color : rgb(255,255,255);</string>
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="taskName">
         <property name="text">
          <string>TaskNAme</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="info_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -126,7 +126,7 @@ background-color: rgb(20, 69, 93);
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="startingDate">
         <property name="text">
          <string>startingDate</string>
         </property>
@@ -136,7 +136,7 @@ background-color: rgb(20, 69, 93);
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="endDAte">
         <property name="text">
          <string>EndDAte</string>
         </property>

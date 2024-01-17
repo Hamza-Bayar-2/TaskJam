@@ -595,6 +595,8 @@ class Ui_MainWindow(object):
         self.working_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.working_frame.setObjectName("working_frame")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.working_frame)
+        self.horizontalLayout_17.setContentsMargins(0, 0, 0, 5)
+        self.horizontalLayout_17.setSpacing(0)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
         self.working_pageView = QtWidgets.QStackedWidget(self.working_frame)
         self.working_pageView.setObjectName("working_pageView")
@@ -612,7 +614,7 @@ class Ui_MainWindow(object):
         self.working_scroll_area.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.working_scroll_area.setObjectName("working_scroll_area")
         self.working_scroll_area_content = QtWidgets.QWidget()
-        self.working_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 385, 513))
+        self.working_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 403, 526))
         self.working_scroll_area_content.setObjectName("working_scroll_area_content")
         self.working_scroll_area_content_layout = QtWidgets.QVBoxLayout(self.working_scroll_area_content)
         self.working_scroll_area_content_layout.setContentsMargins(0, 15, 0, 15)
@@ -1329,7 +1331,7 @@ class Ui_MainWindow(object):
         self.frame_22.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_22.setObjectName("frame_22")
         self.verticalLayout_33 = QtWidgets.QVBoxLayout(self.frame_22)
-        self.verticalLayout_33.setContentsMargins(-1, -1, -1, 0)
+        self.verticalLayout_33.setContentsMargins(-1, 0, -1, 0)
         self.verticalLayout_33.setSpacing(0)
         self.verticalLayout_33.setObjectName("verticalLayout_33")
         self.frame_29 = QtWidgets.QFrame(self.frame_22)
@@ -1588,9 +1590,9 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.working_pageView.setCurrentIndex(0)
-        self.employee_detail_stackwidget.setCurrentIndex(0)
+        self.employee_detail_stackwidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

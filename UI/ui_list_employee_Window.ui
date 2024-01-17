@@ -160,6 +160,9 @@ padding : 6px;
            <height>322</height>
           </rect>
          </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <layout class="QVBoxLayout" name="employee_List_widget_layout"/>
         </widget>
        </widget>

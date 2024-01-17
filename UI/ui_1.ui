@@ -688,7 +688,7 @@ font: 2000 9pt &quot;Montserrat&quot;;</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="home_page">
           <property name="styleSheet">
@@ -1381,10 +1381,25 @@ QPushButton:hover{
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_17">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>5</number>
+                       </property>
                        <item>
                         <widget class="QStackedWidget" name="working_pageView">
                          <property name="currentIndex">
-                          <number>1</number>
+                          <number>0</number>
                          </property>
                          <widget class="QWidget" name="working_task_page">
                           <layout class="QHBoxLayout" name="horizontalLayout_18">
@@ -1425,8 +1440,8 @@ QPushButton:hover{
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>385</width>
-                                <height>513</height>
+                                <width>403</width>
+                                <height>526</height>
                                </rect>
                               </property>
                               <layout class="QVBoxLayout" name="working_scroll_area_content_layout">
@@ -2282,7 +2297,7 @@ border-radius : 10px;
               <item>
                <widget class="QStackedWidget" name="employee_detail_stackwidget">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="welcome_page_emp_detail">
                  <layout class="QHBoxLayout" name="horizontalLayout_61">
@@ -3134,6 +3149,9 @@ border-radius : 5px;
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_33">
                            <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
                             <number>0</number>
                            </property>
                            <property name="bottomMargin">

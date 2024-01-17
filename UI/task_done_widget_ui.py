@@ -14,15 +14,17 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DoneWidget(object):
     def setupUi(self, DoneWidget):
         DoneWidget.setObjectName("DoneWidget")
-        DoneWidget.resize(470, 139)
-        DoneWidget.setMaximumSize(QtCore.QSize(742, 140))
+        DoneWidget.resize(471, 160)
+        DoneWidget.setMinimumSize(QtCore.QSize(471, 160))
+        DoneWidget.setMaximumSize(QtCore.QSize(471, 160))
         DoneWidget.setStyleSheet("*{\n"
 "background-color: rgb(9, 38, 53);\n"
-"    font: 22pt \"Montserrat\";\n"
+"font: 22pt \"Montserrat\";\n"
 "}\n"
-"#TaskWill{\n"
+"#DoneWidget{\n"
 "background-color: rgb(9, 38, 53);\n"
 "border : 2px outset rgb(16, 16, 16);\n"
+"border-radius : 5px;\n"
 "}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(DoneWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -30,7 +32,6 @@ class Ui_DoneWidget(object):
         self.main_frame.setStyleSheet("QFrame#main_frame{\n"
 "background-color: rgb(9, 38, 53);\n"
 "border-raius : 5px;\n"
-"\n"
 "}\n"
 "*{\n"
 "color: rgb(255, 255, 255);\n"
@@ -69,7 +70,12 @@ class Ui_DoneWidget(object):
         self.taskname_label.setObjectName("taskname_label")
         self.horizontalLayout_2.addWidget(self.taskname_label)
         self.header_right_frame = QtWidgets.QFrame(self.header_frame)
-        self.header_right_frame.setMaximumSize(QtCore.QSize(150, 16777215))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.header_right_frame.sizePolicy().hasHeightForWidth())
+        self.header_right_frame.setSizePolicy(sizePolicy)
+        self.header_right_frame.setMaximumSize(QtCore.QSize(200, 16777215))
         self.header_right_frame.setStyleSheet("")
         self.header_right_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.header_right_frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -97,7 +103,7 @@ class Ui_DoneWidget(object):
         self.text_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.text_label.setObjectName("text_label")
         self.verticalLayout_2.addWidget(self.text_label, 0, QtCore.Qt.AlignRight)
-        self.horizontalLayout_2.addWidget(self.header_right_frame)
+        self.horizontalLayout_2.addWidget(self.header_right_frame, 0, QtCore.Qt.AlignRight)
         self.label = QtWidgets.QLabel(self.header_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -111,21 +117,28 @@ class Ui_DoneWidget(object):
         self.horizontalLayout_2.addWidget(self.label)
         self.verticalLayout.addWidget(self.header_frame, 0, QtCore.Qt.AlignTop)
         self.describe_label = QtWidgets.QLabel(self.main_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.describe_label.sizePolicy().hasHeightForWidth())
         self.describe_label.setSizePolicy(sizePolicy)
+        self.describe_label.setAlignment(QtCore.Qt.AlignCenter)
         self.describe_label.setObjectName("describe_label")
-        self.verticalLayout.addWidget(self.describe_label)
+        self.verticalLayout.addWidget(self.describe_label, 0, QtCore.Qt.AlignTop)
         self.employee_label = QtWidgets.QLabel(self.main_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.employee_label.sizePolicy().hasHeightForWidth())
         self.employee_label.setSizePolicy(sizePolicy)
+        self.employee_label.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
+"padding : 5px;\n"
+"border-radius : 5px;\n"
+"}\n"
+"")
         self.employee_label.setObjectName("employee_label")
-        self.verticalLayout.addWidget(self.employee_label)
+        self.verticalLayout.addWidget(self.employee_label, 0, QtCore.Qt.AlignTop)
         self.footer_frame = QtWidgets.QFrame(self.main_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)

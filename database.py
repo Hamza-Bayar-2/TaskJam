@@ -266,7 +266,7 @@ class db_Helper:
         for iter in allEndDates:
             end = iter[0]
             endDate = datetime.strptime(end, "%d.%m.%Y")
-            daysDifference = (endDate - todayDate).days
+            daysDifference = (todayDate - endDate).days
             resultOfDelayAmount = max(daysDifference, 0)
 
             if resultOfDelayAmount == 0 :
@@ -278,7 +278,7 @@ class db_Helper:
             UPDATE
                 employees
             SET
-                AmountOfTasksCompletedOnTime = ?
+                AmountOfTasksCompletedOnTime = ?,
                 AmountOfTasksNotCompletedOnTime = ?
             WHERE
                 employeeID = ?
@@ -499,6 +499,18 @@ class db_Helper:
         ''', (taskStatus, taskID,))
         self.conn.commit()
 
+    #istediğim değeri manuel atama
+    def changeTaskDelayAmount(self, taskId, amount):
+        self.cursor.execute('''
+            UPDATE 
+                tasks
+            SET 
+                delayAmount = ?
+            WHERE 
+                taskID = ?
+        ''', (amount if amount >= 0 else 0, taskId))
+        self.conn.commit()
+
     # görevin gecikme miktarını güncellemeye yarar
     def updateTaskDelayAmount(self, taskID) :
         self.cursor.execute('''
@@ -516,10 +528,10 @@ class db_Helper:
         todayDate = datetime.strptime(today, "%d.%m.%Y")
         endDate = datetime.strptime(end, "%d.%m.%Y")
 
-        daysDifference = (endDate - todayDate).days
+        daysDifference = (todayDate - endDate).days
 
         resultOfDelayAmount = max(daysDifference, 0)
-
+        print("databaseden geldi = ", daysDifference)
         self.cursor.execute('''
             UPDATE 
                 tasks
@@ -626,15 +638,11 @@ class db_Helper:
     def showTasksBasedOnStatusAndEmployeeID(self, employeeID) :
         self.cursor.execute('''
             SELECT
-                taskID,
-                taskName,
-                startingDate,
-                endDate,
-                taskStatus
+                *
             FROM
                 tasks
             WHERE
-                projectID = ?
+                employeeID = ?
         ''', (employeeID,))
 
         goingToCompleteTasks = []
@@ -646,31 +654,46 @@ class db_Helper:
         allTasks = self.cursor.fetchall()
 
         for item in allTasks :
-            if item[4] == 0 :
+            if item[7] == 0 :
                 goingToCompleteTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[4] == 1 :
+            elif item[7] == 1 :
                 ongoingTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                   TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[4] == 2 :
+            elif item[7] == 2 :
                 completedTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
         

@@ -79,6 +79,7 @@ class Ui_ListEmployee_Window(object):
         self.employee_list_scrollArea.setObjectName("employee_list_scrollArea")
         self.employee_List_widget = QtWidgets.QWidget()
         self.employee_List_widget.setGeometry(QtCore.QRect(0, 0, 530, 322))
+        self.employee_List_widget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.employee_List_widget.setObjectName("employee_List_widget")
         self.employee_List_widget_layout = QtWidgets.QVBoxLayout(self.employee_List_widget)
         self.employee_List_widget_layout.setObjectName("employee_List_widget_layout")

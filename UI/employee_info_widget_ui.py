@@ -11,19 +11,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(200, 90)
-        Form.setMinimumSize(QtCore.QSize(200, 90))
-        Form.setMaximumSize(QtCore.QSize(200, 90))
-        Form.setStyleSheet("background-color: rgb(7, 26, 35);\n"
+class Ui_inof_emp(object):
+    def setupUi(self, inof_emp):
+        inof_emp.setObjectName("inof_emp")
+        inof_emp.resize(200, 90)
+        inof_emp.setMinimumSize(QtCore.QSize(200, 90))
+        inof_emp.setMaximumSize(QtCore.QSize(200, 90))
+        inof_emp.setStyleSheet("background-color: rgb(7, 26, 35);\n"
 "border-radius: 5px;\n"
 "color : rgb(255,255,255);")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
+        self.verticalLayout = QtWidgets.QVBoxLayout(inof_emp)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.frame = QtWidgets.QFrame(Form)
+        self.frame = QtWidgets.QFrame(inof_emp)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -31,16 +31,16 @@ class Ui_Form(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(8)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_3 = QtWidgets.QLabel(self.frame)
-        self.label_3.setObjectName("label_3")
-        self.horizontalLayout_2.addWidget(self.label_3)
-        self.pushButton = QtWidgets.QPushButton(self.frame)
+        self.taskName = QtWidgets.QLabel(self.frame)
+        self.taskName.setObjectName("taskName")
+        self.horizontalLayout_2.addWidget(self.taskName)
+        self.info_btn = QtWidgets.QPushButton(self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy)
-        self.pushButton.setStyleSheet("QPushButton{\n"
+        sizePolicy.setHeightForWidth(self.info_btn.sizePolicy().hasHeightForWidth())
+        self.info_btn.setSizePolicy(sizePolicy)
+        self.info_btn.setStyleSheet("QPushButton{\n"
 "border:none;\n"
 "paddin:5p;\n"
 "}\n"
@@ -48,15 +48,15 @@ class Ui_Form(object):
 ":hover{\n"
 "background-color: rgb(20, 69, 93);\n"
 "}")
-        self.pushButton.setText("")
+        self.info_btn.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/info.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton.setIcon(icon)
-        self.pushButton.setIconSize(QtCore.QSize(26, 26))
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_2.addWidget(self.pushButton)
+        self.info_btn.setIcon(icon)
+        self.info_btn.setIconSize(QtCore.QSize(26, 26))
+        self.info_btn.setObjectName("info_btn")
+        self.horizontalLayout_2.addWidget(self.info_btn)
         self.verticalLayout.addWidget(self.frame)
-        self.frame_2 = QtWidgets.QFrame(Form)
+        self.frame_2 = QtWidgets.QFrame(inof_emp)
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -64,23 +64,23 @@ class Ui_Form(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(12)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtWidgets.QLabel(self.frame_2)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.horizontalLayout.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(self.frame_2)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout.addWidget(self.label_2)
+        self.startingDate = QtWidgets.QLabel(self.frame_2)
+        self.startingDate.setAlignment(QtCore.Qt.AlignCenter)
+        self.startingDate.setObjectName("startingDate")
+        self.horizontalLayout.addWidget(self.startingDate)
+        self.endDAte = QtWidgets.QLabel(self.frame_2)
+        self.endDAte.setAlignment(QtCore.Qt.AlignCenter)
+        self.endDAte.setObjectName("endDAte")
+        self.horizontalLayout.addWidget(self.endDAte)
         self.verticalLayout.addWidget(self.frame_2)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(inof_emp)
+        QtCore.QMetaObject.connectSlotsByName(inof_emp)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, inof_emp):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_3.setText(_translate("Form", "TaskNAme"))
-        self.label.setText(_translate("Form", "startingDate"))
-        self.label_2.setText(_translate("Form", "EndDAte"))
+        inof_emp.setWindowTitle(_translate("inof_emp", "Form"))
+        self.taskName.setText(_translate("inof_emp", "TaskNAme"))
+        self.startingDate.setText(_translate("inof_emp", "startingDate"))
+        self.endDAte.setText(_translate("inof_emp", "EndDAte"))
 import image_rc

@@ -149,7 +149,7 @@ font: 600 8pt &quot;Montserrat&quot;;
           <widget class="QFrame" name="header_right_frame">
            <property name="maximumSize">
             <size>
-             <width>150</width>
+             <width>200</width>
              <height>16777215</height>
             </size>
            </property>
@@ -252,15 +252,26 @@ font: 600 8pt &quot;Montserrat&quot;;
         <property name="text">
          <string>Burada görev açıklaması yer almaktadır.</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="employee_label">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">*{
+background-color: rgb(7, 26, 35);
+padding : 5px;
+border-radius : 5px;
+}
+</string>
         </property>
         <property name="text">
          <string>employeeName</string>
