@@ -5,6 +5,8 @@ from modals.tasksBasedOnStatusAndEmployeeID import TasksBasedOnStatusAndEmployee
 from modals.tasksBasedOnStatusAndProjectID import TasksBasedOnStatusAndProjectID 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
+from modals.employeeInfo import EmployeeInfo
+from modals.taskInfo import TaskInfo
 
 class db_Helper:
     def __init__(self) -> None:
@@ -159,7 +161,7 @@ class db_Helper:
 
 
     # çalışan eklerken ilk başta hiç bir görevi olmadığı için hepsine sıfır atıyoruz
-    def addNewEmployee(self, userID, employeeName, employeeSurname, employeeMail) :
+    def addNewEmployee(self, EmployeeInfo) :
         self.cursor.execute('''
             INSERT INTO employees(
                 userID,
@@ -170,7 +172,7 @@ class db_Helper:
                 AmountOfTasksNotCompletedOnTime
             )
             VALUES(?, ?, ?, ?, ?, ?)
-        ''', (userID, employeeName, employeeSurname, employeeMail, 0, 0,))
+        ''', (EmployeeInfo.userID, EmployeeInfo.employeeName, EmployeeInfo.employeeSurname, EmployeeInfo.employeeMail, 0, 0,))
         self.conn.commit()
 
     # bütün çalışanları döndürür
@@ -190,6 +192,20 @@ class db_Helper:
                 1
         ''')
         self.conn.commit()
+        projectsList = []
+        for item in self.cursor.fetchall() :
+            projectsList.append(
+                EmployeeInfo(
+                    employeeID = item[0],
+                    userID = item[1],
+                    employeeName = item[2],
+                    employeeSurname = item[3], 
+                    employeeMail = item[4], 
+                    AmountOfTasksCompletedOnTime= item[4],
+                    AmountOfTasksNotCompletedOnTime = item[5]
+                )
+            )
+        return projectsList
 
     # seçilen çalışanın, ekranın sağ tarafında gösterilecek bilgiler
     # task status (tamamlanacak: 0, devam ediyor: 1, tamamlandi: 2 )
@@ -250,7 +266,7 @@ class db_Helper:
         for iter in allEndDates:
             end = iter[0]
             endDate = datetime.strptime(end, "%d.%m.%Y")
-            daysDifference = (endDate - todayDate).days
+            daysDifference = (todayDate - endDate).days
             resultOfDelayAmount = max(daysDifference, 0)
 
             if resultOfDelayAmount == 0 :
@@ -262,7 +278,7 @@ class db_Helper:
             UPDATE
                 employees
             SET
-                AmountOfTasksCompletedOnTime = ?
+                AmountOfTasksCompletedOnTime = ?,
                 AmountOfTasksNotCompletedOnTime = ?
             WHERE
                 employeeID = ?
@@ -307,7 +323,7 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
-    def addNewProject(self, UserInfo, ProjectInfo) :
+    def addNewProject(self, userID,ProjectInfo) :
         self.cursor.execute('''
             INSERT INTO projects(
                 userID,
@@ -318,7 +334,7 @@ class db_Helper:
                 delayAmount
             )
             VALUES(?, ?, ?, ?, ?, ?)
-        ''', (UserInfo.userID, ProjectInfo.projectName, ProjectInfo.projectDescription, ProjectInfo.startingDate, ProjectInfo.endDate, 0))
+        ''', (userID, ProjectInfo.projectName, ProjectInfo.projectDescription, ProjectInfo.startingDate, ProjectInfo.endDate, 0))
         self.conn.commit()
         print(self.cursor.fetchall())
 
@@ -326,11 +342,7 @@ class db_Helper:
     def showProjectOnDetailPage(self, projectName) :
         self.cursor.execute('''
             SELECT
-                projectName,
-                projectDescription,
-                startingDate,
-                endDate,
-                delayAmount
+                *
             FROM
                 projects
             WHERE
@@ -338,13 +350,15 @@ class db_Helper:
         ''', (projectName,))
         self.conn.commit()
         project = self.cursor.fetchall()
+        print(project)
         return ProjectInfo(
             projectID = project[0][0], 
-            projectName = project[0][1], 
-            projectDescription = project[0][2], 
-            startingDate = project[0][3], 
-            endDate = project[0][4], 
-            delayAmount = project[0][4]) if len(project) != 0 else None
+            userID= project[0][1],
+            projectName = project[0][2], 
+            projectDescription = project[0][3], 
+            startingDate = project[0][4], 
+            endDate = project[0][5], 
+            delayAmount = project[0][6]) if len(project) != 0 else None
 
     # ana sayfadaki en üst kısımdaki projectsim kısmındaki projectsi görüntülemeyi sağlayacak bu fonksiyon
     def showAllProjects(self, userId) :
@@ -367,6 +381,7 @@ class db_Helper:
         for item in self.cursor.fetchall() :
             projectsList.append(
                 ProjectInfo(
+                    userID=None,
                     projectID= item[0],
                     projectName = item[1],
                     projectDescription = item[2],
@@ -441,7 +456,7 @@ class db_Helper:
 
 
     # taskStatus yani görev durumu tamamlanacak: 0 olarak atıyoruz. 
-    def addNewTask(self, projectID, employeeID, taskName, taskDescription, startingDate, endDate) :
+    def addNewTask(self, TaskInfo) :
         self.cursor.execute('''
             INSERT INTO tasks(
                 projectID ,
@@ -454,7 +469,7 @@ class db_Helper:
                 delayAmount 
             )
             VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (projectID, employeeID, taskName, taskDescription, startingDate, endDate, 0, 0,))
+        ''', (TaskInfo.projectID, TaskInfo.employeeID, TaskInfo.taskName, TaskInfo.taskDescription, TaskInfo.startingDate, TaskInfo.endDate, TaskInfo.taskStatus, TaskInfo.delayAmount,))
         self.conn.commit()
 
     def updateTask(self, employeeID, taskName, taskDescription, startingDate, endDate, taskID) :
@@ -484,6 +499,18 @@ class db_Helper:
         ''', (taskStatus, taskID,))
         self.conn.commit()
 
+    #istediğim değeri manuel atama
+    def changeTaskDelayAmount(self, taskId, amount):
+        self.cursor.execute('''
+            UPDATE 
+                tasks
+            SET 
+                delayAmount = ?
+            WHERE 
+                taskID = ?
+        ''', (amount if amount >= 0 else 0, taskId))
+        self.conn.commit()
+
     # görevin gecikme miktarını güncellemeye yarar
     def updateTaskDelayAmount(self, taskID) :
         self.cursor.execute('''
@@ -501,10 +528,10 @@ class db_Helper:
         todayDate = datetime.strptime(today, "%d.%m.%Y")
         endDate = datetime.strptime(end, "%d.%m.%Y")
 
-        daysDifference = (endDate - todayDate).days
+        daysDifference = (todayDate - endDate).days
 
         resultOfDelayAmount = max(daysDifference, 0)
-
+        print("databaseden geldi = ", daysDifference)
         self.cursor.execute('''
             UPDATE 
                 tasks
@@ -544,18 +571,13 @@ class db_Helper:
     def showTasksBasedOnStatusAndProjectID(self, projectID) :
         self.cursor.execute('''
             SELECT
-                taskID,
-                taskName,
-                taskDescription,
-                startingDate,
-                endDate,
-                delayAmount,
-                taskStatus
+                *
             FROM
                 tasks
             WHERE
                 projectID = ?
         ''', (projectID,))
+        self.conn.commit()
 
         goingToCompleteTasks = []
         ongoingTasks = []
@@ -564,42 +586,50 @@ class db_Helper:
         listOfAllTasks = []
 
         allTasks = self.cursor.fetchall()
-
+        # allTasks = self.cursor.fetchall()
         for item in allTasks :
-            if item[6] == 0 :
+            if item[7] == 0 :
                 goingToCompleteTasks.append(
-                    TasksBasedOnStatusAndProjectID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        taskDescription = item[2],
-                        startingDate = item[3],
-                        endDate = item[4],
-                        delayAmount = item[5]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[6] == 1 :
+            elif item[7] == 1 :
                 ongoingTasks.append(
-                    TasksBasedOnStatusAndProjectID(
+                   TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        taskDescription = item[2],
-                        startingDate = item[3],
-                        endDate = item[4],
-                        delayAmount = item[5]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[6] == 2 :
+            elif item[7] == 2 :
                 completedTasks.append(
-                    TasksBasedOnStatusAndProjectID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        taskDescription = item[2],
-                        startingDate = item[3],
-                        endDate = item[4],
-                        delayAmount = item[5]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-        
         listOfAllTasks = [goingToCompleteTasks, ongoingTasks, completedTasks]
         return listOfAllTasks
 
@@ -608,15 +638,11 @@ class db_Helper:
     def showTasksBasedOnStatusAndEmployeeID(self, employeeID) :
         self.cursor.execute('''
             SELECT
-                taskID,
-                taskName,
-                startingDate,
-                endDate,
-                taskStatus
+                *
             FROM
                 tasks
             WHERE
-                projectID = ?
+                employeeID = ?
         ''', (employeeID,))
 
         goingToCompleteTasks = []
@@ -628,31 +654,46 @@ class db_Helper:
         allTasks = self.cursor.fetchall()
 
         for item in allTasks :
-            if item[4] == 0 :
+            if item[7] == 0 :
                 goingToCompleteTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[4] == 1 :
+            elif item[7] == 1 :
                 ongoingTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                   TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
-            elif item[4] == 2 :
+            elif item[7] == 2 :
                 completedTasks.append(
-                    TasksBasedOnStatusAndEmployeeID(
+                    TaskInfo(
                         taskID = item[0],
-                        taskName = item[1],
-                        startingDate = item[2],
-                        endDate = [3]
+                        projectID = item [1],
+                        employeeID = item [2],
+                        taskName = item[3],
+                        taskDescription = item[4],
+                        startingDate = item[5],
+                        endDate = item[6],
+                        taskStatus = item[7],
+                        delayAmount = item[8]
                     )
                 )
         

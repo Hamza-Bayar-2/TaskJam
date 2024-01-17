@@ -52,12 +52,13 @@ class AddProjectWindow(QDialog):
         else :
             newProject = ProjectInfo(
                 projectID = None,
+                userID= self.user.userID,
                 projectName = projectName,
                 projectDescription = projectDescription,
                 startingDate = startingDate,
                 endDate = endDate,
                 delayAmount = 0,)
-            self.db.addNewProject(self.user, newProject)
+            self.db.addNewProject(self.user.userID,newProject)
             self.mainServer.emit("55 TAMM")
             self.close()
 

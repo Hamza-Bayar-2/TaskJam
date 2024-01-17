@@ -645,7 +645,7 @@ QPushButton:hover{
  }</string>
            </property>
            <property name="text">
-            <string>GÜNCELLE</string>
+            <string>Güncelle</string>
            </property>
           </widget>
          </item>

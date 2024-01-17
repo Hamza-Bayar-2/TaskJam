@@ -193,6 +193,7 @@ class Ui_AddTask(object):
         self.starting_date_lineEdit = QtWidgets.QLineEdit(self.frame_2)
         self.starting_date_lineEdit.setMinimumSize(QtCore.QSize(240, 0))
         self.starting_date_lineEdit.setMaximumSize(QtCore.QSize(240, 16777215))
+        self.starting_date_lineEdit.setText("")
         self.starting_date_lineEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.starting_date_lineEdit.setObjectName("starting_date_lineEdit")
         self.verticalLayout_3.addWidget(self.starting_date_lineEdit, 0, QtCore.Qt.AlignHCenter)
@@ -300,27 +301,6 @@ class Ui_AddTask(object):
         self.addTask_footer_frame.setObjectName("addTask_footer_frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.addTask_footer_frame)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.project_dlete_btn = QtWidgets.QPushButton(self.addTask_footer_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.project_dlete_btn.sizePolicy().hasHeightForWidth())
-        self.project_dlete_btn.setSizePolicy(sizePolicy)
-        self.project_dlete_btn.setStyleSheet("*{\n"
-"background-color: rgb(20, 66, 114);\n"
-"border-radius : 5px ;\n"
-"font: 600 12pt \"Montserrat\";\n"
-"padding : 4px;\n"
-"}\n"
-":hover{\n"
-"background-color: rgb(9, 33, 44);\n"
-"}")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/garbage.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.project_dlete_btn.setIcon(icon1)
-        self.project_dlete_btn.setIconSize(QtCore.QSize(20, 20))
-        self.project_dlete_btn.setObjectName("project_dlete_btn")
-        self.horizontalLayout_3.addWidget(self.project_dlete_btn)
         self.teher_project_label = QtWidgets.QLabel(self.addTask_footer_frame)
         self.teher_project_label.setObjectName("teher_project_label")
         self.horizontalLayout_3.addWidget(self.teher_project_label, 0, QtCore.Qt.AlignRight)
@@ -334,7 +314,7 @@ class Ui_AddTask(object):
 "padding : 6px;\n"
 "    background-color: rgb(33, 164, 62);\n"
 "border-radius:5px;\n"
-"font: 11pt \"Montserrat\";\n"
+"font: 1000 12pt \"Montserrat\";\n"
 "}\n"
 "\n"
 "QPushButton:hover{\n"
@@ -355,7 +335,6 @@ class Ui_AddTask(object):
         self.task_name_label.setText(_translate("AddTask", "Görev Adı :"))
         self.task_describe_title.setText(_translate("AddTask", "Görev Açıklaması : "))
         self.start_date_label.setText(_translate("AddTask", "Başlangıç Tarihi :"))
-        self.starting_date_lineEdit.setText(_translate("AddTask", "as"))
         self.format_1.setText(_translate("AddTask", "format : (gg.aa.yyyy)           "))
         self.end_date_label.setText(_translate("AddTask", "Bitiş Tarihi :"))
         self.format_2.setText(_translate("AddTask", "format : (gg.aa.yyyy)"))
@@ -363,8 +342,7 @@ class Ui_AddTask(object):
         self.select_there_label.setText(_translate("AddTask", "Şuradan Seç"))
         self.workers_list_btn.setText(_translate("AddTask", "Çalışanlar Listesi"))
         self.selected_worker_label.setText(_translate("AddTask", "UserName"))
-        self.project_dlete_btn.setText(_translate("AddTask", "Projeyi Sil"))
         self.teher_project_label.setText(_translate("AddTask", "Şu Projeye:"))
         self.will_add_project_label.setText(_translate("AddTask", "${Eklenecek Proje Adı"))
-        self.task_add_btn.setText(_translate("AddTask", "PushButton"))
+        self.task_add_btn.setText(_translate("AddTask", "Ekle"))
 import image_rc
