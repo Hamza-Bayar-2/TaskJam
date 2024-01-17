@@ -301,7 +301,7 @@ class MainWİndow(QMainWindow) :
             taskWillWidget.taskname_label.setText(item.taskName)
             taskWillWidget.describe_label.setText(item.taskDescription)
             #gecikme olduğuunu kontrol ett
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
             #belirlenen sürede tamamlandı mı ??
             # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
             taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task,1))
@@ -362,7 +362,7 @@ class MainWİndow(QMainWindow) :
             taskWillWidget.show_btn.setText("Şu an da İşlem Görüyor. Detay Görüntüle")
             taskWillWidget.starting_date_label.setText(item.startingDate)
             taskWillWidget.end_date_label.setText(item.endDate)
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
             # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
             taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task, 0))
             taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
@@ -411,7 +411,7 @@ class MainWİndow(QMainWindow) :
                 taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
             taskWillWidget.starting_date_label.setText(item.startingDate)
             taskWillWidget.end_date_label.setText(item.endDate)
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName)
+            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
             # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
             taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(task.taskID))
             taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())

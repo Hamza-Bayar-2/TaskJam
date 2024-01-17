@@ -49,7 +49,7 @@ class RegisterWindow(QDialog):
             )    
             self.db.addNewUser(newUser)
             self.close()
-            self.main = MainWİndow(newUser)
+            self.main = MainWİndow(self.db.showUserInformation(email))
             self.main.showMaximized()
 
     def openLogin(self, message):
