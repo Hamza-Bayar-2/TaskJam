@@ -3,25 +3,20 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QHBoxLayo
 from PyQt5.QtCore import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-import sys
 import datetime
 from UI.my_ui import Ui_MainWindow
 from modals.taskInfo import TaskInfo
-from modals.userInfo import UserInfo
 from modals.employeeInfo import EmployeeInfo
-from modals.selectedEmployee import SelectedEmployee
 from database import db_Helper
 from add_project import AddProjectWindow
 from UI.project_widget_ui import Ui_ProjectWindow
 from UI.employee_list_widget_ui import Ui_Form
 from UI.task_will_ui import Ui_TaskWill
-from UI.task_widget_late_ui import Ui_TaskLate
 from UI.task_done_widget_ui import Ui_DoneWidget
 from UI.employee_info_widget_ui import Ui_inof_emp
 from UI.employee_list_widget_small_ui import Ui_smal_row_Widget
 from UI.task_edit_ui import Ui_TaskEdit
 from UI.task_info_ui import Ui_TaskInfo
-from add_task import AddTask
 from project_update import  ProjectUpdate
 
 class MainWİndow(QMainWindow) :
@@ -33,14 +28,14 @@ class MainWİndow(QMainWindow) :
         self.myProject = None
         self.myEmployee = None
         self.myTaskEmployee = None
-        self.users = ["a" , "b", "c", "a" , "b", "c"]
         self.window_fix()
         self.initUI()
 
     def initUI(self):
         self.ui.setupUi(self)
         self.setWindowTitle("TaskJam")
-        # self.showMaximized()
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        
         self.buttonSetting()
         self.layoutSetting()
         self.labelSetting()
@@ -102,9 +97,6 @@ class MainWİndow(QMainWindow) :
         self.ui.emp_surname_detail_label_2.setText(self.myEmployee.employeeMail)
         self.ui.workers_delete_btn_2.clicked.connect(lambda : self.deleteEmployee())
 
-
-
-
         self.ui.completed_success_count_label_3.setText(str(selectedEmp.AmountOfTasksCompletedOnTime))
         self.ui.completed_unsucces_count_label_2.setText(str(selectedEmp.AmountOfTasksNotCompletedOnTime))
         self.ui.label_29.setText(str(len(listForEmployeInfo[0])))
@@ -143,6 +135,7 @@ class MainWİndow(QMainWindow) :
 
     def deleteEmployee(self):
         self.ui.employee_detail_stackwidget.setCurrentIndex(0)
+        self.db.deleteTasksWhenEmployeeDeleted(self.myEmployee.employeeID)
         self.db.deleteEmployeeID(self.myEmployee.employeeID)
         self.setState()
 
@@ -287,12 +280,11 @@ class MainWİndow(QMainWindow) :
             projectWidget.project_name.setText(item.projectName)
             projectWidget.date_label.setText(f"{item.startingDate} - {item.endDate}")
             projectWidget.project_describe.setText(item.projectDescription)
-            projectWidget.amount_label_2.setText('ihi')
+            projectWidget.amount_label_2.setText(str(self.db.showTotalNumberOfEmployeesInTheProject(item.projectID)))
             self.ui.projects_scroll_content_widget_layout.addWidget(widget)
             projectWidget.select_btn_2.clicked.connect(lambda _, project = item: self.setMyProject(project))
             projectWidget.show_btn_2.clicked.connect(lambda _, selectedProject = item : self.editProject(selectedProject))
             if(self.myProject == None or self.myProject.projectID == item.projectID):
-                print("girdik")
                 if(self.myProject == None):
                     self.myProject = item
                 widget.setStyleSheet(
@@ -337,7 +329,7 @@ class MainWİndow(QMainWindow) :
             notInfo.setPixmap(QPixmap(":/image/icons/astronot_waiting_roket.png"))
             notInfo.setScaledContents(True)
             notInfo.setAlignment(Qt.AlignCenter)
-            notInfo.setMaximumSize(QSize(150, 125))
+            notInfo.setMaximumSize(QSize(100, 110))
             sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
             notInfo.setStyleSheet(
                 """
@@ -348,7 +340,7 @@ class MainWİndow(QMainWindow) :
             yazi = QLabel("Veri Yok")
             self.ui.done_scroll_area_frame_2.setSizePolicy(sizePolicy)
             yazi.setStyleSheet("""
-                padding : 15px;
+                padding : 10px;
                 border-radius :15px;
                 background-color: rgb(9, 38, 53);
             """)
@@ -386,7 +378,7 @@ class MainWİndow(QMainWindow) :
             notInfo.setPixmap(QPixmap(":/image/icons/astronot_not_knowing.png"))
             notInfo.setScaledContents(True)
             notInfo.setAlignment(Qt.AlignCenter)
-            notInfo.setMaximumSize(QSize(150, 100))
+            notInfo.setMaximumSize(QSize(100, 85))
             sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
             notInfo.setStyleSheet(
                 """
@@ -397,7 +389,7 @@ class MainWİndow(QMainWindow) :
             yazi = QLabel("Veri Yok")
 
             yazi.setStyleSheet("""
-                padding : 15px;
+                padding : 10px;
                 border-radius :15px;
                 background-color: rgb(9, 38, 53);
             """)
@@ -418,35 +410,22 @@ class MainWİndow(QMainWindow) :
                 taskWillWidget.resume_btn.setIcon(icon1)
                 taskWillWidget.text_label_3.setText("Görevi\nTamamla")
                 if (fark > 0 and item.delayAmount == 0 ):
-                    taskWillWidget.end_date_frame.deleteLater()
-                    taskWillWidget.starting_date_frame.deleteLater()
+                    taskWillWidget.end_date_label.setText(datetime.datetime.strftime(datetime.datetime.now(),"%d.%m.%Y"))
+                    # taskWillWidget.end_date_frame.deleteLater()
+                    # taskWillWidget.starting_date_frame.deleteLater()
                     taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
                     taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
                     taskWillWidget.text_label.setText("En kısa zamanda bitirin")
-                    Label = QLabel()
-                    Label.setMaximumSize(QSize(15, 15))
-                    Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
-                    Label2 = QLabel(" Görev ")
-                    Label3 = QLabel(str(fark) + "Gün Gecikti ")
-                    Label3.setStyleSheet("""
-                            font: 600 10pt"Montserrat";
-                        """)
-                    Label4 = QLabel("bitmesi Gerekiyordu")
-                    taskWillWidget.horizontalLayout_3.addWidget(Label)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label2)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label3)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label4)
-                    sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-                    sizePolicy.setHorizontalStretch(0)
-                    sizePolicy.setVerticalStretch(0)
-                    taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
-                    taskWillWidget.date_frame.setSizePolicy(sizePolicy)
-                    # otherTAsk = QFrame(taskWillWidget.date_frame)
+                    # otherTAsk = QFrame(myFrame)
                     # otherTAsk.setLayout(QHBoxLayout("myLayout"))
                     # otherTAsk.myLayout.addWidget(QLabel("Görev"))
                 else :
-                    taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
+                    if(fark == 0):
+                        taskWillWidget.last_day_result_label.setText("Bugün içerisinde")
+                    else:
+                        taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
                     taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
+                    taskWillWidget.end_date_label.setText(item.endDate)
                 taskWillWidget.show_btn.setStyleSheet("""
                     *{
                         background-color: rgb(229, 189, 48);
@@ -458,7 +437,6 @@ class MainWİndow(QMainWindow) :
                     }""")
                 taskWillWidget.show_btn.setText("Şu an da İşlem Görüyor. Detay Görüntüle")
                 taskWillWidget.starting_date_label.setText(item.startingDate)
-                taskWillWidget.end_date_label.setText(item.endDate)
                 taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
                 # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
                 taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task, 0))
@@ -473,7 +451,7 @@ class MainWİndow(QMainWindow) :
             notInfo.setPixmap(QPixmap(":/image/icons/astronot_waiting_wall.png"))
             notInfo.setScaledContents(True)
             notInfo.setAlignment(Qt.AlignCenter)
-            notInfo.setMaximumSize(QSize(90, 120))
+            notInfo.setMaximumSize(QSize(80, 110))
             sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
             notInfo.setStyleSheet(
                 """
@@ -484,7 +462,7 @@ class MainWİndow(QMainWindow) :
             yazi = QLabel("Veri Yok")
 
             yazi.setStyleSheet("""
-                padding : 15px;
+                padding : 10px;
                 border-radius :15px;
                 background-color: rgb(9, 38, 53);
             """)
@@ -500,39 +478,19 @@ class MainWİndow(QMainWindow) :
                 self.ui.will_done_scroll_area_content_layout_2.addWidget(widget)
                 taskWillWidget.taskname_label.setText(item.taskName)
                 taskWillWidget.describe_label.setText(item.taskDescription)
-                if (fark > 0 and item.delayAmount == 0):
-                    taskWillWidget.end_date_frame.deleteLater()
-                    taskWillWidget.starting_date_frame.deleteLater()
+                if (fark > 0 and item.delayAmount == 0 ):
+                    taskWillWidget.end_date_label.setText(datetime.datetime.strftime(datetime.datetime.now(),"%d.%m.%Y"))
                     taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
                     taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
                     taskWillWidget.text_label.setText("En kısa zamanda bitirin")
-                    Label = QLabel()
-                    Label.setMaximumSize(QSize(15, 15))
-                    Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
-
-                    Label2 = QLabel(" Görev ")
-                    Label3 = QLabel(str(fark) + "Gün Gecikti ")
-                    Label3.setStyleSheet("""
-                            font: 600 10pt"Montserrat";
-                            """)
-                    Label4 = QLabel("bitmesi Gerekiyordu")
-                    taskWillWidget.horizontalLayout_3.addWidget(Label)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label2)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label3)
-                    taskWillWidget.horizontalLayout_3.addWidget(Label4)
-                    sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-                    sizePolicy.setHorizontalStretch(0)
-                    sizePolicy.setVerticalStretch(0)
-                    taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
-                    taskWillWidget.date_frame.setSizePolicy(sizePolicy)
-                    # otherTAsk = QFrame(taskWillWidget.date_frame)
-                    # otherTAsk.setLayout(QHBoxLayout("myLayout"))
-                    # otherTAsk.myLayout.addWidget(QLabel("Görev"))
                 else :
-                    taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
+                    if(fark == 0):
+                        taskWillWidget.last_day_result_label.setText("Bugün içerisinde")
+                    else:
+                        taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
                     taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
+                    taskWillWidget.end_date_label.setText(item.endDate)
                 taskWillWidget.starting_date_label.setText(item.startingDate)
-                taskWillWidget.end_date_label.setText(item.endDate)
                 taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
                 # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
                 taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(task.taskID))
@@ -559,15 +517,70 @@ class MainWİndow(QMainWindow) :
         layout.addWidget(myWidget)
         infoWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
 
+        fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days #geçme süresi
+        if (fark > 0 and item.delayAmount == 0):
+            infoWindow.taskdt_end_Dare_label.setText(datetime.datetime.strftime(datetime.datetime.now(),"%d.%m.%Y"))
+            infoWindow.label_6.deleteLater()
+            infoWindow.las_day_for_end.deleteLater()
+            Label = QLabel()
+            Label.setMaximumSize(QSize(15, 15))
+            Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
+
+            Label2 = QLabel(" Görev ")
+            Label3 = QLabel(str(fark) + "Gün Gecikti ")
+            Label3.setStyleSheet('''
+                    font: 600 10pt"Montserrat";
+                    ''')
+            Label4 = QLabel("bitmesi Gerekiyordu")
+            myFrame = QFrame()
+            myLayout= QHBoxLayout()
+            myFrame.setLayout(myLayout)
+            infoWindow.verticalLayout_22.addWidget(myFrame)
+            myLayout.addWidget(Label)
+            myLayout.addWidget(Label2)
+            myLayout.addWidget(Label3)
+            myLayout.addWidget(Label4)
+            sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            myFrame.setContentsMargins(5,0,5,0)
+            myFrame.setSizePolicy(sizePolicy)
+        else:
+            infoWindow.taskdt_end_Dare_label.setText(item.endDate)
+            if(fark > 0 and item.delayAmount != 0):
+                infoWindow.label_2.setPixmap(QPixmap(":/icons/icons/red_set_big.png"))
+                infoWindow.label_6.setText(str(item.delayAmount) + " Gün")
+                infoWindow.las_day_for_end.setText("Geç Teslim edilmiş")
+            elif(fark <= 0 and item.taskStatus == 2):
+                infoWindow.label_3.setPixmap(QPixmap(":/icons/icons/green_set_horizantal_big.png"))
+                infoWindow.label_2.setPixmap(QPixmap(":/icons/icons/green_set_big.png"))
+                infoWindow.label_6.setText("Harika")
+                infoWindow.las_day_for_end.setText("Tam zamanında Teslim Edildi")
+            else:
+                infoWindow.label_3.setPixmap(QPixmap(":/icons/icons/yellow_set_horizantal_big.png"))
+                if fark == 0 :
+                    infoWindow.label_6.setText("Bugün İçerisinde")
+                    infoWindow.las_day_for_end.setText("Bitmesi Gerekiyor.")
+                else:       
+                    infoWindow.las_day_for_end.setText(str(abs(fark)) + " Gün Kaldı")
+                    infoWindow.taskdt_end_Dare_label.setText(item.endDate)
+        if item.taskStatus == 0:
+            infoWindow.taskdt_done_btn.setText("Görevi\nBaşlat")
+            infoWindow.taskdt_done_btn.setIcon(QIcon(":/icons/icons/resume.png"))
+        elif item.taskStatus == 2:
+            infoWindow.taskdt_done_btn.deleteLater()
+    
         infoWindow.taskdt_name_label.setText(item.taskName)
         infoWindow.taskdt_desk_labell.setText(item.taskDescription)
         infoWindow.taskdt_starting_date_label.setText(item.startingDate)
-        infoWindow.taskdt_end_Dare_label.setText(item.endDate)
         infoWindow.taskdt_emp_name_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
         infoWindow.taskdt_delete_btn.clicked.connect(lambda :self.db.deleteTask(item.taskID))
         infoWindow.taskdt_done_btn.clicked.connect(lambda : self.changeStatusTask(item, 2))
         infoWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
         infoWindow.taskdt_edit_btn.clicked.connect(lambda : self.openTaskEdit(item, slot))
+        infoWindow.taskdt_delete_btn.clicked.connect(lambda _, task = item: self.db.deleteTask(task.taskID))
+        infoWindow.taskdt_delete_btn.clicked.connect(lambda : self.setState())
+
 
     def openTaskEdit(self, item, slot):
         if slot == 1 :

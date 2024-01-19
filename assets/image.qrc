@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="image">
+    <file>officalLogo.png</file>
+    <file>officalLogo2.png</file>
     <file>icons/astronot_waiting_wall.png</file>
     <file>icons/astronot_waiting_roket.png</file>
     <file>icons/astronot_not_knowing.png</file>
@@ -7,6 +9,10 @@
     <file>profile-icon-9.png</file>
   </qresource>
   <qresource prefix="icons">
+    <file>icons/yellow_set_horizantal_big.png</file>
+    <file>icons/green_set_horizantal_big.png</file>
+    <file>icons/green_set_big.png</file>
+    <file>icons/red_set_big.png</file>
     <file>icons/red_set_horiontal_big.png</file>
     <file>icons/exit_btn.png</file>
     <file>icons/yellow_set_big.png</file>

@@ -20,6 +20,8 @@ class LoginWindow(QDialog) :
         self.ui.setupUi(self)
         self.initUi()
     def initUi(self):
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        self.setWindowTitle("TaskJam")
         self.showNormal()
         self.buttonHandle()
 

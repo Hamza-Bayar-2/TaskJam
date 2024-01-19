@@ -20,6 +20,8 @@ class RegisterWindow(QDialog):
         self.window_fix()
         self.initUi()
     def initUi(self):
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        self.setWindowTitle("TaskJam")
         self.buttonHandle()   
 
     def buttonHandle(self):

@@ -22,9 +22,11 @@ class AddProjectWindow(QDialog):
         self.initUI()
 
     def initUI(self):
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        self.setWindowTitle("TaskJam")
         self.buttonHandle()
-        self.ui.starting_date_lineEdit.setText("11.01.2024")
-        self.ui.ending_date_lineEdit.setText("20.01.2024")
+        self.ui.starting_date_lineEdit.setText(str(datetime.datetime.strftime(datetime.datetime.now(),"%d.%m.%Y")))
+        self.ui.ending_date_lineEdit.setText(str(datetime.datetime.strftime(datetime.datetime.now() ,"%d.%m.%Y")))
 
     def buttonHandle(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
