@@ -18,6 +18,9 @@ from UI.task_will_ui import Ui_TaskWill
 from UI.task_widget_late_ui import Ui_TaskLate
 from UI.task_done_widget_ui import Ui_DoneWidget
 from UI.employee_info_widget_ui import Ui_inof_emp
+from UI.employee_list_widget_small_ui import Ui_smal_row_Widget
+from UI.task_edit_ui import Ui_TaskEdit
+from UI.task_info_ui import Ui_TaskInfo
 from add_task import AddTask
 from project_update import  ProjectUpdate
 
@@ -29,6 +32,7 @@ class MainWİndow(QMainWindow) :
         self.db = db_Helper()
         self.myProject = None
         self.myEmployee = None
+        self.myTaskEmployee = None
         self.users = ["a" , "b", "c", "a" , "b", "c"]
         self.window_fix()
         self.initUI()
@@ -46,7 +50,13 @@ class MainWİndow(QMainWindow) :
         self.projectRowUpdate()
         self.tasksTableUpdateAll() if(self.myProject !=None) else print("proje yok")
         self.employeeListWidgetUpdate()
+        self.resetPageViewIndex()
         print("SetState Gerçekleşti")
+
+    def resetPageViewIndex(self):
+        self.ui.working_pageView.setCurrentIndex(0)
+        self.ui.waiting_pageView.setCurrentIndex(0)
+        self.ui.done_pageView.setCurrentIndex(0)
 
     def buttonSetting(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
@@ -56,7 +66,7 @@ class MainWİndow(QMainWindow) :
         self.ui.workers_page_btn.clicked.connect(lambda : self.changePage(1))
         self.ui.home_page_btn.clicked.connect(lambda : self.changePage(0))
         self.ui.signout_btn.clicked.connect(lambda : self.close())  # login ekranına yönlendirilebilir.
-        self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd())
+        self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd() if self.myProject != None else print("viyh"))
         self.ui.emp_add_btn.clicked.connect(lambda : self.employeeAdd())
 
     def employeeListWidgetUpdate(self):
@@ -92,7 +102,7 @@ class MainWİndow(QMainWindow) :
         self.ui.emp_surname_detail_label_2.setText(self.myEmployee.employeeMail)
         self.ui.workers_delete_btn_2.clicked.connect(lambda : self.deleteEmployee())
 
-        
+
 
 
         self.ui.completed_success_count_label_3.setText(str(selectedEmp.AmountOfTasksCompletedOnTime))
@@ -170,9 +180,49 @@ class MainWİndow(QMainWindow) :
 
     def taskAdd(self):
         #proje seçiliyken tıklanmamsı gerekiyor.
-        self.tasskAddWindow = AddTask(self.myProject.projectName)
-        self.tasskAddWindow.show()
-        self.tasskAddWindow.mainWindowSocket.connect(lambda response : self.setState() if(response == "55 TAMM") else print("zorrtt"))
+        layout = self.ui.waiting_task_edit_page_layout
+        page = self.ui.waiting_pageView
+        page.setCurrentIndex(2)
+        self.clear_layout(layout)
+        myWidget = QWidget(self)
+        taskAddWindow = Ui_TaskEdit()
+        taskAddWindow.setupUi(myWidget)
+        taskAddWindow.taskdt_name_label.setText("Görev Oluştur")
+        taskAddWindow.taskdt_done_btn.setText("GÖREV EKLE")
+        taskAddWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
+        taskAddWindow.taskdt_back_btn.clicked.connect(lambda : self.taskAdd())
+        taskAddWindow.task_edit_emp_select_btn.clicked.connect(lambda : self.empTable(taskAddWindow))
+        taskAddWindow.verticalLayout.addWidget(QLabel("Şu Projeye >>" + str(self.myProject.projectName)))
+        taskAddWindow.task_edit_start_date_lineedit.setText(datetime.datetime.now().strftime('%d.%m.%Y'))
+        taskAddWindow.taskdt_done_btn.clicked.connect(lambda : self.validateAndAddTask(taskAddWindow))
+        layout.addWidget(myWidget)
+        
+    def validateAndAddTask(self, window):
+        taskName = window.task_edit_name_lineedit.text()
+        taskDesc = window.task_edit_desc_lineedit.text()
+        taskStartDate = window.task_edit_start_date_lineedit.text()
+        taskEndDate = window.task_edit_end_date_lineedit.text()
+        taskEmployeeID = self.myTaskEmployee
+
+        if(taskName == "" or taskDesc == "" or taskStartDate == "" or taskEndDate == "" or taskEmployeeID == None):
+            window.working_edit_status_label.setText("Boş Bırakılamaz")
+        elif(self.validateDate(taskStartDate, taskEndDate)):
+            window.working_edit_status_label.setText("Tarih Formatı (gg.aa.yyyy) olmalıdır.")
+        elif(self.dateNow > self.dateLater):
+            window.working_edit_status_label.setText("Başlangıç Tarihi Bitiş Tarihinden Önce olamaz")
+        else:
+            self.db.addNewTask(TaskInfo(
+                taskID= None,
+                employeeID= self.myTaskEmployee.employeeID,
+                projectID= self.myProject.projectID,
+                taskName= taskName,
+                taskDescription= taskDesc,
+                startingDate= taskStartDate,
+                endDate= taskEndDate,
+                delayAmount=0,
+                taskStatus=0
+            ))
+            self.setState()
 
 
     def projectAdd(self):
@@ -216,7 +266,7 @@ class MainWİndow(QMainWindow) :
 
     def layoutSetting(self):
         self.ui.working_scroll_area_content_layout.setAlignment(Qt.AlignTop |Qt.AlignHCenter)
-        self.ui.will_done_scroll_area_content_layout.setAlignment(Qt.AlignTop |Qt.AlignHCenter)
+        self.ui.will_done_scroll_area_content_layout_2.setAlignment(Qt.AlignTop |Qt.AlignHCenter)
         self.ui.projects_scroll_content_widget_layout.setAlignment(Qt.AlignLeft |Qt.AlignVCenter)
 
     def clear_layout(self, layout):
@@ -271,9 +321,9 @@ class MainWİndow(QMainWindow) :
 
     def tasksTableUpdateAll(self):
         #layout içerisindeki widgetları siliyoruz. ve yeniden dolduruyoruz.
-        self.clear_layout(self.ui.will_done_scroll_area_content_layout)
+        self.clear_layout(self.ui.done_scroll_area_cotent_layout_2)
         self.clear_layout(self.ui.working_scroll_area_content_layout)
-        self.clear_layout(self.ui.done_scroll_area_cotent_layout)
+        self.clear_layout(self.ui.will_done_scroll_area_content_layout_2)
 
         listOfAllTasks = self.db.showTasksBasedOnStatusAndProjectID(projectID= self.myProject.projectID)
         # users = self.db.
@@ -282,141 +332,322 @@ class MainWİndow(QMainWindow) :
         self.loadDoneTask(listOfAllTasks[2])
 
     def loadDoneTask(self, listOfAllTasks):
-        for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
-            fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
-            widget = QWidget(self)
-            taskWillWidget =  Ui_DoneWidget()
-            taskWillWidget.setupUi(widget)
-            taskWillWidget.last_day_result_label.deleteLater()
-            taskWillWidget.text_label.deleteLater()
-            print("my Dleay amounT= " + str(item.delayAmount))
-            if(fark > 0 and item.delayAmount != 0 ):
-                taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
-                label = QLabel("Geç Teslim")
-            else:
-                taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/green_set.png"))
-                label = QLabel("Zamanında Teslim")
-            taskWillWidget.verticalLayout_2.addWidget(label)
-            self.ui.done_scroll_area_cotent_layout.addWidget(widget)
-            taskWillWidget.taskname_label.setText(item.taskName)
-            taskWillWidget.describe_label.setText(item.taskDescription)
-            #gecikme olduğuunu kontrol ett
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
-            #belirlenen sürede tamamlandı mı ??
-            # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
-            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task,1))
-            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+        if(len(listOfAllTasks) == 0):
+            notInfo = QLabel(self.ui.done_scroll_area_frame_2)
+            notInfo.setPixmap(QPixmap(":/image/icons/astronot_waiting_roket.png"))
+            notInfo.setScaledContents(True)
+            notInfo.setAlignment(Qt.AlignCenter)
+            notInfo.setMaximumSize(QSize(150, 125))
+            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+            notInfo.setStyleSheet(
+                """
+                padding : 15px;
+                border-radius :25px;
+                background-color: rgb(9, 38, 53);
+                """)
+            yazi = QLabel("Veri Yok")
+            self.ui.done_scroll_area_frame_2.setSizePolicy(sizePolicy)
+            yazi.setStyleSheet("""
+                padding : 15px;
+                border-radius :15px;
+                background-color: rgb(9, 38, 53);
+            """)
+            self.ui.done_scroll_area_cotent_layout_2.addWidget(notInfo,Qt.AlignCenter)
+        else:
+            for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
+                fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
+                widget = QWidget(self)
+                taskWillWidget =  Ui_DoneWidget()
+                taskWillWidget.setupUi(widget)
+                taskWillWidget.last_day_result_label.deleteLater()
+                taskWillWidget.text_label.deleteLater()
+                print("my Dleay amounT= " + str(item.delayAmount))
+                if(fark > 0 and item.delayAmount != 0 ):
+                    taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
+                    label = QLabel("Geç Teslim")
+                else:
+                    taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/green_set.png"))
+                    label = QLabel("Zamanında Teslim")
+                taskWillWidget.verticalLayout_2.addWidget(label)
+                self.ui.done_scroll_area_cotent_layout_2.addWidget(widget)
+                taskWillWidget.taskname_label.setText(item.taskName)
+                taskWillWidget.describe_label.setText(item.taskDescription)
+                #gecikme olduğuunu kontrol ett
+                taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
+                #belirlenen sürede tamamlandı mı ??
+                # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task,1))
+                taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+                taskWillWidget.show_btn.clicked.connect(lambda _, task = item : self.openTasskInfo(task, 2))
 
     def loadWorkingTask(self, listOfAllTasks):
-        for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
-            fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
-            widget = QWidget(self)
-            taskWillWidget =  Ui_TaskWill()
-            taskWillWidget.setupUi(widget)
-            self.ui.working_scroll_area_content_layout.addWidget(widget)
-            taskWillWidget.taskname_label.setText(item.taskName)
-            taskWillWidget.describe_label.setText(item.taskDescription)
-            icon1 = QIcon()
-            icon1.addPixmap(QPixmap(":/icons/icons/tick.png"),QIcon.Normal, QIcon.Off)
-            taskWillWidget.resume_btn.setIcon(icon1)
-            taskWillWidget.text_label_3.setText("Görevi\nTamamla")
-            if (fark > 0 and item.delayAmount == 0 ):
-                taskWillWidget.end_date_frame.deleteLater()
-                taskWillWidget.starting_date_frame.deleteLater()
-                taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
-                taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
-                taskWillWidget.text_label.setText("En kısa zamanda bitirin")
-                Label = QLabel()
-                Label.setMaximumSize(QSize(15, 15))
-                Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
-                Label2 = QLabel(" Görev ")
-                Label3 = QLabel(str(fark) + "Gün Gecikti ")
-                Label3.setStyleSheet("""
-                        font: 600 10pt"Montserrat";
-                     """)
-                Label4 = QLabel("bitmesi Gerekiyordu")
-                taskWillWidget.horizontalLayout_3.addWidget(Label)
-                taskWillWidget.horizontalLayout_3.addWidget(Label2)
-                taskWillWidget.horizontalLayout_3.addWidget(Label3)
-                taskWillWidget.horizontalLayout_3.addWidget(Label4)
-                sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-                sizePolicy.setHorizontalStretch(0)
-                sizePolicy.setVerticalStretch(0)
-                taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
-                taskWillWidget.date_frame.setSizePolicy(sizePolicy)
-                # otherTAsk = QFrame(taskWillWidget.date_frame)
-                # otherTAsk.setLayout(QHBoxLayout("myLayout"))
-                # otherTAsk.myLayout.addWidget(QLabel("Görev"))
-            else :
-                taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
-                taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
-            taskWillWidget.show_btn.setStyleSheet("""
-                *{
-                    background-color: rgb(229, 189, 48);
-                    border-radius : 5px;
-                    color : rgb(0,0,0);
-                }
-                :hover{
-                    background-color: rgb(175, 143, 36);
-                }""")
-            taskWillWidget.show_btn.setText("Şu an da İşlem Görüyor. Detay Görüntüle")
-            taskWillWidget.starting_date_label.setText(item.startingDate)
-            taskWillWidget.end_date_label.setText(item.endDate)
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
-            # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
-            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task, 0))
-            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
-            taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.changeStatusTask(task2, 2))
-            taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+        if(len(listOfAllTasks) == 0):
+            notInfo = QLabel(self.ui.working_scroll_area_content)
+            notInfo.setPixmap(QPixmap(":/image/icons/astronot_not_knowing.png"))
+            notInfo.setScaledContents(True)
+            notInfo.setAlignment(Qt.AlignCenter)
+            notInfo.setMaximumSize(QSize(150, 100))
+            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+            notInfo.setStyleSheet(
+                """
+                padding : 15px;
+                border-radius :25px;
+                background-color: rgb(9, 38, 53);
+                """)
+            yazi = QLabel("Veri Yok")
+
+            yazi.setStyleSheet("""
+                padding : 15px;
+                border-radius :15px;
+                background-color: rgb(9, 38, 53);
+            """)
+            self.ui.working_scroll_area_content.setSizePolicy(sizePolicy)
+            self.ui.working_scroll_area_content_layout.addWidget(notInfo,Qt.AlignCenter)
+            self.ui.working_scroll_area_content_layout.addWidget(yazi,Qt.AlignCenter)
+        else:
+            for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
+                fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
+                widget = QWidget(self)
+                taskWillWidget =  Ui_TaskWill()
+                taskWillWidget.setupUi(widget)
+                self.ui.working_scroll_area_content_layout.addWidget(widget)
+                taskWillWidget.taskname_label.setText(item.taskName)
+                taskWillWidget.describe_label.setText(item.taskDescription)
+                icon1 = QIcon()
+                icon1.addPixmap(QPixmap(":/icons/icons/tick.png"),QIcon.Normal, QIcon.Off)
+                taskWillWidget.resume_btn.setIcon(icon1)
+                taskWillWidget.text_label_3.setText("Görevi\nTamamla")
+                if (fark > 0 and item.delayAmount == 0 ):
+                    taskWillWidget.end_date_frame.deleteLater()
+                    taskWillWidget.starting_date_frame.deleteLater()
+                    taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
+                    taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
+                    taskWillWidget.text_label.setText("En kısa zamanda bitirin")
+                    Label = QLabel()
+                    Label.setMaximumSize(QSize(15, 15))
+                    Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
+                    Label2 = QLabel(" Görev ")
+                    Label3 = QLabel(str(fark) + "Gün Gecikti ")
+                    Label3.setStyleSheet("""
+                            font: 600 10pt"Montserrat";
+                        """)
+                    Label4 = QLabel("bitmesi Gerekiyordu")
+                    taskWillWidget.horizontalLayout_3.addWidget(Label)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label2)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label3)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label4)
+                    sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+                    sizePolicy.setHorizontalStretch(0)
+                    sizePolicy.setVerticalStretch(0)
+                    taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
+                    taskWillWidget.date_frame.setSizePolicy(sizePolicy)
+                    # otherTAsk = QFrame(taskWillWidget.date_frame)
+                    # otherTAsk.setLayout(QHBoxLayout("myLayout"))
+                    # otherTAsk.myLayout.addWidget(QLabel("Görev"))
+                else :
+                    taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
+                    taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
+                taskWillWidget.show_btn.setStyleSheet("""
+                    *{
+                        background-color: rgb(229, 189, 48);
+                        border-radius : 5px;
+                        color : rgb(0,0,0);
+                    }
+                    :hover{
+                        background-color: rgb(175, 143, 36);
+                    }""")
+                taskWillWidget.show_btn.setText("Şu an da İşlem Görüyor. Detay Görüntüle")
+                taskWillWidget.starting_date_label.setText(item.startingDate)
+                taskWillWidget.end_date_label.setText(item.endDate)
+                taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
+                # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.changeStatusTask(task, 0))
+                taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+                taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.changeStatusTask(task2, 2))
+                taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+                taskWillWidget.show_btn.clicked.connect(lambda _, task = item: self.openTasskInfo(task, 1))
 
     def loadWillTask(self, listOfAllTasks):
-        for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
-            fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
-            widget = QWidget(self)
-            taskWillWidget =  Ui_TaskWill()
-            taskWillWidget.setupUi(widget)
-            self.ui.will_done_scroll_area_content_layout.addWidget(widget)
-            taskWillWidget.taskname_label.setText(item.taskName)
-            taskWillWidget.describe_label.setText(item.taskDescription)
-            if (fark > 0 and item.delayAmount == 0):
-                taskWillWidget.end_date_frame.deleteLater()
-                taskWillWidget.starting_date_frame.deleteLater()
-                taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
-                taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
-                taskWillWidget.text_label.setText("En kısa zamanda bitirin")
-                Label = QLabel()    
-                Label.setMaximumSize(QSize(15, 15))
-                Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
-                
-                Label2 = QLabel(" Görev ")
-                Label3 = QLabel(str(fark) + "Gün Gecikti ")
-                Label3.setStyleSheet("""
-                        font: 600 10pt"Montserrat";
-                        """)
-                Label4 = QLabel("bitmesi Gerekiyordu")
-                taskWillWidget.horizontalLayout_3.addWidget(Label)
-                taskWillWidget.horizontalLayout_3.addWidget(Label2)
-                taskWillWidget.horizontalLayout_3.addWidget(Label3)
-                taskWillWidget.horizontalLayout_3.addWidget(Label4)
-                sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-                sizePolicy.setHorizontalStretch(0)
-                sizePolicy.setVerticalStretch(0)
-                taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
-                taskWillWidget.date_frame.setSizePolicy(sizePolicy)
-                # otherTAsk = QFrame(taskWillWidget.date_frame)
-                # otherTAsk.setLayout(QHBoxLayout("myLayout"))
-                # otherTAsk.myLayout.addWidget(QLabel("Görev"))
-            else :
-                taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
-                taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
-            taskWillWidget.starting_date_label.setText(item.startingDate)
-            taskWillWidget.end_date_label.setText(item.endDate)
-            taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
-            # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
-            taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(task.taskID))
-            taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
-            taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.changeStatusTask(task2, 1))
-            taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+        if(len(listOfAllTasks) == 0):
+            notInfo = QLabel(self.ui.will_done_scroll_area_content_2)
+            notInfo.setPixmap(QPixmap(":/image/icons/astronot_waiting_wall.png"))
+            notInfo.setScaledContents(True)
+            notInfo.setAlignment(Qt.AlignCenter)
+            notInfo.setMaximumSize(QSize(90, 120))
+            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+            notInfo.setStyleSheet(
+                """
+                padding : 15px;
+                border-radius :25px;
+                background-color: rgb(9, 38, 53);
+                """)
+            yazi = QLabel("Veri Yok")
+
+            yazi.setStyleSheet("""
+                padding : 15px;
+                border-radius :15px;
+                background-color: rgb(9, 38, 53);
+            """)
+            self.ui.will_done_scroll_area_content_2.setSizePolicy(sizePolicy)
+            self.ui.will_done_scroll_area_content_layout_2.addWidget(notInfo,Qt.AlignCenter)
+            self.ui.will_done_scroll_area_content_layout_2.addWidget(yazi,Qt.AlignCenter)
+        else:
+            for item in listOfAllTasks: #TAMAMLANACAK BÖLGESİ İÇİN
+                fark = (datetime.datetime.now() - self.convertDateFromStr(item.endDate)).days
+                widget = QWidget(self)
+                taskWillWidget =  Ui_TaskWill()
+                taskWillWidget.setupUi(widget)
+                self.ui.will_done_scroll_area_content_layout_2.addWidget(widget)
+                taskWillWidget.taskname_label.setText(item.taskName)
+                taskWillWidget.describe_label.setText(item.taskDescription)
+                if (fark > 0 and item.delayAmount == 0):
+                    taskWillWidget.end_date_frame.deleteLater()
+                    taskWillWidget.starting_date_frame.deleteLater()
+                    taskWillWidget.label.setPixmap(QPixmap(":/icons/icons/red_set.png"))
+                    taskWillWidget.last_day_result_label.setText(str(fark) + " Gün gecikti")
+                    taskWillWidget.text_label.setText("En kısa zamanda bitirin")
+                    Label = QLabel()
+                    Label.setMaximumSize(QSize(15, 15))
+                    Label.setPixmap(QPixmap(":/icons/icons/rect_attention.png"))
+
+                    Label2 = QLabel(" Görev ")
+                    Label3 = QLabel(str(fark) + "Gün Gecikti ")
+                    Label3.setStyleSheet("""
+                            font: 600 10pt"Montserrat";
+                            """)
+                    Label4 = QLabel("bitmesi Gerekiyordu")
+                    taskWillWidget.horizontalLayout_3.addWidget(Label)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label2)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label3)
+                    taskWillWidget.horizontalLayout_3.addWidget(Label4)
+                    sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+                    sizePolicy.setHorizontalStretch(0)
+                    sizePolicy.setVerticalStretch(0)
+                    taskWillWidget.date_frame.setContentsMargins(5,0,5,0)
+                    taskWillWidget.date_frame.setSizePolicy(sizePolicy)
+                    # otherTAsk = QFrame(taskWillWidget.date_frame)
+                    # otherTAsk.setLayout(QHBoxLayout("myLayout"))
+                    # otherTAsk.myLayout.addWidget(QLabel("Görev"))
+                else :
+                    taskWillWidget.last_day_result_label.setText(str(abs(fark)) + "  Gün içinde")
+                    taskWillWidget.text_label.setText("Bitmesi Gerekiyor")
+                taskWillWidget.starting_date_label.setText(item.startingDate)
+                taskWillWidget.end_date_label.setText(item.endDate)
+                taskWillWidget.employee_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
+                # taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(item.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda _, task = item : self.db.deleteTask(task.taskID))
+                taskWillWidget.delete_btn.clicked.connect(lambda: self.setState())
+                taskWillWidget.resume_btn.clicked.connect(lambda _, task2 = item : self.changeStatusTask(task2, 1))
+                taskWillWidget.resume_btn.clicked.connect(lambda : self.setState())
+                taskWillWidget.show_btn.clicked.connect(lambda _, task = item: self.openTasskInfo(task, 0))
+
+    def openTasskInfo(self, item, slot):
+        if slot == 1 :
+            page = self.ui.working_pageView
+            layout = self.ui.working_task_detail_show_page_layout
+        elif slot == 0:
+            page = self.ui.waiting_pageView
+            layout = self.ui.waiting_task_detail_page_layoout
+        else :
+            page = self.ui.done_pageView
+            layout = self.ui.done_task_detail_page_layout
+        page.setCurrentIndex(1)
+        self.clear_layout(layout)
+        myWidget = QWidget(self)
+        infoWindow = Ui_TaskInfo()
+        infoWindow.setupUi(myWidget)
+        layout.addWidget(myWidget)
+        infoWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
+
+        infoWindow.taskdt_name_label.setText(item.taskName)
+        infoWindow.taskdt_desk_labell.setText(item.taskDescription)
+        infoWindow.taskdt_starting_date_label.setText(item.startingDate)
+        infoWindow.taskdt_end_Dare_label.setText(item.endDate)
+        infoWindow.taskdt_emp_name_label.setText(self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(employeeID=item.employeeID).employeeSurname)
+        infoWindow.taskdt_delete_btn.clicked.connect(lambda :self.db.deleteTask(item.taskID))
+        infoWindow.taskdt_done_btn.clicked.connect(lambda : self.changeStatusTask(item, 2))
+        infoWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
+        infoWindow.taskdt_edit_btn.clicked.connect(lambda : self.openTaskEdit(item, slot))
+
+    def openTaskEdit(self, item, slot):
+        if slot == 1 :
+            page = self.ui.working_pageView
+            layout = self.ui.working_task_edit_page_layout
+        elif slot == 0:
+            page = self.ui.waiting_pageView
+            layout = self.ui.waiting_task_edit_page_layout
+        else :
+            page = self.ui.done_pageView
+            layout = self.ui.done_task_edit_page_layout
+        page.setCurrentIndex(2)
+        self.clear_layout(layout)
+        myWidget = QWidget(self)
+        self.editWindow = Ui_TaskEdit()
+        self.editWindow.setupUi(myWidget)
+        self.editWindow.taskdt_name_label.setText(item.taskName)
+        self.editWindow.task_edit_name_lineedit.setText(item.taskName)
+        self.editWindow.task_edit_desc_lineedit.setText(item.taskDescription)
+        self.editWindow.task_edit_start_date_lineedit.setText(item.startingDate)
+        self.editWindow.task_edit_end_date_lineedit.setText(item.endDate)
+        self.editWindow.task_edit_emp_name_label.setText(self.db.showSelectedEmployeeInfomation(item.employeeID).employeeName + " " + self.db.showSelectedEmployeeInfomation(item.employeeID).employeeSurname)
+        self.editWindow.task_edit_emp_select_btn.clicked.connect(lambda : self.empTable(self.editWindow))
+        self.editWindow.taskdt_exit_btn.clicked.connect(lambda : page.setCurrentIndex(0))
+        self.editWindow.taskdt_back_btn.clicked.connect(lambda : self.openTaskEdit(item, slot))
+        self.editWindow.taskdt_done_btn.clicked.connect(lambda : self.saveTask(item, page)) 
+        layout.addWidget(myWidget)
+
+    def saveTask(self, task, page):
+        taskName = self.editWindow.task_edit_name_lineedit.text()
+        taskDesc = self.editWindow.task_edit_desc_lineedit.text()
+        taskStartDate = self.editWindow.task_edit_start_date_lineedit.text()
+        taskEndDate = self.editWindow.task_edit_end_date_lineedit.text()
+        taskEmployeeId = self.myTaskEmployee
+
+        
+        if(taskName == "" or taskDesc == "" or taskStartDate == "" or taskEndDate == ""):
+            self.editWindow.working_edit_status_label.setText("Boş Bırakılamaz")
+        elif(self.validateDate(taskStartDate, taskEndDate)):
+            self.editWindow.working_edit_status_label.setText("Tarih Formatı (gg.aa.yyyy) olmalıdır.")
+        elif(self.dateNow > self.dateLater):
+            self.editWindow.working_edit_status_label.setText("Başlangıç Tarihi Bitiş Tarihinden Önce olamaz")
+        else:
+            if(taskEmployeeId == None):
+                taskEmployeeId = task
+            self.db.updateTask(
+                taskID= task.taskID,
+                employeeID= taskEmployeeId.employeeID,
+                taskName= taskName,
+                taskDescription= taskDesc,
+                startingDate= taskStartDate,
+                endDate= taskEndDate
+            )
+            page.setCurrentIndex
+            self.setState()
+    def validateDate(self, taskStartDate, taskEndDate):
+        try:
+            self.dateNow = datetime.datetime.strptime(taskStartDate, "%d.%m.%Y")
+            self.dateLater = datetime.datetime.strptime(taskEndDate, "%d.%m.%Y")
+            return False
+        except ValueError:
+            return True
+       
+    def empTable(self,window):
+        liste = self.db.showEmployeeInformation()
+        self.clear_layout(window.emp_list_scroll_frame_layout)
+        window.task_edit_pageView.setCurrentIndex(1)
+        for index in liste :
+            widget = QWidget()
+            item = Ui_smal_row_Widget()
+            item.setupUi(widget)
+            item.user_name_label.setText(index.employeeName)
+            item.user_mail_label.setText(index.employeeMail)
+            item.selected_btn.clicked.connect(lambda _,i = index : self.setMyTaskEmployee(i, window))
+            window.emp_list_scroll_frame_layout.addWidget(widget)
+
+    def setMyTaskEmployee(self, employee, window):
+        self.myTaskEmployee = employee
+        window.task_edit_pageView.setCurrentIndex(0)
+        window.task_edit_emp_name_label.setText(employee.employeeName + " " + employee.employeeSurname)
 
     def convertDateFromStr(self, strDate):
         today = datetime.datetime.strptime(strDate,"%d.%m.%Y")
@@ -450,32 +681,14 @@ class MainWİndow(QMainWindow) :
         self.oldPos = event.globalPos()
     def wheelEvent(self, event):
     # Tekerlek olayını yakala ve scroll işlemi yap
+
         if self.ui.main_top_right_frame.rect().contains(event.pos()) or self.ui.main_top_bar_frame.rect().contains(event.pos()):
             delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
             self.ui.projects_scroll.horizontalScrollBar().setValue(self.ui.projects_scroll.horizontalScrollBar().value() - int(delta * 40))  # 20 birimlik bir kaydırma yap
-        if(self.ui.employee_list_scroll_area.rect().contains(event.pos())):
+        elif(self.ui.employee_list_scroll_area.rect().contains(event.pos())):
             delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
             self.ui.employee_list_scroll_area.verticalScrollBar().setValue(self.ui.employee_list_scroll_area.verticalScrollBar().value() - int(delta * 40))
-
-"""   projectRowUpdate a aittir...
- projectWidget = QWidget()
-project_name_label = QLabel(item.projectName)
-project_date_row_label = QLabel(f"{item.startingDate} - {item.endDate}")
-projectWidget.setMinimumHeight(100)
-projectWidget.setStyleSheet(
-    background-color: rgb(35, 39, 79);
-    color: rgb(255, 255, 255);
-    border-radius : 10px;
-)
-projectWidgetLayout = QVBoxLayout(projectWidget)
-projectWidgetTopLayout = QHBoxLayout(QFrame(projectWidget))
-project_describe_label = QLabel(item.projectDescription)
-projectWidgetLayout.addWidget(project_describe_label)
-projectWidgetBottomLayout = QHBoxLayout(QFrame(projectWidget))
-self.ui.projects_scroll_content_layout.setSpacing(20)
-projectWidgetTopLayout.addWidget(project_name_label)
-projectWidgetTopLayout.addWidget(project_date_row_label)
-projectWidgetTopLayout.setAlignment(Qt.AlignTop)
-
-self.ui.projects_scroll_content_layout.addWidget(projectWidget)
-"""
+        elif(self.ui.working_pageView.currentIndex == 2 or self.ui.waiting_pageView.currentIndex == 2 or self.ui.done_pageView.currentIndex == 2):
+            if(self.editWindow is not None and self.editWindow.emp_list_window_scrolArea.rect().contains(event.pos())):
+                delta = event.angleDelta().y() / 120  # Tekerleği kaydırma miktarını al
+                self.editWindow.emp_list_window_scrolArea.verticalScrollBar().setValue(self.editWindow.emp_list_window_scrolArea.verticalScrollBar().value() - int(delta * 40))

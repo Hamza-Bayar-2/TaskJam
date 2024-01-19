@@ -15,6 +15,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1875, 921)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setEnabled(True)
         self.centralwidget.setStyleSheet("*{\n"
@@ -176,7 +181,7 @@ class Ui_MainWindow(object):
         self.avatar_info_frame = QtWidgets.QFrame(self.avatar_info)
         self.avatar_info_frame.setMinimumSize(QtCore.QSize(1, 120))
         self.avatar_info_frame.setStyleSheet("background-color: rgb(7, 26, 35);\n"
-"border-radius: 10px;")
+"border-radius: 5px;")
         self.avatar_info_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.avatar_info_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.avatar_info_frame.setObjectName("avatar_info_frame")
@@ -397,7 +402,6 @@ class Ui_MainWindow(object):
         self.project_add_btn.setStyleSheet("* {\n"
 "background-color: rgb(9, 38, 53);\n"
 "color: #ffffff; /* Metin rengi */\n"
-"box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
 "border : 2px outset rgb(16, 16, 16);\n"
 "padding: 10px;\n"
 "font: 8pt \"Montserrat\";\n"
@@ -502,23 +506,30 @@ class Ui_MainWindow(object):
         self.waiting_label = QtWidgets.QLabel(self.main_bottom_bar_top_frame)
         self.waiting_label.setMinimumSize(QtCore.QSize(0, 0))
         self.waiting_label.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.waiting_label.setStyleSheet("border-radius: 5px;\n"
-"box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
-"border : 2px outset rgb(16, 16, 16);")
+        self.waiting_label.setStyleSheet("*{\n"
+"border-radius: 5px;\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"")
         self.waiting_label.setAlignment(QtCore.Qt.AlignCenter)
         self.waiting_label.setObjectName("waiting_label")
         self.horizontalLayout_7.addWidget(self.waiting_label)
         self.working_label = QtWidgets.QLabel(self.main_bottom_bar_top_frame)
-        self.working_label.setStyleSheet("color: rgb(229, 189, 48);\n"
-"box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
-"border : 2px outset rgb(16, 16, 16);")
+        self.working_label.setStyleSheet("*{\n"
+"color: rgb(229, 189, 48);\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"")
         self.working_label.setAlignment(QtCore.Qt.AlignCenter)
         self.working_label.setObjectName("working_label")
         self.horizontalLayout_7.addWidget(self.working_label)
         self.done_label = QtWidgets.QLabel(self.main_bottom_bar_top_frame)
-        self.done_label.setStyleSheet("color: rgb(0, 192, 42);\n"
-"box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);\n"
-"border : 2px outset rgb(16, 16, 16);")
+        self.done_label.setStyleSheet("*{\n"
+"color: rgb(0, 192, 42);\n"
+"border : 2px outset rgb(16, 16, 16);\n"
+"}\n"
+"\n"
+"")
         self.done_label.setAlignment(QtCore.Qt.AlignCenter)
         self.done_label.setObjectName("done_label")
         self.horizontalLayout_7.addWidget(self.done_label)
@@ -553,27 +564,57 @@ class Ui_MainWindow(object):
         self.waiting_frame_main.setFrameShadow(QtWidgets.QFrame.Raised)
         self.waiting_frame_main.setLineWidth(0)
         self.waiting_frame_main.setObjectName("waiting_frame_main")
-        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.waiting_frame_main)
-        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_13.setSpacing(0)
-        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        self.will_done_scroll_area = QtWidgets.QScrollArea(self.waiting_frame_main)
+        self.verticalLayout_37 = QtWidgets.QVBoxLayout(self.waiting_frame_main)
+        self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_37.setSpacing(0)
+        self.verticalLayout_37.setObjectName("verticalLayout_37")
+        self.waiting_pageView = QtWidgets.QStackedWidget(self.waiting_frame_main)
+        self.waiting_pageView.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
+"}")
+        self.waiting_pageView.setObjectName("waiting_pageView")
+        self.waiting_task_page = QtWidgets.QWidget()
+        self.waiting_task_page.setObjectName("waiting_task_page")
+        self.verticalLayout_38 = QtWidgets.QVBoxLayout(self.waiting_task_page)
+        self.verticalLayout_38.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_38.setSpacing(0)
+        self.verticalLayout_38.setObjectName("verticalLayout_38")
+        self.will_done_scroll_area = QtWidgets.QScrollArea(self.waiting_task_page)
         self.will_done_scroll_area.setStyleSheet("background-color: rgb(7, 26, 35);")
         self.will_done_scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.will_done_scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.will_done_scroll_area.setWidgetResizable(True)
         self.will_done_scroll_area.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.will_done_scroll_area.setObjectName("will_done_scroll_area")
-        self.will_done_scroll_area_content = QtWidgets.QWidget()
-        self.will_done_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 510, 477))
-        self.will_done_scroll_area_content.setStyleSheet("")
-        self.will_done_scroll_area_content.setObjectName("will_done_scroll_area_content")
-        self.will_done_scroll_area_content_layout = QtWidgets.QVBoxLayout(self.will_done_scroll_area_content)
-        self.will_done_scroll_area_content_layout.setContentsMargins(0, 15, 0, 15)
-        self.will_done_scroll_area_content_layout.setSpacing(15)
-        self.will_done_scroll_area_content_layout.setObjectName("will_done_scroll_area_content_layout")
-        self.will_done_scroll_area.setWidget(self.will_done_scroll_area_content)
-        self.horizontalLayout_13.addWidget(self.will_done_scroll_area)
+        self.will_done_scroll_area_content_2 = QtWidgets.QWidget()
+        self.will_done_scroll_area_content_2.setGeometry(QtCore.QRect(0, 0, 510, 477))
+        self.will_done_scroll_area_content_2.setStyleSheet("")
+        self.will_done_scroll_area_content_2.setObjectName("will_done_scroll_area_content_2")
+        self.will_done_scroll_area_content_layout_2 = QtWidgets.QVBoxLayout(self.will_done_scroll_area_content_2)
+        self.will_done_scroll_area_content_layout_2.setContentsMargins(0, 15, 0, 15)
+        self.will_done_scroll_area_content_layout_2.setSpacing(15)
+        self.will_done_scroll_area_content_layout_2.setObjectName("will_done_scroll_area_content_layout_2")
+        self.will_done_scroll_area.setWidget(self.will_done_scroll_area_content_2)
+        self.verticalLayout_38.addWidget(self.will_done_scroll_area)
+        self.waiting_pageView.addWidget(self.waiting_task_page)
+        self.waiting_task_detail_page = QtWidgets.QWidget()
+        self.waiting_task_detail_page.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
+"}")
+        self.waiting_task_detail_page.setObjectName("waiting_task_detail_page")
+        self.waiting_task_detail_page_layoout = QtWidgets.QHBoxLayout(self.waiting_task_detail_page)
+        self.waiting_task_detail_page_layoout.setContentsMargins(20, 20, 20, 10)
+        self.waiting_task_detail_page_layoout.setSpacing(0)
+        self.waiting_task_detail_page_layoout.setObjectName("waiting_task_detail_page_layoout")
+        self.waiting_pageView.addWidget(self.waiting_task_detail_page)
+        self.waiting_task_edit_page = QtWidgets.QWidget()
+        self.waiting_task_edit_page.setObjectName("waiting_task_edit_page")
+        self.waiting_task_edit_page_layout = QtWidgets.QHBoxLayout(self.waiting_task_edit_page)
+        self.waiting_task_edit_page_layout.setContentsMargins(20, 20, 20, 10)
+        self.waiting_task_edit_page_layout.setSpacing(0)
+        self.waiting_task_edit_page_layout.setObjectName("waiting_task_edit_page_layout")
+        self.waiting_pageView.addWidget(self.waiting_task_edit_page)
+        self.verticalLayout_37.addWidget(self.waiting_pageView)
         self.verticalLayout_4.addWidget(self.waiting_frame_main)
         self.task_add_btn = QtWidgets.QPushButton(self.waiting_frame)
         self.task_add_btn.setMinimumSize(QtCore.QSize(0, 40))
@@ -624,8 +665,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.addWidget(self.working_scroll_area)
         self.working_pageView.addWidget(self.working_task_page)
         self.working_task_detail_show_page = QtWidgets.QWidget()
+        self.working_task_detail_show_page.setStyleSheet("*{\n"
+"font: 10pt \"Montserrat\";\n"
+"}\n"
+"")
         self.working_task_detail_show_page.setObjectName("working_task_detail_show_page")
+        self.working_task_detail_show_page_layout = QtWidgets.QVBoxLayout(self.working_task_detail_show_page)
+        self.working_task_detail_show_page_layout.setContentsMargins(20, 20, 20, 20)
+        self.working_task_detail_show_page_layout.setSpacing(0)
+        self.working_task_detail_show_page_layout.setObjectName("working_task_detail_show_page_layout")
         self.working_pageView.addWidget(self.working_task_detail_show_page)
+        self.working_task_edit_page = QtWidgets.QWidget()
+        self.working_task_edit_page.setObjectName("working_task_edit_page")
+        self.working_task_edit_page_layout = QtWidgets.QVBoxLayout(self.working_task_edit_page)
+        self.working_task_edit_page_layout.setContentsMargins(20, 20, 20, 20)
+        self.working_task_edit_page_layout.setSpacing(0)
+        self.working_task_edit_page_layout.setObjectName("working_task_edit_page_layout")
+        self.working_pageView.addWidget(self.working_task_edit_page)
         self.horizontalLayout_17.addWidget(self.working_pageView)
         self.horizontalLayout_6.addWidget(self.working_frame)
         self.done_task_frame = QtWidgets.QFrame(self.main_bottom_bar_botttom_frame)
@@ -634,27 +690,61 @@ class Ui_MainWindow(object):
         self.done_task_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.done_task_frame.setObjectName("done_task_frame")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.done_task_frame)
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 5)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.done_scroll_area = QtWidgets.QScrollArea(self.done_task_frame)
+        self.done_pageView = QtWidgets.QStackedWidget(self.done_task_frame)
+        self.done_pageView.setStyleSheet("*{\n"
+"background-color: rgb(7, 26, 35);\n"
+"}")
+        self.done_pageView.setObjectName("done_pageView")
+        self.done_task_page = QtWidgets.QWidget()
+        self.done_task_page.setObjectName("done_task_page")
+        self.horizontalLayout_29 = QtWidgets.QHBoxLayout(self.done_task_page)
+        self.horizontalLayout_29.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_29.setSpacing(0)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.done_scroll_area = QtWidgets.QScrollArea(self.done_task_page)
         self.done_scroll_area.setStyleSheet("background-color: rgb(7, 26, 35);")
         self.done_scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.done_scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.done_scroll_area.setWidgetResizable(True)
         self.done_scroll_area.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.done_scroll_area.setObjectName("done_scroll_area")
-        self.done_scroll_area_frame = QtWidgets.QWidget()
-        self.done_scroll_area_frame.setGeometry(QtCore.QRect(0, 0, 510, 526))
-        self.done_scroll_area_frame.setStyleSheet("")
-        self.done_scroll_area_frame.setObjectName("done_scroll_area_frame")
-        self.done_scroll_area_cotent_layout = QtWidgets.QVBoxLayout(self.done_scroll_area_frame)
-        self.done_scroll_area_cotent_layout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
-        self.done_scroll_area_cotent_layout.setContentsMargins(0, 15, 0, 15)
-        self.done_scroll_area_cotent_layout.setSpacing(15)
-        self.done_scroll_area_cotent_layout.setObjectName("done_scroll_area_cotent_layout")
-        self.done_scroll_area.setWidget(self.done_scroll_area_frame)
-        self.verticalLayout_5.addWidget(self.done_scroll_area)
+        self.done_scroll_area_frame_2 = QtWidgets.QWidget()
+        self.done_scroll_area_frame_2.setGeometry(QtCore.QRect(0, 0, 510, 531))
+        self.done_scroll_area_frame_2.setStyleSheet("")
+        self.done_scroll_area_frame_2.setObjectName("done_scroll_area_frame_2")
+        self.done_scroll_area_cotent_layout_2 = QtWidgets.QVBoxLayout(self.done_scroll_area_frame_2)
+        self.done_scroll_area_cotent_layout_2.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
+        self.done_scroll_area_cotent_layout_2.setContentsMargins(0, 15, 0, 15)
+        self.done_scroll_area_cotent_layout_2.setSpacing(15)
+        self.done_scroll_area_cotent_layout_2.setObjectName("done_scroll_area_cotent_layout_2")
+        self.done_scroll_area.setWidget(self.done_scroll_area_frame_2)
+        self.horizontalLayout_29.addWidget(self.done_scroll_area)
+        self.done_pageView.addWidget(self.done_task_page)
+        self.done_task_detail_show = QtWidgets.QWidget()
+        self.done_task_detail_show.setStyleSheet("*{\n"
+"font: 10pt \"Montserrat\";\n"
+"\n"
+"}\n"
+"QWidget{\n"
+"    background-color: rgb(7, 26, 35);\n"
+"}\n"
+"")
+        self.done_task_detail_show.setObjectName("done_task_detail_show")
+        self.done_task_detail_page_layout = QtWidgets.QVBoxLayout(self.done_task_detail_show)
+        self.done_task_detail_page_layout.setContentsMargins(20, 20, 20, 20)
+        self.done_task_detail_page_layout.setObjectName("done_task_detail_page_layout")
+        self.done_pageView.addWidget(self.done_task_detail_show)
+        self.done_task_edit_page = QtWidgets.QWidget()
+        self.done_task_edit_page.setObjectName("done_task_edit_page")
+        self.done_task_edit_page_layout = QtWidgets.QHBoxLayout(self.done_task_edit_page)
+        self.done_task_edit_page_layout.setContentsMargins(20, 20, 20, 20)
+        self.done_task_edit_page_layout.setSpacing(0)
+        self.done_task_edit_page_layout.setObjectName("done_task_edit_page_layout")
+        self.done_pageView.addWidget(self.done_task_edit_page)
+        self.verticalLayout_5.addWidget(self.done_pageView)
         self.horizontalLayout_6.addWidget(self.done_task_frame)
         self.verticalLayout_10.addWidget(self.main_bottom_bar_botttom_frame)
         self.verticalLayout_9.addWidget(self.main_bottom_bar_frame)
@@ -920,7 +1010,7 @@ class Ui_MainWindow(object):
         self.employee_list_scroll_area.setWidgetResizable(True)
         self.employee_list_scroll_area.setObjectName("employee_list_scroll_area")
         self.employee_list_scroll_area_content = QtWidgets.QWidget()
-        self.employee_list_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 765, 18))
+        self.employee_list_scroll_area_content.setGeometry(QtCore.QRect(0, 0, 100, 18))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1383,7 +1473,7 @@ class Ui_MainWindow(object):
         self.willl_task_emp_inf_scrollArea_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.willl_task_emp_inf_scrollArea_3.setObjectName("willl_task_emp_inf_scrollArea_3")
         self.willl_task_emp_inf_Frame_2 = QtWidgets.QWidget()
-        self.willl_task_emp_inf_Frame_2.setGeometry(QtCore.QRect(0, 0, 704, 93))
+        self.willl_task_emp_inf_Frame_2.setGeometry(QtCore.QRect(0, 0, 100, 50))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1484,7 +1574,7 @@ class Ui_MainWindow(object):
         self.working_task_emp_inf_scrollArea_11.setWidgetResizable(True)
         self.working_task_emp_inf_scrollArea_11.setObjectName("working_task_emp_inf_scrollArea_11")
         self.working_task_emp_inf_Frame_6 = QtWidgets.QWidget()
-        self.working_task_emp_inf_Frame_6.setGeometry(QtCore.QRect(0, 0, 704, 93))
+        self.working_task_emp_inf_Frame_6.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.working_task_emp_inf_Frame_6.setObjectName("working_task_emp_inf_Frame_6")
         self.willl_task_emp_inf_scrollArea_12 = QtWidgets.QHBoxLayout(self.working_task_emp_inf_Frame_6)
         self.willl_task_emp_inf_scrollArea_12.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
@@ -1580,7 +1670,7 @@ class Ui_MainWindow(object):
         self.done_task_emp_inf_scrollArea_13.setWidgetResizable(True)
         self.done_task_emp_inf_scrollArea_13.setObjectName("done_task_emp_inf_scrollArea_13")
         self.done_task_emp_inf_Frame_7 = QtWidgets.QWidget()
-        self.done_task_emp_inf_Frame_7.setGeometry(QtCore.QRect(0, 0, 704, 93))
+        self.done_task_emp_inf_Frame_7.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.done_task_emp_inf_Frame_7.setObjectName("done_task_emp_inf_Frame_7")
         self.willl_task_emp_inf_scrollArea_14 = QtWidgets.QHBoxLayout(self.done_task_emp_inf_Frame_7)
         self.willl_task_emp_inf_scrollArea_14.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
@@ -1603,7 +1693,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
+        self.waiting_pageView.setCurrentIndex(0)
         self.working_pageView.setCurrentIndex(0)
+        self.done_pageView.setCurrentIndex(0)
         self.employee_detail_stackwidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
+    <width>340</width>
     <height>44</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>510</width>
+    <width>330</width>
     <height>44</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>510</width>
+    <width>2000</width>
     <height>44</height>
    </size>
   </property>
@@ -26,7 +26,9 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">border:none;</string>
+   <string notr="true">*{
+border:none;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -48,7 +50,7 @@
     <widget class="QFrame" name="main_frame">
      <property name="styleSheet">
       <string notr="true">QFrame{
-background-color: rgb(9, 38, 53);
+background-color: rgb(7, 26, 35);
 border-radius : 5px;
 }
 QLabel{
@@ -76,7 +78,7 @@ color: rgb(255, 255, 255);
        <number>13</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>9</number>
       </property>
       <item alignment="Qt::AlignVCenter">
        <widget class="QLabel" name="user_name_label">
