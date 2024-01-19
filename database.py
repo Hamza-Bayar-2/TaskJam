@@ -437,6 +437,14 @@ class db_Helper:
     def deleteProject(self, projectID) :
         self.cursor.execute('''
             DELETE FROM 
+                tasks
+            WHERE 
+                projectID = ?
+        ''', (projectID,))
+        self.conn.commit()
+
+        self.cursor.execute('''
+            DELETE FROM 
                 projects
             WHERE 
                 projectID = ?
