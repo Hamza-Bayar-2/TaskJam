@@ -1,8 +1,6 @@
 from datetime import datetime
 import sqlite3
 from modals.selectedEmployee import SelectedEmployee
-from modals.tasksBasedOnStatusAndEmployeeID import TasksBasedOnStatusAndEmployeeID
-from modals.tasksBasedOnStatusAndProjectID import TasksBasedOnStatusAndProjectID 
 from modals.userInfo import UserInfo
 from modals.projectInfo import ProjectInfo
 from modals.employeeInfo import EmployeeInfo
@@ -323,7 +321,7 @@ class db_Helper:
 
 
     # proje eklerken ilk başta gecikme miktarını 0 ve zamanında tamamlandıyı true olarak atıyorum
-    def addNewProject(self, userID,ProjectInfo) :
+    def addNewProject(self, userID, ProjectInfo) :
         self.cursor.execute('''
             INSERT INTO projects(
                 userID,
@@ -437,6 +435,14 @@ class db_Helper:
         self.conn.commit()
         
     def deleteProject(self, projectID) :
+        self.cursor.execute('''
+            DELETE FROM 
+                tasks
+            WHERE 
+                projectID = ?
+        ''', (projectID,))
+        self.conn.commit()
+
         self.cursor.execute('''
             DELETE FROM 
                 projects
@@ -726,6 +732,21 @@ class db_Helper:
         ''', (taskID,))
         self.conn.commit()
 
+    # bir kullanıcı silindiği zaman o kullanıcıya ait tüm görevleri siler
+    def deleteTasksWhenEmployeeDeleted(self, employeeID) :
+        self.cursor.execute('''
+            DELETE FROM
+                tasks
+            WHERE
+                taskID IN (
+                    SELECT 
+                        taskID
+                    FROM
+                        tasks
+                    WHERE
+                        employeeID = ?        
+                )
+        ''', (employeeID,))
 
 
 # conn = sqlite3.connect('veritabani.db')
