@@ -434,6 +434,28 @@ class db_Helper:
         ''', (ProjectInfo.projectName, ProjectInfo.projectDescription, ProjectInfo.startingDate, ProjectInfo.endDate, ProjectInfo.projectID,))
         self.conn.commit()
         
+    def activeProjectsAmount(self) :
+        self.cursor.execute('''
+            SELECT 
+                endDate
+            FROM 
+                projects
+        ''')
+        resultEndDates = self.cursor.fetchall()
+        todayDate = datetime.today().strftime("%d.%m.%Y")
+        count = 0
+
+        for iter in resultEndDates :
+            endDate = datetime.strptime(iter[0], "%d.%m.%Y")
+            daysDifference = (todayDate - endDate).days
+
+            if daysDifference <= 0 :
+                count += 1
+        
+        return count
+
+
+
     def deleteProject(self, projectID) :
         self.cursor.execute('''
             DELETE FROM 
@@ -529,15 +551,13 @@ class db_Helper:
         ''', (taskID,))
 
         end = self.cursor.fetchone()[0]
-        today = datetime.today().strftime("%d.%m.%Y")
 
-        todayDate = datetime.strptime(today, "%d.%m.%Y")
+        todayDate = datetime.today().strftime("%d.%m.%Y")
         endDate = datetime.strptime(end, "%d.%m.%Y")
 
         daysDifference = (todayDate - endDate).days
 
         resultOfDelayAmount = max(daysDifference, 0)
-        print("databaseden geldi = ", daysDifference)
         self.cursor.execute('''
             UPDATE 
                 tasks
@@ -747,6 +767,7 @@ class db_Helper:
                         employeeID = ?        
                 )
         ''', (employeeID,))
+        self.conn.commit()
 
 
 # conn = sqlite3.connect('veritabani.db')
