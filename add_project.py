@@ -80,4 +80,5 @@ class AddProjectWindow(QDialog):
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
+        
 
