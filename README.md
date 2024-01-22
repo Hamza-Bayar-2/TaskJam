@@ -11,27 +11,27 @@ This repository contains the final project given in the scope of the DataBase Ma
 </p>
 
 ### Ödev istenirleri
-- [ ] Projede bir kullanıcı sisteme farklı proje tanımlaması yapabilir. Başlangıç ve bitiş tarihlerini girebilir.
-- [ ] Sisteme çalışanları ekler çıkarır veya günceller
-- [ ] Projeye görevler ekler, görevleri yapacak kişilere atar.
-- [ ] Her görevin başlangıç tarihi, adam gün değeri ve bitiş tarihi vardır.
-- [ ] Projelerin görev kontrolü yapılarak bir görev zamanında tamamlandı ise durumu tamamlandıysa 
+- [x] Projede bir kullanıcı sisteme farklı proje tanımlaması yapabilir. Başlangıç ve bitiş tarihlerini girebilir.
+- [x] Sisteme çalışanları ekler çıkarır veya günceller
+- [x] Projeye görevler ekler, görevleri yapacak kişilere atar.
+- [x] Her görevin başlangıç tarihi, adam gün değeri ve bitiş tarihi vardır.
+- [x] Projelerin görev kontrolü yapılarak bir görev zamanında tamamlandı ise durumu tamamlandıysa 
 değiştirilir.
-- [ ] Bir görevin 3 durumu olabilir. Tamamlanacak, Devam Ediyor, Tamamlandı
-- [ ] Görevlerin zamanında tamamlanmadığı durumlarda projenin bitiş tarihi sürekli olarak ileri ertelenecektir 
+- [x] Bir görevin 3 durumu olabilir. Tamamlanacak, Devam Ediyor, Tamamlandı
+- [x] Görevlerin zamanında tamamlanmadığı durumlarda projenin bitiş tarihi sürekli olarak ileri ertelenecektir 
 ve gecikme miktarı ilgili arayüzde gösterilmelidir.
-- [ ] Bir kullanıcı sisteme girdiğinde projeler listesi ile karşılaşır. Proje yok ise yeni proje ekleyerek projesini 
+- [x] Bir kullanıcı sisteme girdiğinde projeler listesi ile karşılaşır. Proje yok ise yeni proje ekleyerek projesini 
 oluşturur. Projelerin adı, başlama ve bitiş tarihleri vardır. Bir projeye tıklayarak görevlerini ekler. her görev 
 bir kişiye atanır.
-- [ ] Sistemde çalışanların listelendiği bir bölüm vardır. Bir çalışana tıklanınca detay sayfasında hangi 
+- [x] Sistemde çalışanların listelendiği bir bölüm vardır. Bir çalışana tıklanınca detay sayfasında hangi 
 projelerde görevi var ise görünebilir. Çalışanın bugüne kadar tamamladığı , devam eden yada başlayacak 
 görevleri görünür.
-- [ ] Çalışanın zamanında tamamladığı proje görevleri, zamanında tamamlayamadığı proje görevleri sayılarla 
+- [x] Çalışanın zamanında tamamladığı proje görevleri, zamanında tamamlayamadığı proje görevleri sayılarla 
 ifade edilerek ilgili sayfada gösterilir.
-- [ ] UML ER diyagramının detaylı ve tam olarak hazırlanması
-- [ ] Uygulama veritabanı şemasının niteliği
-- [ ] Uygulama UI ve UX uygunluğu
-- [ ] Kodlama kalitesi (Clean code uyumu)
+- [x] UML ER diyagramının detaylı ve tam olarak hazırlanması
+- [x] Uygulama veritabanı şemasının niteliği
+- [x] Uygulama UI ve UX uygunluğu
+- [x] Kodlama kalitesi (Clean code uyumu)
 
 ## UI
 
