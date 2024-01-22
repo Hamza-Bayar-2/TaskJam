@@ -1,7 +1,15 @@
 # TaskJam - Şirketler için Görev Yönetici Paneli
-Bu repo Ondokuz Mayıs Üniversitesi Bilgisayar Mühendisliği Mobil Programlama Dersi Kapsamında 2023-2024 Yılı Güz Döneminde Verilen Final Ödevini içermektedir,
+Bu repo Ondokuz Mayıs Üniversitesi Bilgisayar Mühendisliği Veri Tabanı Yöetim Sistemleri Dersi Kapsamında 2023-2024 Yılı Güz Döneminde Verilen Final Ödevini içermektedir.
 
 This repository contains the final project given in the scope of the DataBase Management Systems Course for the Department of Computer Engineering at Ondokuz Mayıs University during the Fall Semester of the 2023-2024 academic year.
+
+**Grup 29**
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/banner-1-tj.png" width=100% height=100% />
+</p>
+
 ### Ödev istenirleri
 - [ ] Projede bir kullanıcı sisteme farklı proje tanımlaması yapabilir. Başlangıç ve bitiş tarihlerini girebilir.
 - [ ] Sisteme çalışanları ekler çıkarır veya günceller
@@ -24,7 +32,31 @@ ifade edilerek ilgili sayfada gösterilir.
 - [ ] Uygulama veritabanı şemasının niteliği
 - [ ] Uygulama UI ve UX uygunluğu
 - [ ] Kodlama kalitesi (Clean code uyumu)
-- [ ] Kaynak Github ve Youtube video Linkler
+
+## UI
+
+# Home Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-1-tj.png" width=100% height=100% />
+</p>
+
+# Tasks - Edit Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-2-tj.png" width=100% height=100% />
+</p>
+
+# Employees Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-3-tj.png" width=100% height=100% />
+</p>
+
+
 
 ## BAŞLARKEN
 
