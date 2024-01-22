@@ -22,9 +22,11 @@ class AddProjectWindow(QDialog):
         self.initUI()
 
     def initUI(self):
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        self.setWindowTitle("TaskJam")
         self.buttonHandle()
-        self.ui.starting_date_lineEdit.setText("11.01.2024")
-        self.ui.ending_date_lineEdit.setText("20.01.2024")
+        self.ui.starting_date_lineEdit.setText(str(datetime.datetime.strftime(datetime.datetime.now(),"%d.%m.%Y")))
+        self.ui.ending_date_lineEdit.setText(str(datetime.datetime.strftime(datetime.datetime.now() ,"%d.%m.%Y")))
 
     def buttonHandle(self):
         self.ui.exit_btn.clicked.connect(lambda : self.close())
@@ -35,20 +37,19 @@ class AddProjectWindow(QDialog):
         projectDescription = self.ui.project_describe_lineEdit.text()
         startingDate = self.ui.starting_date_lineEdit.text()
         endDate = self.ui.ending_date_lineEdit.text()
-        dateNow = datetime.datetime.strptime(startingDate, '%d.%m.%Y')
-        dateLater = datetime.datetime.strptime(endDate, '%d.%m.%Y')
+        
 
         if(projectName == "" or projectDescription == "" or startingDate == "" or endDate == ""):
             self.ui.status_label.setText("Boş bırakılamaz.")
             return
-        elif(len(startingDate.split(".")) != 3 or len(endDate.split(".")) != 3 or len(startingDate) != 10 or len(endDate) != 10 ):
+        elif(self.validateDate(startingDate, endDate)):
             self.ui.status_label.setText("lütfen tarih bilgilerinde formata uyunuz.")
             return
         elif(self.db.showProjectOnDetailPage(projectName=projectName) != None):
             self.ui.status_label.setText("Bu proje adına sahip zaten kayıt var")
             return
-        elif dateNow >= dateLater :
-            self.ui.status_label.setText("Başlangıç taihi bitiş tarihinden küçük olmamaz")
+        elif self.dateNow > self.dateLater :
+            self.ui.status_label.setText("Başlangıç taihi bitiş tarihinden küçük olamaz")
         else :
             newProject = ProjectInfo(
                 projectID = None,
@@ -61,7 +62,13 @@ class AddProjectWindow(QDialog):
             self.db.addNewProject(self.user.userID,newProject)
             self.mainServer.emit("55 TAMM")
             self.close()
-
+    def validateDate(self, taskStartDate, taskEndDate):
+        try:
+            self.dateNow = datetime.datetime.strptime(taskStartDate, "%d.%m.%Y")
+            self.dateLater = datetime.datetime.strptime(taskEndDate, "%d.%m.%Y")
+            return False
+        except ValueError:
+            return True
 
     def window_fix(self) :
         self.setWindowTitle("TaskJam Login")
@@ -73,4 +80,5 @@ class AddProjectWindow(QDialog):
         delta = QPoint(event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
+        
 

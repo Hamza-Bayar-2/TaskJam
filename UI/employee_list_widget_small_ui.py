@@ -14,17 +14,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_smal_row_Widget(object):
     def setupUi(self, smal_row_Widget):
         smal_row_Widget.setObjectName("smal_row_Widget")
-        smal_row_Widget.resize(510, 44)
-        smal_row_Widget.setMinimumSize(QtCore.QSize(510, 44))
-        smal_row_Widget.setMaximumSize(QtCore.QSize(510, 44))
-        smal_row_Widget.setStyleSheet("border:none;")
+        smal_row_Widget.resize(340, 44)
+        smal_row_Widget.setMinimumSize(QtCore.QSize(330, 44))
+        smal_row_Widget.setMaximumSize(QtCore.QSize(2000, 44))
+        smal_row_Widget.setStyleSheet("*{\n"
+"border:none;\n"
+"}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(smal_row_Widget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.main_frame = QtWidgets.QFrame(smal_row_Widget)
         self.main_frame.setStyleSheet("QFrame{\n"
-"background-color: rgb(9, 38, 53);\n"
+"background-color: rgb(7, 26, 35);\n"
 "border-radius : 5px;\n"
 "}\n"
 "QLabel{\n"
@@ -35,7 +37,7 @@ class Ui_smal_row_Widget(object):
         self.main_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.main_frame.setObjectName("main_frame")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.main_frame)
-        self.horizontalLayout_2.setContentsMargins(23, 6, 13, 5)
+        self.horizontalLayout_2.setContentsMargins(23, 6, 13, 9)
         self.horizontalLayout_2.setSpacing(4)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.user_name_label = QtWidgets.QLabel(self.main_frame)

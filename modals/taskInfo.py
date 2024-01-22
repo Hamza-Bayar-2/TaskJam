@@ -12,9 +12,9 @@ class TaskInfo :
             delayAmount, #INT
             ) -> None:
         
-        self.taskID = taskID
+        self.taskID = taskID if taskID != None else 0
         self.projectID = projectID
-        self.employeeID = employeeID
+        self.employeeID = employeeID if employeeID != None else 0
         self.taskName = taskName
         self.taskDescription = taskDescription
         self.startingDate = startingDate

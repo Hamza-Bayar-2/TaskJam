@@ -172,7 +172,27 @@ class db_Helper:
             VALUES(?, ?, ?, ?, ?, ?)
         ''', (EmployeeInfo.userID, EmployeeInfo.employeeName, EmployeeInfo.employeeSurname, EmployeeInfo.employeeMail, 0, 0,))
         self.conn.commit()
+    def showEmployeeInfoByEmpIDreturnModal(self, employeeID):
+        self.cursor.execute('''
+            SELECT 
+                *
+            FROM 
+                employees
+            WHERE
+                employeeID = ?
 
+        ''', (employeeID,))
+        self.conn.commit()
+        myitem = self.cursor.fetchall()[0]
+        return EmployeeInfo(
+            employeeID= myitem[0],
+            userID= myitem[1],
+            employeeName= myitem[2],
+            employeeSurname= myitem[3],
+            employeeMail= myitem[4],
+            AmountOfTasksCompletedOnTime= myitem[5],
+            AmountOfTasksNotCompletedOnTime= myitem[6],
+        )
     # bütün çalışanları döndürür
     def showEmployeeInformation(self) :
         self.cursor.execute('''
@@ -199,8 +219,8 @@ class db_Helper:
                     employeeName = item[2],
                     employeeSurname = item[3], 
                     employeeMail = item[4], 
-                    AmountOfTasksCompletedOnTime= item[4],
-                    AmountOfTasksNotCompletedOnTime = item[5]
+                    AmountOfTasksCompletedOnTime= item[5],
+                    AmountOfTasksNotCompletedOnTime = item[6]
                 )
             )
         return projectsList
@@ -402,6 +422,7 @@ class db_Helper:
                 projectID = ?
         ''', (projectID,))
         self.conn.commit()
+        return self.cursor.fetchall()[0][1]
 
     # bu fonksiyon projenin gecikme miktarını en geç tamamlanan göreve göre setlemektedir
     def updateProjectDelayAmount(self, projectID) :
@@ -447,7 +468,7 @@ class db_Helper:
 
         for iter in resultEndDates :
             endDate = datetime.strptime(iter[0], "%d.%m.%Y")
-            daysDifference = (todayDate - endDate).days
+            daysDifference = (datetime.strptime(todayDate, "%d.%m.%Y") - endDate).days
 
             if daysDifference <= 0 :
                 count += 1
@@ -555,7 +576,7 @@ class db_Helper:
         todayDate = datetime.today().strftime("%d.%m.%Y")
         endDate = datetime.strptime(end, "%d.%m.%Y")
 
-        daysDifference = (todayDate - endDate).days
+        daysDifference = (datetime.strptime(todayDate, "%d.%m.%Y") - endDate).days
 
         resultOfDelayAmount = max(daysDifference, 0)
         self.cursor.execute('''
