@@ -33,6 +33,31 @@ ifade edilerek ilgili sayfada gösterilir.
 - [ ] Uygulama UI ve UX uygunluğu
 - [ ] Kodlama kalitesi (Clean code uyumu)
 
+## UI
+
+# Home Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-1-tj.png" width=100% height=100% />
+</p>
+
+# Tasks - Edit Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-2-tj.png" width=100% height=100% />
+</p>
+
+# Employees Page
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/ui-3-tj.png" width=100% height=100% />
+</p>
+
+
+
 ## BAŞLARKEN
 
 > [!IMPORTANT]
