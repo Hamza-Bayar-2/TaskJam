@@ -25,8 +25,8 @@ class LoginWindow(QDialog) :
         self.showNormal()
         self.buttonHandle()
 
-        self.ui.eposta_lineedit.setText(".@")
-        self.ui.password_lineedit.setText(".")
+        self.ui.eposta_lineedit.setText("alpergezeravci@gmail.com")
+        self.ui.password_lineedit.setText("admin")
 
     def buttonHandle(self):
          self.ui.exit_btn.clicked.connect(lambda : self.close())

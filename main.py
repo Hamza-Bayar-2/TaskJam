@@ -57,11 +57,11 @@ class MainWİndow(QMainWindow) :
         self.ui.exit_btn.clicked.connect(lambda : self.close())
         self.ui.bottom_line_btn.clicked.connect(lambda : self.showMinimized())
         self.ui.restore_btn.clicked.connect(lambda : self.WindowSize())
-        self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd())
+        self.ui.task_add_btn.clicked.connect(lambda : self.taskAdd() if self.myProject != None else print("viyh"))
         self.ui.workers_page_btn.clicked.connect(lambda : self.changePage(1))
         self.ui.home_page_btn.clicked.connect(lambda : self.changePage(0))
         self.ui.signout_btn.clicked.connect(lambda : self.close())  # login ekranına yönlendirilebilir.
-        self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd() if self.myProject != None else print("viyh"))
+        self.ui.project_add_btn.clicked.connect(lambda : self.projectAdd())
         self.ui.emp_add_btn.clicked.connect(lambda : self.employeeAdd())
 
     def employeeListWidgetUpdate(self):
@@ -99,6 +99,7 @@ class MainWİndow(QMainWindow) :
 
         self.ui.completed_success_count_label_3.setText(str(selectedEmp.AmountOfTasksCompletedOnTime))
         self.ui.completed_unsucces_count_label_2.setText(str(selectedEmp.AmountOfTasksNotCompletedOnTime))
+
         self.ui.label_29.setText(str(len(listForEmployeInfo[0])))
         self.ui.label_33.setText(str(len(listForEmployeInfo[1])))
         self.ui.label_37.setText(str(len(listForEmployeInfo[2])))
@@ -217,7 +218,6 @@ class MainWİndow(QMainWindow) :
             ))
             self.setState()
 
-
     def projectAdd(self):
         self.projectAddWindow = AddProjectWindow(self.user)
         self.projectAddWindow.show()
@@ -272,7 +272,7 @@ class MainWİndow(QMainWindow) :
     def projectRowUpdate(self):
         self.clear_layout(self.ui.projects_scroll_content_widget_layout)
         projects = self.db.showAllProjects(self.user.userID)
-        self.ui.project_count_label.setText(str(len(projects)) + "\nAktif") # aktiflik kontrolunu yapmamız lazım
+        self.ui.project_count_label.setText(str(self.db.activeProjectsAmount()) + "\nAktif") # aktiflik kontrolunu yapmamız lazım
         for item in projects :
             widget = QWidget()
             projectWidget  =  Ui_ProjectWindow()
@@ -581,7 +581,6 @@ class MainWİndow(QMainWindow) :
         infoWindow.taskdt_delete_btn.clicked.connect(lambda _, task = item: self.db.deleteTask(task.taskID))
         infoWindow.taskdt_delete_btn.clicked.connect(lambda : self.setState())
 
-
     def openTaskEdit(self, item, slot):
         if slot == 1 :
             page = self.ui.working_pageView
@@ -675,6 +674,7 @@ class MainWİndow(QMainWindow) :
             self.db.changeTaskDelayAmount(task.taskID,0)
         self.db.updateTaskStatus(statusMode, task.taskID)
         self.setState()
+        
 
     def WindowSize(self):
         if self.isMaximized():  # Eğer pencere küçültülmüşse

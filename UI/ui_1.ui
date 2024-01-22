@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1875</width>
+    <width>1549</width>
     <height>921</height>
    </rect>
   </property>
@@ -1057,7 +1057,7 @@ border : 2px outset rgb(16, 16, 16);
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1304</width>
+                         <width>978</width>
                          <height>178</height>
                         </rect>
                        </property>
@@ -1373,7 +1373,7 @@ background-color: rgb(7, 26, 35);
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>510</width>
+                                   <width>401</width>
                                    <height>477</height>
                                   </rect>
                                  </property>
@@ -1548,7 +1548,7 @@ QPushButton:hover{
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>509</width>
+                                <width>401</width>
                                 <height>526</height>
                                </rect>
                               </property>
@@ -1699,7 +1699,7 @@ background-color: rgb(7, 26, 35);
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>510</width>
+                                <width>401</width>
                                 <height>531</height>
                                </rect>
                               </property>
@@ -2437,7 +2437,7 @@ border : 2px outset rgb(16, 16, 16);</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>765</width>
+                      <width>16</width>
                       <height>18</height>
                      </rect>
                     </property>
@@ -3505,8 +3505,8 @@ border-radius : 5px;
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>704</width>
-                                   <height>93</height>
+                                   <width>28</width>
+                                   <height>50</height>
                                   </rect>
                                  </property>
                                  <property name="sizePolicy">
@@ -3732,8 +3732,8 @@ border-radius : 5px;
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>704</width>
-                                   <height>93</height>
+                                   <width>28</width>
+                                   <height>16</height>
                                   </rect>
                                  </property>
                                  <layout class="QHBoxLayout" name="willl_task_emp_inf_scrollArea_12">
@@ -3953,8 +3953,8 @@ border-radius : 5px;
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>704</width>
-                                   <height>93</height>
+                                   <width>28</width>
+                                   <height>16</height>
                                   </rect>
                                  </property>
                                  <layout class="QHBoxLayout" name="willl_task_emp_inf_scrollArea_14">
@@ -4008,6 +4008,7 @@ border-radius : 5px;
  </widget>
  <resources>
   <include location="../assets/image.qrc"/>
+  <include location="../../../../../../.designer/assets/image.qrc"/>
  </resources>
  <connections/>
 </ui>

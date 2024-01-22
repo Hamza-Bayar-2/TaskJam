@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="image">
+    <file>officalLogo.ico</file>
     <file>officalLogo.png</file>
     <file>officalLogo2.png</file>
     <file>icons/astronot_waiting_wall.png</file>

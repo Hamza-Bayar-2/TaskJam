@@ -468,7 +468,7 @@ class db_Helper:
 
         for iter in resultEndDates :
             endDate = datetime.strptime(iter[0], "%d.%m.%Y")
-            daysDifference = (todayDate - endDate).days
+            daysDifference = (datetime.strptime(todayDate, "%d.%m.%Y") - endDate).days
 
             if daysDifference <= 0 :
                 count += 1
@@ -576,7 +576,7 @@ class db_Helper:
         todayDate = datetime.today().strftime("%d.%m.%Y")
         endDate = datetime.strptime(end, "%d.%m.%Y")
 
-        daysDifference = (todayDate - endDate).days
+        daysDifference = (datetime.strptime(todayDate, "%d.%m.%Y") - endDate).days
 
         resultOfDelayAmount = max(daysDifference, 0)
         self.cursor.execute('''
