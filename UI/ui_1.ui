@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1553</width>
+    <width>1549</width>
     <height>921</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -370,7 +376,7 @@ box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(7, 26, 35);
-border-radius: 10px;</string>
+border-radius: 5px;</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -391,7 +397,7 @@ border-radius: 10px;</string>
                    <string notr="true">font: 75 12pt &quot;Nexa Black&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>UserName</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -642,6 +648,28 @@ font: 2000 9pt &quot;Montserrat&quot;;</string>
            </spacer>
           </item>
           <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="label_2">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../assets/image.qrc">:/image/officalLogo.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
            <widget class="QLabel" name="mini_logo_label">
             <property name="maximumSize">
              <size>
@@ -675,7 +703,7 @@ font: 2000 9pt &quot;Montserrat&quot;;</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">font: 2000 6pt &quot;Montserrat&quot;;</string>
+             <string notr="true">font: 2000 7pt &quot;Montserrat&quot;;</string>
             </property>
             <property name="text">
              <string>Design by Fezaitech v1.0.0</string>
@@ -688,7 +716,7 @@ font: 2000 9pt &quot;Montserrat&quot;;</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="home_page">
           <property name="styleSheet">
@@ -938,7 +966,6 @@ Var</string>
                           <string notr="true">* {
 background-color: rgb(9, 38, 53);
 color: #ffffff; /* Metin rengi */
-box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
 border : 2px outset rgb(16, 16, 16);
 padding: 10px;
 font: 8pt &quot;Montserrat&quot;;
@@ -1030,7 +1057,7 @@ border : 2px outset rgb(16, 16, 16);
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>982</width>
+                         <width>978</width>
                          <height>178</height>
                         </rect>
                        </property>
@@ -1158,9 +1185,11 @@ background-color: rgb(9, 38, 53);
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">border-radius: 5px;
-box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
-border : 2px outset rgb(16, 16, 16);</string>
+                       <string notr="true">*{
+border-radius: 5px;
+border : 2px outset rgb(16, 16, 16);
+}
+</string>
                       </property>
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-size:13pt&quot;&gt;Tamamlanacak &lt;/span&gt;&lt;span style=&quot; font-family:'Montserrat'; font-size:13pt; color:#ffffff;&quot;&gt;Görevler&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1173,9 +1202,11 @@ border : 2px outset rgb(16, 16, 16);</string>
                     <item>
                      <widget class="QLabel" name="working_label">
                       <property name="styleSheet">
-                       <string notr="true">color: rgb(229, 189, 48);
-box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
-border : 2px outset rgb(16, 16, 16);</string>
+                       <string notr="true">*{
+color: rgb(229, 189, 48);
+border : 2px outset rgb(16, 16, 16);
+}
+</string>
                       </property>
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-size:13pt&quot;&gt;Tamamlanmakta &lt;/span&gt;&lt;span style=&quot; font-family:'Montserrat'; font-size:13pt;&quot;&gt;Olan Görevler&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1188,9 +1219,12 @@ border : 2px outset rgb(16, 16, 16);</string>
                     <item>
                      <widget class="QLabel" name="done_label">
                       <property name="styleSheet">
-                       <string notr="true">color: rgb(0, 192, 42);
-box-shadow: 15px 15px 15px 15px rgb(0, 0, 0);
-border : 2px outset rgb(16, 16, 16);</string>
+                       <string notr="true">*{
+color: rgb(0, 192, 42);
+border : 2px outset rgb(16, 16, 16);
+}
+
+</string>
                       </property>
                       <property name="text">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-size:13pt&quot;&gt;Tamamlanan &lt;/span&gt;&lt;span style=&quot; font-family:'Montserrat'; font-size:13pt;&quot;&gt;Görevler&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1274,7 +1308,7 @@ border-radius : 5px;
                          <property name="lineWidth">
                           <number>0</number>
                          </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_13">
+                         <layout class="QVBoxLayout" name="verticalLayout_37">
                           <property name="spacing">
                            <number>0</number>
                           </property>
@@ -1291,49 +1325,123 @@ border-radius : 5px;
                            <number>0</number>
                           </property>
                           <item>
-                           <widget class="QScrollArea" name="will_done_scroll_area">
+                           <widget class="QStackedWidget" name="waiting_pageView">
                             <property name="styleSheet">
-                             <string notr="true">background-color: rgb(7, 26, 35);</string>
+                             <string notr="true">*{
+background-color: rgb(7, 26, 35);
+}</string>
                             </property>
-                            <property name="verticalScrollBarPolicy">
-                             <enum>Qt::ScrollBarAlwaysOff</enum>
+                            <property name="currentIndex">
+                             <number>0</number>
                             </property>
-                            <property name="horizontalScrollBarPolicy">
-                             <enum>Qt::ScrollBarAlwaysOff</enum>
-                            </property>
-                            <property name="widgetResizable">
-                             <bool>true</bool>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                            </property>
-                            <widget class="QWidget" name="will_done_scroll_area_content">
-                             <property name="geometry">
-                              <rect>
-                               <x>0</x>
-                               <y>0</y>
-                               <width>402</width>
-                               <height>477</height>
-                              </rect>
-                             </property>
-                             <property name="styleSheet">
-                              <string notr="true"/>
-                             </property>
-                             <layout class="QVBoxLayout" name="will_done_scroll_area_content_layout">
+                            <widget class="QWidget" name="waiting_task_page">
+                             <layout class="QVBoxLayout" name="verticalLayout_38">
                               <property name="spacing">
-                               <number>15</number>
+                               <number>0</number>
                               </property>
                               <property name="leftMargin">
                                <number>0</number>
                               </property>
                               <property name="topMargin">
-                               <number>15</number>
+                               <number>0</number>
                               </property>
                               <property name="rightMargin">
                                <number>0</number>
                               </property>
                               <property name="bottomMargin">
-                               <number>15</number>
+                               <number>0</number>
+                              </property>
+                              <item>
+                               <widget class="QScrollArea" name="will_done_scroll_area">
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(7, 26, 35);</string>
+                                </property>
+                                <property name="verticalScrollBarPolicy">
+                                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                                </property>
+                                <property name="horizontalScrollBarPolicy">
+                                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                                </property>
+                                <property name="widgetResizable">
+                                 <bool>true</bool>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                                </property>
+                                <widget class="QWidget" name="will_done_scroll_area_content_2">
+                                 <property name="geometry">
+                                  <rect>
+                                   <x>0</x>
+                                   <y>0</y>
+                                   <width>401</width>
+                                   <height>477</height>
+                                  </rect>
+                                 </property>
+                                 <property name="styleSheet">
+                                  <string notr="true"/>
+                                 </property>
+                                 <layout class="QVBoxLayout" name="will_done_scroll_area_content_layout_2">
+                                  <property name="spacing">
+                                   <number>15</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>15</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>15</number>
+                                  </property>
+                                 </layout>
+                                </widget>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                            <widget class="QWidget" name="waiting_task_detail_page">
+                             <property name="styleSheet">
+                              <string notr="true">*{
+background-color: rgb(7, 26, 35);
+}</string>
+                             </property>
+                             <layout class="QHBoxLayout" name="waiting_task_detail_page_layoout">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <property name="leftMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="topMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="rightMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="bottomMargin">
+                               <number>10</number>
+                              </property>
+                             </layout>
+                            </widget>
+                            <widget class="QWidget" name="waiting_task_edit_page">
+                             <layout class="QHBoxLayout" name="waiting_task_edit_page_layout">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <property name="leftMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="topMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="rightMargin">
+                               <number>20</number>
+                              </property>
+                              <property name="bottomMargin">
+                               <number>10</number>
                               </property>
                              </layout>
                             </widget>
@@ -1440,7 +1548,7 @@ QPushButton:hover{
                                <rect>
                                 <x>0</x>
                                 <y>0</y>
-                                <width>403</width>
+                                <width>401</width>
                                 <height>526</height>
                                </rect>
                               </property>
@@ -1466,7 +1574,50 @@ QPushButton:hover{
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="working_task_detail_show_page"/>
+                         <widget class="QWidget" name="working_task_detail_show_page">
+                          <property name="styleSheet">
+                           <string notr="true">*{
+font: 10pt &quot;Montserrat&quot;;
+}
+</string>
+                          </property>
+                          <layout class="QVBoxLayout" name="working_task_detail_show_page_layout">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>20</number>
+                           </property>
+                          </layout>
+                         </widget>
+                         <widget class="QWidget" name="working_task_edit_page">
+                          <layout class="QVBoxLayout" name="working_task_edit_page_layout">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>20</number>
+                           </property>
+                          </layout>
+                         </widget>
                         </widget>
                        </item>
                       </layout>
@@ -1497,55 +1648,131 @@ QPushButton:hover{
                         <number>0</number>
                        </property>
                        <property name="bottomMargin">
-                        <number>5</number>
+                        <number>0</number>
                        </property>
                        <item>
-                        <widget class="QScrollArea" name="done_scroll_area">
+                        <widget class="QStackedWidget" name="done_pageView">
                          <property name="styleSheet">
-                          <string notr="true">background-color: rgb(7, 26, 35);</string>
+                          <string notr="true">*{
+background-color: rgb(7, 26, 35);
+}</string>
                          </property>
-                         <property name="verticalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
+                         <property name="currentIndex">
+                          <number>0</number>
                          </property>
-                         <property name="horizontalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
-                         </property>
-                         <property name="widgetResizable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                         </property>
-                         <widget class="QWidget" name="done_scroll_area_frame">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>402</width>
-                            <height>526</height>
-                           </rect>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <layout class="QVBoxLayout" name="done_scroll_area_cotent_layout">
+                         <widget class="QWidget" name="done_task_page">
+                          <layout class="QHBoxLayout" name="horizontalLayout_29">
                            <property name="spacing">
-                            <number>15</number>
-                           </property>
-                           <property name="sizeConstraint">
-                            <enum>QLayout::SetMaximumSize</enum>
+                            <number>0</number>
                            </property>
                            <property name="leftMargin">
                             <number>0</number>
                            </property>
                            <property name="topMargin">
-                            <number>15</number>
+                            <number>0</number>
                            </property>
                            <property name="rightMargin">
                             <number>0</number>
                            </property>
                            <property name="bottomMargin">
-                            <number>15</number>
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QScrollArea" name="done_scroll_area">
+                             <property name="styleSheet">
+                              <string notr="true">background-color: rgb(7, 26, 35);</string>
+                             </property>
+                             <property name="verticalScrollBarPolicy">
+                              <enum>Qt::ScrollBarAlwaysOff</enum>
+                             </property>
+                             <property name="horizontalScrollBarPolicy">
+                              <enum>Qt::ScrollBarAlwaysOff</enum>
+                             </property>
+                             <property name="widgetResizable">
+                              <bool>true</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                             </property>
+                             <widget class="QWidget" name="done_scroll_area_frame_2">
+                              <property name="geometry">
+                               <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>401</width>
+                                <height>531</height>
+                               </rect>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <layout class="QVBoxLayout" name="done_scroll_area_cotent_layout_2">
+                               <property name="spacing">
+                                <number>15</number>
+                               </property>
+                               <property name="sizeConstraint">
+                                <enum>QLayout::SetMinAndMaxSize</enum>
+                               </property>
+                               <property name="leftMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="topMargin">
+                                <number>15</number>
+                               </property>
+                               <property name="rightMargin">
+                                <number>0</number>
+                               </property>
+                               <property name="bottomMargin">
+                                <number>15</number>
+                               </property>
+                              </layout>
+                             </widget>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                         <widget class="QWidget" name="done_task_detail_show">
+                          <property name="styleSheet">
+                           <string notr="true">*{
+font: 10pt &quot;Montserrat&quot;;
+
+}
+QWidget{
+	background-color: rgb(7, 26, 35);
+}
+</string>
+                          </property>
+                          <layout class="QVBoxLayout" name="done_task_detail_page_layout">
+                           <property name="leftMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>20</number>
+                           </property>
+                          </layout>
+                         </widget>
+                         <widget class="QWidget" name="done_task_edit_page">
+                          <layout class="QHBoxLayout" name="done_task_edit_page_layout">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>20</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>20</number>
                            </property>
                           </layout>
                          </widget>
@@ -2210,7 +2437,7 @@ border : 2px outset rgb(16, 16, 16);</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>765</width>
+                      <width>16</width>
                       <height>18</height>
                      </rect>
                     </property>
@@ -2297,7 +2524,7 @@ border-radius : 10px;
               <item>
                <widget class="QStackedWidget" name="employee_detail_stackwidget">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="welcome_page_emp_detail">
                  <layout class="QHBoxLayout" name="horizontalLayout_61">
@@ -3136,7 +3363,7 @@ border-radius : 5px;
                         <item>
                          <widget class="QFrame" name="frame_22">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -3149,7 +3376,7 @@ border-radius : 5px;
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_33">
                            <property name="spacing">
-                            <number>0</number>
+                            <number>4</number>
                            </property>
                            <property name="topMargin">
                             <number>0</number>
@@ -3249,6 +3476,18 @@ border-radius : 5px;
                               </property>
                               <item>
                                <widget class="QScrollArea" name="willl_task_emp_inf_scrollArea_3">
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>0</width>
+                                  <height>50</height>
+                                 </size>
+                                </property>
+                                <property name="layoutDirection">
+                                 <enum>Qt::LeftToRight</enum>
+                                </property>
+                                <property name="frameShape">
+                                 <enum>QFrame::StyledPanel</enum>
+                                </property>
                                 <property name="verticalScrollBarPolicy">
                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                 </property>
@@ -3258,18 +3497,30 @@ border-radius : 5px;
                                 <property name="widgetResizable">
                                  <bool>true</bool>
                                 </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                                </property>
                                 <widget class="QWidget" name="willl_task_emp_inf_Frame_2">
                                  <property name="geometry">
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>382</width>
-                                   <height>69</height>
+                                   <width>28</width>
+                                   <height>50</height>
                                   </rect>
+                                 </property>
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
                                  </property>
                                  <layout class="QHBoxLayout" name="willl_task_emp_inf_scrollArea_4">
                                   <property name="spacing">
-                                   <number>0</number>
+                                   <number>10</number>
+                                  </property>
+                                  <property name="sizeConstraint">
+                                   <enum>QLayout::SetMaximumSize</enum>
                                   </property>
                                   <property name="topMargin">
                                    <number>0</number>
@@ -3354,7 +3605,7 @@ border-radius : 5px;
                         <item>
                          <widget class="QFrame" name="frame_31">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -3367,6 +3618,9 @@ border-radius : 5px;
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_34">
                            <property name="spacing">
+                            <number>4</number>
+                           </property>
+                           <property name="topMargin">
                             <number>0</number>
                            </property>
                            <property name="bottomMargin">
@@ -3478,13 +3732,16 @@ border-radius : 5px;
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>382</width>
-                                   <height>69</height>
+                                   <width>28</width>
+                                   <height>16</height>
                                   </rect>
                                  </property>
                                  <layout class="QHBoxLayout" name="willl_task_emp_inf_scrollArea_12">
                                   <property name="spacing">
-                                   <number>0</number>
+                                   <number>10</number>
+                                  </property>
+                                  <property name="sizeConstraint">
+                                   <enum>QLayout::SetMaximumSize</enum>
                                   </property>
                                   <property name="topMargin">
                                    <number>0</number>
@@ -3569,7 +3826,7 @@ border-radius : 5px;
                         <item>
                          <widget class="QFrame" name="frame_34">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -3582,6 +3839,9 @@ border-radius : 5px;
                           </property>
                           <layout class="QVBoxLayout" name="verticalLayout_35">
                            <property name="spacing">
+                            <number>4</number>
+                           </property>
+                           <property name="topMargin">
                             <number>0</number>
                            </property>
                            <property name="bottomMargin">
@@ -3693,13 +3953,16 @@ border-radius : 5px;
                                   <rect>
                                    <x>0</x>
                                    <y>0</y>
-                                   <width>382</width>
-                                   <height>69</height>
+                                   <width>28</width>
+                                   <height>16</height>
                                   </rect>
                                  </property>
                                  <layout class="QHBoxLayout" name="willl_task_emp_inf_scrollArea_14">
                                   <property name="spacing">
-                                   <number>0</number>
+                                   <number>10</number>
+                                  </property>
+                                  <property name="sizeConstraint">
+                                   <enum>QLayout::SetMaximumSize</enum>
                                   </property>
                                   <property name="topMargin">
                                    <number>0</number>
@@ -3745,6 +4008,7 @@ border-radius : 5px;
  </widget>
  <resources>
   <include location="../assets/image.qrc"/>
+  <include location="../../../../../../.designer/assets/image.qrc"/>
  </resources>
  <connections/>
 </ui>

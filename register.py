@@ -20,6 +20,8 @@ class RegisterWindow(QDialog):
         self.window_fix()
         self.initUi()
     def initUi(self):
+        self.setWindowIcon(QIcon(':/image/officalLogo.png'))
+        self.setWindowTitle("TaskJam")
         self.buttonHandle()   
 
     def buttonHandle(self):
@@ -49,7 +51,7 @@ class RegisterWindow(QDialog):
             )    
             self.db.addNewUser(newUser)
             self.close()
-            self.main = MainWİndow(newUser)
+            self.main = MainWİndow(self.db.showUserInformation(email))
             self.main.showMaximized()
 
     def openLogin(self, message):
