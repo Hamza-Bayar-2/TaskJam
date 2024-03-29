@@ -1,5 +1,5 @@
 # TaskJam - Şirketler için Görev Yönetici Paneli
-Bu repo Ondokuz Mayıs Üniversitesi Bilgisayar Mühendisliği Veri Tabanı Yöetim Sistemleri Dersi Kapsamında 2023-2024 Yılı Güz Döneminde Verilen Final Ödevini içermektedir.
+Bu repo Ondokuz Mayıs Üniversitesi Bilgisayar Mühendisliği Veri Tabanı Yönetim Sistemleri Dersi Kapsamında 2023-2024 Yılı Güz Döneminde Verilen Final Ödevini içermektedir.
 
 This repository contains the final project given in the scope of the DataBase Management Systems Course for the Department of Computer Engineering at Ondokuz Mayıs University during the Fall Semester of the 2023-2024 academic year.
 
