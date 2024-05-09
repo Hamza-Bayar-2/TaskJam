@@ -56,6 +56,13 @@ ifade edilerek ilgili sayfada gösterilir.
  <img src="/assets/readmeAssets/ui-3-tj.png" width=100% height=100% />
 </p>
 
+# UML ER Diagram
+
+<p align="center">
+
+ <img src="/assets/readmeAssets/dataBase.png" width=100% height=100% />
+</p>
+
 
 
 ## BAŞLARKEN
